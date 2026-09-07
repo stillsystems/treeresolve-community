@@ -64,7 +64,7 @@ Standard Git and native merge tools operate strictly on raw text lines. When two
 
 ---
 
-## Security & Commercial Licensing
+## Security & Enterprise Inquiries
 
-* **Security Vulnerabilities**: To report a sensitive security vulnerability, please email `security@stillsystems.com`.
-* **Commercial Inquiries**: For enterprise seat licensing, custom MSAs, or air-gapped deployment assistance, visit [Still Systems](https://stillsystems.com) or contact `licensing@stillsystems.com`.
+* **Security Vulnerabilities**: Report security vulnerabilities privately via [GitHub Security Advisories](https://github.com/stillsystems/treeresolve-community/security/advisories/new).
+* **Enterprise & Team Licensing**: For enterprise seat pools, wildcard domain tokens, or custom invoice arrangements, please open a thread in [Community Discussions](https://github.com/stillsystems/treeresolve-community/discussions).
