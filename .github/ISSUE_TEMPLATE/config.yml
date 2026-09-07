@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: "💬 Community Discussions"
+    url: "https://github.com/stillsystems/treeresolve-community/discussions"
+    about: "Ask questions, share ideas, and discuss merge workflows with the community."
+  - name: "🔒 Security Vulnerabilities"
+    url: "mailto:security@stillsystems.com"
+    about: "Report security vulnerabilities privately to our engineering team."
