@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TreeResolve — Deterministic, Syntax-Aware 3-Way Merge Conflicts</title>
+  <meta name="description" content="Deterministic, syntax-aware 3-way merge conflict resolution for VS Code and Git. Zero hallucinations, 100% offline-ready, and instant local execution.">
+  <link rel="icon" type="image/png" href="images/icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ambient-glow-top"></div>
+  <div class="ambient-glow-mid"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a href="#" class="nav-brand">
+        <div class="brand-icon">TR</div>
+        <span>TreeResolve</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#simulator">Live Demo</a></li>
+        <li><a href="#cli">Git CLI</a></li>
+        <li><a href="#enterprise">Enterprise</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="https://github.com/stillsystems/treeresolve" target="_blank" rel="noopener" class="btn btn-outline btn-sm">
+          <svg height="18" width="18" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          GitHub
+        </a>
+        <a href="#enterprise" class="btn btn-primary btn-sm">Enterprise Inquiry</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="container">
+      <div class="hero-badge-wrap">
+        <div class="badge">
+          <span class="badge-dot"></span>
+          TreeResolve v0.3.0 Live • Zero-AI Deterministic Merge Engine
+        </div>
+      </div>
+      <h1 class="hero-title">
+        Deterministic, Syntax-Aware<br>
+        3-Way Merge Conflicts
+      </h1>
+      <p class="hero-subtitle">
+        Turn tedious manual rebase slogs into effortless operations. TreeResolve replaces line-based guesswork with local concrete syntax tree comprehension—zero hallucinations, zero cloud lock-in, and instant local execution.
+      </p>
+      <div class="hero-cta">
+        <a href="https://marketplace.visualstudio.com/items?itemName=still-systems.treeresolve" target="_blank" rel="noopener" class="btn btn-primary btn-lg">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+          </svg>
+          Install VS Code Extension
+        </a>
+        <a href="#enterprise" class="btn btn-outline btn-lg">
+          Contact Enterprise Sales
+        </a>
+      </div>
+
+      <!-- Hero Viewport Media Preview -->
+      <div class="hero-visual">
+        <div class="hero-visual-bar">
+          <div class="window-dots">
+            <div class="window-dot dot-red"></div>
+            <div class="window-dot dot-yellow"></div>
+            <div class="window-dot dot-green"></div>
+          </div>
+          <span class="window-title">TreeResolve 3-Way Canvas Viewport — Ours (Current) | Merged Result | Theirs (Incoming)</span>
+          <span style="width: 40px;"></span>
+        </div>
+        <img src="images/preview.png" alt="TreeResolve 3-Way Conflict Canvas with Bézier Ribbons and Intra-Line Token Micro-Diffing">
+      </div>
+    </div>
+  </header>
+
+  <!-- Key Statistics Ribbon -->
+  <section class="container">
+    <div class="stats-strip">
+      <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Deterministic (Zero AI / Zero Hallucinations)</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">0ms</div>
+        <div class="stat-label">Network Latency (Local AST Execution)</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">7</div>
+        <div class="stat-label">Sandboxed WASM Grammars Bundled</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">45/45</div>
+        <div class="stat-label">Automated Unit Verification Tests</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Simulator Section -->
+  <section id="simulator" class="simulator-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Interactive Simulator</span>
+        <h2 class="section-title">See Deterministic Merging in Action</h2>
+        <p class="section-desc">Experience how TreeResolve safely reconciles non-colliding syntax changes that cause standard Git to fail.</p>
+      </div>
+
+      <div class="simulator-box">
+        <div class="sim-nav">
+          <div class="sim-tabs">
+            <button class="sim-tab active" data-lang="typescript">TypeScript Imports</button>
+            <button class="sim-tab" data-lang="python">Python Scope</button>
+            <button class="sim-tab" data-lang="json">JSON Deep Keys</button>
+            <button class="sim-tab" data-lang="go">Go Import Blocks</button>
+          </div>
+          <div class="sim-controls">
+            <button id="sim-toggle-action" class="sim-toggle-btn">
+              <span>⚡ Run Auto-Resolve</span>
+            </button>
+          </div>
+        </div>
+        <div class="sim-panes">
+          <div class="sim-pane">
+            <div class="sim-pane-header">
+              <span>Conflicted Buffer (Raw Git Diff3)</span>
+              <span class="badge badge-sm" style="font-size: 0.72rem; color: #ef4444;">Conflicts Flagged</span>
+            </div>
+            <pre id="code-display-left"></pre>
+          </div>
+          <div class="sim-pane">
+            <div class="sim-pane-header">
+              <span>TreeResolve Synthesized Result</span>
+              <span class="badge badge-sm" style="font-size: 0.72rem; color: #34d399;">Deterministic AST</span>
+            </div>
+            <pre id="code-display-right"></pre>
+          </div>
+        </div>
+      </div>
+      <p id="sim-explanation" style="text-align: center; color: var(--text-muted); font-size: 0.95rem; margin-top: 16px;"></p>
+    </div>
+  </section>
+
+  <!-- Features Grid -->
+  <section id="features" class="container" style="padding: 40px 0 60px;">
+    <div class="section-header">
+      <span class="section-tag">Core Capabilities</span>
+      <h2 class="section-title">Built for Performance and Precision</h2>
+      <p class="section-desc">Traditional merge tools rely on line-based guessing. TreeResolve brings full compiler-grade understanding directly to your editor.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon icon-blue">⚡</div>
+        <h3 class="feature-title">Concrete Syntax Tree Engine</h3>
+        <p class="feature-text">Pre-compiled WebAssembly parsers parse AST nodes in background workers, performing mathematical set-difference reconciliations with 3-way deletion tracking.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-purple">🎨</div>
+        <h3 class="feature-title">Dynamic Bézier Ribbons</h3>
+        <p class="feature-text">Hardware-accelerated HTML5 canvas ribbons link corresponding code blocks across Ours, Merged Result, and Theirs with proportional alignment scrolling.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-green">🔒</div>
+        <h3 class="feature-title">Air-Gapped & Zero Data Egress</h3>
+        <p class="feature-text">Your source code never leaves your local machine. No LLMs, no remote API calls, no token leakage. Complies with the strictest InfoSec policies.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-amber">🔍</div>
+        <h3 class="feature-title">Intra-Line Token Micro-Diffing</h3>
+        <p class="feature-text">Off-thread LCS diffing visually distinguishes exact character and word substitutions within conflicting lines, highlighting additions and deletions in color.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-cyan">📦</div>
+        <h3 class="feature-title">Semantic Lockfile Resolution</h3>
+        <p class="feature-text">Automatically auto-merges non-breaking semver bumps and concurrent package additions in <code>package-lock.json</code> while aligning SHA-512 integrity hashes.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-red">⚙️</div>
+        <h3 class="feature-title">Repo Policy Engine (.treeresolverc)</h3>
+        <p class="feature-text">Check project-level glob policies directly into your Git repository to govern auto-merge rules and automatic staging across large engineering teams.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLI Showcase Banner -->
+  <section id="cli" class="container">
+    <div class="cli-banner">
+      <div>
+        <span class="section-tag">Terminal Workflows</span>
+        <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 14px;">Standalone Git Mergetool Companion</h2>
+        <p style="color: var(--text-muted); font-size: 1rem; line-height: 1.6; margin-bottom: 24px;">
+          Prefer working in the terminal or running headless auto-resolution in CI/CD pipelines? TreeResolve includes a standalone CLI executable with zero dependencies.
+        </p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <a href="https://github.com/stillsystems/treeresolve#4-git-mergetool--cli-companion" target="_blank" rel="noopener" class="btn btn-outline btn-sm">
+            CLI Documentation →
+          </a>
+        </div>
+      </div>
+      <div class="cli-code-block">
+        <span class="cli-comment"># 1. Configure Git global mergetool in one command</span><br>
+        <span class="cli-cmd">npx treeresolve setup-git</span><br><br>
+        <span class="cli-comment"># 2. Batch auto-resolve all clean syntax conflicts</span><br>
+        <span class="cli-cmd">npx treeresolve auto</span><br><br>
+        <span class="cli-comment"># 3. Direct 3-way invocation in Git mergetool</span><br>
+        <span class="cli-cmd">git mergetool -t treeresolve</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Enterprise Inquiry Section -->
+  <section id="enterprise" class="enterprise-section">
+    <div class="container">
+      <div class="enterprise-card">
+        <div class="enterprise-info">
+          <span class="section-tag">Enterprise & Security</span>
+          <h3>Procurement, MDM & Custom Inquiries</h3>
+          <p>
+            Deploy TreeResolve securely across hundreds of engineering seats. We support centralized MDM rollout, air-gapped cryptographic licensing, and dedicated SLA contracts.
+          </p>
+
+          <ul class="enterprise-points">
+            <li>
+              <span class="check-icon">✓</span>
+              <span><strong>Air-Gapped Cryptographic Leases:</strong> Ed25519-signed offline licenses verified without external network calls.</span>
+            </li>
+            <li>
+              <span class="check-icon">✓</span>
+              <span><strong>Fleet Rollout:</strong> Silent automated distribution via Microsoft Intune, Jamf Pro, and Ansible.</span>
+            </li>
+            <li>
+              <span class="check-icon">✓</span>
+              <span><strong>Commercial Invoicing:</strong> Net 30 / Net 60 payment terms, ACH, wire transfers, and corporate POs.</span>
+            </li>
+            <li>
+              <span class="check-icon">✓</span>
+              <span><strong>Zero Data Egress:</strong> Fully verified local execution with zero source code or credential transmission.</span>
+            </li>
+          </ul>
+
+          <div style="margin-top: 32px; padding: 18px; background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border); border-radius: var(--radius-md);">
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 8px;">Direct Developer Contact:</p>
+            <a href="mailto:billy.kidd34@gmail.com" style="color: var(--accent-cyan); font-weight: 600; text-decoration: none; font-size: 0.95rem;">
+              billy.kidd34@gmail.com
+            </a>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="enterprise-form-wrap">
+          <form id="enterprise-inquiry-form" class="inquiry-form">
+            <div id="form-status" class="form-status"></div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Your Name *</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Jane Doe" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Work Email *</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="jane@company.com" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="company">Company / Organization *</label>
+                <input type="text" id="company" name="company" class="form-control" placeholder="Acme Technologies" required>
+              </div>
+              <div class="form-group">
+                <label for="seats">Estimated Seats</label>
+                <select id="seats" name="seats" class="form-control">
+                  <option value="10-50">10 – 50 developers</option>
+                  <option value="50-200" selected>50 – 200 developers</option>
+                  <option value="200-1000">200 – 1,000 developers</option>
+                  <option value="1000+">1,000+ enterprise fleet</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="security">Deployment Environment</label>
+              <select id="security" name="security" class="form-control">
+                <option value="Standard Workstations">Standard Developer Laptops (macOS / Linux / Windows)</option>
+                <option value="Air-Gapped VPC">Air-Gapped / SCIF Restricted Network</option>
+                <option value="Self-Hosted Worker">Internal Cloudflare Worker / Private Proxy</option>
+                <option value="Virtual Desktops">VDI / Remote SSH / Dev Containers</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Project Requirements or Questions</label>
+              <textarea id="message" name="message" class="form-control" placeholder="Tell us about your team's workflow, security requirements, or custom languages..."></textarea>
+            </div>
+
+            <button type="submit" id="submit-inquiry-btn" class="btn btn-glow btn-lg" style="width: 100%; margin-top: 8px;">
+              Submit Enterprise Inquiry
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-copy">
+        © 2026 TreeResolve. Distributed under commercial proprietary and community terms.
+      </div>
+      <ul class="footer-links">
+        <li><a href="https://github.com/stillsystems/treeresolve/blob/main/ENTERPRISE.md" target="_blank" rel="noopener">Enterprise Guide</a></li>
+        <li><a href="https://github.com/stillsystems/treeresolve/blob/main/ARCHITECTURE.md" target="_blank" rel="noopener">Architecture</a></li>
+        <li><a href="https://github.com/stillsystems/treeresolve/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Changelog</a></li>
+        <li><a href="https://github.com/stillsystems/treeresolve-community/issues" target="_blank" rel="noopener">Community Tracker</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
