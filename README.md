@@ -49,7 +49,7 @@ TreeResolve identifies the structural context of conflicting blocks. If two chan
 
 ### 🔒 Offline-First & Enterprise-Ready
 
-* **Air-Gapped Operation**: Runs entirely on your local machine. Zero telemetry, zero cloud dependencies.
+* **Air-Gapped Operation**: Runs entirely on your local machine. Zero source code egress, zero cloud dependencies.
 * **Native Undo/Redo**: Integrates directly with VS Code's `WorkspaceEdit` API—standard `Cmd+Z`, `Cmd+Shift+Z`, and `Cmd+S` work seamlessly out of the box.
 
 ---
