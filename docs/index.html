@@ -74,7 +74,7 @@
             <div class="window-dot dot-green"></div>
           </div>
           <span class="window-title">TreeResolve 3-Way Canvas Viewport — Ours (Current) | Merged Result | Theirs (Incoming)</span>
-          <span style="width: 40px;"></span>
+          <span class="window-spacer"></span>
         </div>
         <img src="images/preview.png" alt="TreeResolve 3-Way Conflict Canvas with Bézier Ribbons and Intra-Line Token Micro-Diffing">
       </div>
@@ -130,25 +130,25 @@
           <div class="sim-pane">
             <div class="sim-pane-header">
               <span>Conflicted Buffer (Raw Git Diff3)</span>
-              <span class="badge badge-sm" style="font-size: 0.72rem; color: #ef4444;">Conflicts Flagged</span>
+              <span class="badge badge-sm badge-danger">Conflicts Flagged</span>
             </div>
             <pre id="code-display-left"></pre>
           </div>
           <div class="sim-pane">
             <div class="sim-pane-header">
               <span>TreeResolve Synthesized Result</span>
-              <span class="badge badge-sm" style="font-size: 0.72rem; color: #34d399;">Deterministic AST</span>
+              <span class="badge badge-sm badge-success">Deterministic AST</span>
             </div>
             <pre id="code-display-right"></pre>
           </div>
         </div>
       </div>
-      <p id="sim-explanation" style="text-align: center; color: var(--text-muted); font-size: 0.95rem; margin-top: 16px;"></p>
+      <p id="sim-explanation" class="sim-explanation"></p>
     </div>
   </section>
 
   <!-- Features Grid -->
-  <section id="features" class="container" style="padding: 40px 0 60px;">
+  <section id="features" class="container features-section">
     <div class="section-header">
       <span class="section-tag">Core Capabilities</span>
       <h2 class="section-title">Built for Performance and Precision</h2>
@@ -199,11 +199,11 @@
     <div class="cli-banner">
       <div>
         <span class="section-tag">Terminal Workflows</span>
-        <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 14px;">Standalone Git Mergetool Companion</h2>
-        <p style="color: var(--text-muted); font-size: 1rem; line-height: 1.6; margin-bottom: 24px;">
+        <h2 class="cli-title">Standalone Git Mergetool Companion</h2>
+        <p class="cli-desc">
           Prefer working in the terminal or running headless auto-resolution in CI/CD pipelines? TreeResolve includes a standalone CLI executable with zero dependencies.
         </p>
-        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <div class="cli-actions">
           <a href="https://github.com/stillsystems/treeresolve-community#4-git-mergetool--cli-companion" target="_blank" rel="noopener" class="btn btn-outline btn-sm">
             CLI Documentation →
           </a>
@@ -250,9 +250,9 @@
             </li>
           </ul>
 
-          <div style="margin-top: 32px; padding: 18px; background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border); border-radius: var(--radius-md);">
-            <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 8px;">Community & Discussions:</p>
-            <a href="https://github.com/stillsystems/treeresolve-community/discussions" target="_blank" rel="noopener" style="color: var(--accent-cyan); font-weight: 600; text-decoration: none; font-size: 0.95rem;">
+          <div class="enterprise-contact-box">
+            <p class="enterprise-contact-label">Community & Discussions:</p>
+            <a href="https://github.com/stillsystems/treeresolve-community/discussions" target="_blank" rel="noopener" class="enterprise-contact-link">
               TreeResolve Community Portal →
             </a>
           </div>
@@ -305,7 +305,7 @@
               <textarea id="message" name="message" class="form-control" placeholder="Tell us about your team's workflow, security requirements, or custom languages..."></textarea>
             </div>
 
-            <button type="submit" id="submit-inquiry-btn" class="btn btn-glow btn-lg" style="width: 100%; margin-top: 8px;">
+            <button type="submit" id="submit-inquiry-btn" class="btn btn-glow btn-lg btn-block-submit">
               Submit Enterprise Inquiry
             </button>
           </form>

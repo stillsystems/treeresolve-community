@@ -105,8 +105,8 @@ body {
   top: 0;
   z-index: 100;
   background: rgba(6, 9, 14, 0.85);
-  backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
 }
 
@@ -239,6 +239,7 @@ body {
   font-weight: 600;
   border: 1px solid var(--border);
   background: rgba(15, 23, 42, 0.6);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   color: var(--accent-cyan);
 }
@@ -782,3 +783,75 @@ textarea.form-control {
   .nav-links { display: none; }
   .hero-title { font-size: 2.1rem; }
 }
+
+/* UI Utility Classes replacing inline styles */
+.window-spacer {
+  width: 40px;
+}
+
+.badge-danger {
+  font-size: 0.72rem;
+  color: #ef4444;
+}
+
+.badge-success {
+  font-size: 0.72rem;
+  color: #34d399;
+}
+
+.sim-explanation {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-top: 16px;
+}
+
+.features-section {
+  padding: 40px 0 60px;
+}
+
+.cli-title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 14px;
+}
+
+.cli-desc {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.cli-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.enterprise-contact-box {
+  margin-top: 32px;
+  padding: 18px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.enterprise-contact-label {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.enterprise-contact-link {
+  color: var(--accent-cyan);
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.btn-block-submit {
+  width: 100%;
+  margin-top: 8px;
+}
+
