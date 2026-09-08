@@ -40,6 +40,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **User Opt-Out Control**: Configurable via `"treeresolve.enableTelemetry": false` and automatically honors VS Code's global telemetry setting (`telemetry.telemetryLevel: "off"`).
 - **Serverless Ingestion Endpoint**: Added `POST /api/v1/telemetry` route in Cloudflare Licensing Worker for edge-cached metrics ingestion.
 
+## [0.2.0] - 2026-09-08
+
+### Added
+
 #### Concrete Syntax Tree (CST) Engine (@vscode/tree-sitter-wasm)
 
 - **Zero-Native Cross-Platform WASM Architecture**: Integrated Microsoft's official `@vscode/tree-sitter-wasm` build across TypeScript, TSX, JavaScript, Python, Go, and Rust with zero native compilation.
