@@ -5,6 +5,13 @@ All notable changes to the "TreeResolve" extension will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.1] - 2026-09-08
+
+### Changed
+
+- **Open VSX Registry Publication**: Officially published TreeResolve to [Open VSX Registry](https://open-vsx.org/extension/stillsystems/treeresolve) under verified namespace `stillsystems`.
+- **Publisher Identifier Alignment**: Standardized extension publisher identifier to `stillsystems.treeresolve` across extension manifest, documentation, and enterprise MDM deployment scripts.
+
 ## [0.3.0] - 2026-09-08
 
 ### Added
