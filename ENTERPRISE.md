@@ -160,4 +160,4 @@ Still Systems provides flexible procurement paths for enterprise organizations:
 * **Enterprise Agreements**: Custom Master Services Agreements (MSA), Security Addendums, and Vendor Risk Assessment questionnaires.
 * **Dedicated Support & Custom Grammar Normalizers**: Enterprise tiers include prioritized support SLAs and custom normalizer engineering for internal or proprietary DSLs.
 
-For enterprise evaluations, custom quotes, or security reviews, submit an inquiry via the [Enterprise Portal](https://stillsystems.github.io/treeresolve-community/#enterprise), email <billy.kidd34@gmail.com>, or contact the team on the [TreeResolve Community Tracker](https://github.com/stillsystems/treeresolve-community/issues).
+For enterprise evaluations, custom quotes, or security reviews, submit an inquiry via the [Enterprise Portal](https://stillsystems.github.io/treeresolve-community/#enterprise) or contact the team on the [TreeResolve Community Tracker](https://github.com/stillsystems/treeresolve-community/issues).

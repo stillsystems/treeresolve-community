@@ -178,33 +178,24 @@ import (
       const data = Object.fromEntries(formData.entries());
 
       try {
-        const response = await fetch('https://formsubmit.co/ajax/billy.kidd34@gmail.com', {
+        const response = await fetch('https://treeresolve-licensing.still-systems.workers.dev/api/v1/inquiry', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Accept': 'application/json'
           },
-          body: JSON.stringify({
-            _subject: `TreeResolve Enterprise Inquiry: ${data.company || data.name}`,
-            ...data
-          })
+          body: JSON.stringify(data)
         });
 
         if (response.ok) {
           formStatus.className = 'form-status success';
-          formStatus.innerHTML = '✅ <strong>Inquiry received!</strong> Thank you for reaching out. We will get back to you within 1 business day.';
+          formStatus.innerHTML = '✅ <strong>Inquiry received!</strong> Thank you for reaching out. We will review your project requirements and follow up promptly.';
           inquiryForm.reset();
         } else {
           throw new Error('Submission returned status ' + response.status);
         }
       } catch {
-        // Fallback: construct mailto link
-        const subject = encodeURIComponent(`TreeResolve Enterprise Inquiry: ${data.company || data.name}`);
-        const body = encodeURIComponent(
-          `Name: ${data.name}\nEmail: ${data.email}\nCompany: ${data.company}\nSeats: ${data.seats}\nSecurity Model: ${data.security}\n\nMessage:\n${data.message}`
-        );
         formStatus.className = 'form-status error';
-        formStatus.innerHTML = `⚠️ Direct submission failed. <a href="mailto:billy.kidd34@gmail.com?subject=${subject}&body=${body}" style="color: #60a5fa; text-decoration: underline;">Click here to send via your email client</a>.`;
+        formStatus.innerHTML = `⚠️ Submission temporarily unavailable. Please submit an inquiry on the <a href="https://github.com/stillsystems/treeresolve-community/discussions" target="_blank" rel="noopener" style="color: #60a5fa; text-decoration: underline;">TreeResolve Community Portal</a>.`;
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Submit Enterprise Inquiry';

@@ -164,4 +164,4 @@ For organizational procurement, InfoSec assessments, and MDM rollout instruction
 ## Security & Enterprise Inquiries
 
 * **Security Vulnerabilities**: Report security vulnerabilities privately via [GitHub Security Advisories](https://github.com/stillsystems/treeresolve-community/security/advisories/new).
-* **Enterprise Inquiries**: For enterprise evaluations, volume seat licensing, or custom MSA agreements, submit an inquiry via the [Enterprise Portal](https://stillsystems.github.io/treeresolve-community/#enterprise) or email <billy.kidd34@gmail.com>.
+* **Enterprise Inquiries**: For enterprise evaluations, volume seat licensing, or custom MSA agreements, submit an inquiry via the [Enterprise Portal](https://stillsystems.github.io/treeresolve-community/#enterprise) or open a discussion on the [TreeResolve Community Tracker](https://github.com/stillsystems/treeresolve-community/issues).
