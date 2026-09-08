@@ -630,16 +630,29 @@ body {
   border-radius: var(--radius-xl);
   padding: 48px;
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
   gap: 48px;
   box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7);
   position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.enterprise-info {
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .enterprise-info h3 {
   font-size: 2rem;
   font-weight: 800;
   margin-bottom: 16px;
+  word-break: break-word;
 }
 
 .enterprise-info p {
@@ -667,6 +680,14 @@ body {
 .check-icon {
   color: var(--accent-emerald);
   font-weight: 800;
+  flex-shrink: 0;
+}
+
+.enterprise-form-wrap {
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Form Styles */
@@ -674,18 +695,30 @@ body {
   display: flex;
   flex-direction: column;
   gap: 18px;
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .form-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 16px;
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .form-group label {
@@ -703,6 +736,11 @@ body {
   font-family: var(--font-sans);
   font-size: 0.95rem;
   transition: var(--transition);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  display: block;
 }
 
 .form-control:focus {
@@ -711,9 +749,34 @@ body {
   box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
 }
 
+select.form-control {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+select.form-control option {
+  background: #0b0f19;
+  color: var(--text-main);
+  max-width: 100%;
+}
+
 textarea.form-control {
   resize: vertical;
   min-height: 100px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.btn-block-submit {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .form-status {
@@ -778,12 +841,12 @@ textarea.form-control {
 /* Responsive */
 @media (max-width: 900px) {
   .hero-title { font-size: 2.5rem; }
-  .stats-strip { grid-template-columns: repeat(2, 1fr); gap: 30px; }
-  .features-grid { grid-template-columns: 1fr; }
-  .cli-banner { grid-template-columns: 1fr; }
-  .enterprise-card { grid-template-columns: 1fr; padding: 32px 24px; }
-  .form-row { grid-template-columns: 1fr; }
-  .sim-panes { grid-template-columns: 1fr; }
+  .stats-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px; }
+  .features-grid { grid-template-columns: minmax(0, 1fr); }
+  .cli-banner { grid-template-columns: minmax(0, 1fr); }
+  .enterprise-card { grid-template-columns: minmax(0, 1fr); padding: 32px 24px; gap: 36px; }
+  .form-row { grid-template-columns: minmax(0, 1fr); }
+  .sim-panes { grid-template-columns: minmax(0, 1fr); }
   .sim-pane { border-right: none; border-bottom: 1px solid var(--border); }
 }
 
@@ -829,7 +892,7 @@ textarea.form-control {
 
 @media (max-width: 600px) {
   .container {
-    padding: 0 16px;
+    padding: 0 14px;
   }
   .nav-inner {
     height: 62px;
@@ -886,7 +949,7 @@ textarea.form-control {
     display: none;
   }
   .stats-strip {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 20px 14px;
     padding: 24px 0;
     margin: 20px 0 40px;
@@ -898,31 +961,36 @@ textarea.form-control {
     font-size: 0.78rem;
   }
   .enterprise-section {
-    padding: 40px 0 60px;
+    padding: 36px 0 50px;
   }
   .enterprise-card {
-    padding: 24px 16px;
+    padding: 22px 14px;
     border-radius: var(--radius-lg);
+    gap: 24px;
   }
   .enterprise-info h3 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     line-height: 1.25;
     margin-bottom: 12px;
   }
   .enterprise-info p {
-    font-size: 0.92rem;
-    margin-bottom: 20px;
+    font-size: 0.9rem;
+    margin-bottom: 18px;
   }
   .enterprise-points {
     gap: 12px;
   }
   .enterprise-points li {
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     word-break: break-word;
   }
   .enterprise-contact-box {
-    margin-top: 20px;
-    padding: 14px;
+    margin-top: 18px;
+    padding: 12px;
+  }
+  .enterprise-contact-link {
+    font-size: 0.88rem;
+    word-break: break-word;
   }
   .footer-inner {
     flex-direction: column;
