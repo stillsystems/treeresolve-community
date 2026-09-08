@@ -97,7 +97,7 @@ Deploy via PowerShell script or Intune Win32 App:
 
 ```powershell
 # Install extension silently for all users
-code --install-extension still-systems.treeresolve --force
+code --install-extension stillsystems.treeresolve --force
 ```
 
 #### Jamf Pro / macOS Fleet
@@ -107,7 +107,7 @@ Deploy via Jamf shell policy:
 ```bash
 #!/bin/bash
 # Install extension silently under current logged-in user
-sudo -u $(stat -f "%Su" /dev/console) code --install-extension still-systems.treeresolve --force
+sudo -u $(stat -f "%Su" /dev/console) code --install-extension stillsystems.treeresolve --force
 ```
 
 ### 4.2. Centralized VS Code Settings Configuration

@@ -1,35 +1,55 @@
-# TreeResolve Community & Issue Tracker
+# TreeResolve
 
-Welcome to the public community repository for **TreeResolve**, the deterministic, syntax-aware 3-way merge conflict resolution engine for VS Code and Git.
-
-[![VS Code Marketplace](https://img.shields.io/visual-studio-marketplace/v/still-systems.treeresolve)](https://marketplace.visualstudio.com/items?itemName=still-systems.treeresolve)
+[![Version](https://img.shields.io/visual-studio-marketplace/v/stillsystems.treeresolve)](https://marketplace.visualstudio.com/items?itemName=stillsystems.treeresolve)
+[![License](https://img.shields.io/badge/License-Proprietary-blue.svg)](LICENSE)
+[![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.85.0-brightgreen)](https://code.visualstudio.com)
 [![Website](https://img.shields.io/badge/Website-stillsystems.github.io%2Ftreeresolve--community-blueviolet)](https://stillsystems.github.io/treeresolve-community)
-[![Discussions](https://img.shields.io/github/discussions/stillsystems/treeresolve-community)](https://github.com/stillsystems/treeresolve-community/discussions)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-This repository serves as the central public hub for:
-* 🐛 **[Reporting Bugs & Regressions](https://github.com/stillsystems/treeresolve-community/issues/new?template=1_bug_report.md)**
-* 🚀 **[Requesting New Languages & Grammars](https://github.com/stillsystems/treeresolve-community/issues/new?template=2_language_request.md)**
-* 💡 **[Proposing Features & Workflow Improvements](https://github.com/stillsystems/treeresolve-community/issues/new?template=3_feature_request.md)**
-* 💬 **[Community Discussions & Q&A](https://github.com/stillsystems/treeresolve-community/discussions)**
-* 🏢 **[Enterprise & Deployment Guide](ENTERPRISE.md)**
-* 🏛️ **[Architecture Specification](ARCHITECTURE.md)**
-* 📋 **[Changelog](CHANGELOG.md)**
+**Deterministic, syntax-aware 3-way merge conflict resolution for VS Code.**  
+Turn tedious manual rebase slogs into effortless operations with zero hallucinations, zero cloud lock-in, and instant local execution.
 
 ---
 
-## What is TreeResolve?
+## Why TreeResolve?
 
 Standard Git and native merge tools operate strictly on raw text lines. When two branches both insert an import, add an enum flag, or update adjacent JSON properties, line-based diff engines flag false conflicts and force you to manually click through hundreds of trivial hunks.
 
 **TreeResolve replaces line-based guesswork with local syntax comprehension:**
-* **Deterministic AST Auto-Resolution**: Parses code structurally via Tree-sitter to safely auto-resolve non-colliding syntax elements (imports, object keys, enum variants, interface members).
+
+* **Deterministic Syntax Auto-Resolution**: Analyzes code structurally to safely auto-resolve non-colliding syntax elements (disjoint imports and JSON keys).
 * **Zero AI / Zero Hallucinations**: 100% programmatic and rule-driven. Your code is never transmitted to an LLM or third-party cloud service—merges are provably correct, offline-ready, and reproducible.
 * **Synchronized 3-Way Canvas**: A smooth visual editor with dynamic Bézier ribbons linking your branches (`Ours`, `Merged Result`, and `Theirs`).
-* **Wasm-Accelerated Performance**: Diffs run via compiled WebAssembly inside isolated background workers, eliminating UI freezes on massive files.
+* **Responsive Local Performance**: Efficient diff alignment and canvas rendering without external cloud dependencies.
 
-👉 **[Install TreeResolve on the VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=still-systems.treeresolve)**  
-🌐 **[Visit the Live Web Demo & Conflict Simulator](https://stillsystems.github.io/treeresolve-community/)**
+---
+
+![TreeResolve 3-Way Merge Editor Viewport](images/preview.png)
+
+---
+
+## Features
+
+### ⚡ Deterministic Syntax Auto-Merge
+
+TreeResolve identifies the structural context of conflicting blocks. If two changes are syntactically disjoint, they are resolved automatically before the merge editor even opens:
+
+* **ES / TypeScript / Python Imports**: Deterministic 3-way set difference against Base, honoring deletions and deduplicating imports.
+* **JSON / JSONC Configuration**: Deep recursive 3-way merge combining non-colliding keys while safely detecting delete-modify conflicts.
+* **Lockfiles (`package-lock.json`)**: 3-way semver range comparison and integrity hash alignment for non-breaking package additions and bumps.
+
+### 🎨 Visual 3-Pane Viewport
+
+![3-Way Diff with Base Common Ancestor](images/diff3-base.png)
+
+* **Dynamic Bézier Ribbons**: Visually connects changes between `Current (Ours)`, `Merged Result`, and `Incoming (Theirs)` panes with hardware-accelerated curves.
+* **Base Ancestor Inspection**: 1-click expandable drawer revealing the exact common ancestor code both branches diverged from.
+* **Proportional Scrolling**: Intercepts scroll events to maintain alignment across massive insertions without visual jumps.
+* **1-Click Overrides**: Accept Ours, Accept Theirs, or combine both with intuitive inline controls.
+
+### 🔒 Offline-First & Enterprise-Ready
+
+* **Air-Gapped Operation**: Runs entirely on your local machine. Zero telemetry, zero cloud dependencies.
+* **Native Undo/Redo**: Integrates directly with VS Code's `WorkspaceEdit` API—standard `Cmd+Z`, `Cmd+Shift+Z`, and `Cmd+S` work seamlessly out of the box.
 
 ---
 
@@ -50,9 +70,12 @@ Standard Git and native merge tools operate strictly on raw text lines. When two
 
 ---
 
-## 🗺️ Active Roadmap
+## 🗺️ Roadmap & Upcoming Languages
+
+TreeResolve's syntax engine expands language support by shipping dedicated language-specific normalizers.
 
 ### Currently Supported (v0.3.0)
+
 * [x] **TypeScript / JavaScript**: Disjoint imports (named, aliased, side-effect, and type-only) with true 3-way deletion handling and AST declaration merging.
 * [x] **JSON / JSONC**: Nested recursive 3-way key deduplication and conflict detection.
 * [x] **Python**: Module and from-import normalization with true 3-way deletion handling.
@@ -69,8 +92,12 @@ Standard Git and native merge tools operate strictly on raw text lines. When two
 * [x] **Universal Line-based 3-Way Diff**: Visual fallback for all other file types.
 
 ### In Active Development
+
 * [ ] **Intra-Line Interactive Token Acceptance**: Micro-level sub-line segment picking.
 * [ ] **Semantic Intra-Line Token Highlighting**: Visual micro-highlighting for variable and argument renames.
+
+> 💡 **Have a feature idea, language request, or bug report?**  
+> Join the conversation or open an issue in the [TreeResolve Community Tracker](https://github.com/stillsystems/treeresolve-community/issues).
 
 ---
 
@@ -81,7 +108,7 @@ Standard Git and native merge tools operate strictly on raw text lines. When two
 Install **TreeResolve** from the VS Code Marketplace or by running:
 
 ```bash
-ext install still-systems.treeresolve
+ext install stillsystems.treeresolve
 ```
 
 ### 2. Resolving a Merge Conflict in VS Code
@@ -153,15 +180,29 @@ For organizational procurement, InfoSec assessments, and MDM rollout instruction
 
 ---
 
-## Contributing Feedback & Filing Issues
+## Extension Settings
 
-1. **Check Existing Issues**: Before opening a new issue, please search [existing open issues](https://github.com/stillsystems/treeresolve-community/issues) to avoid duplicates.
-2. **Include Reproduction Snippets**: When reporting a conflict parsing or merge issue, providing a minimal reproduction snippet (Ours, Theirs, Base) helps us diagnose and ship a fix quickly.
-3. **Upvote Languages**: Want support for your language prioritized? Upvote or comment on the corresponding issue in [Language Requests](https://github.com/stillsystems/treeresolve-community/labels/language-request).
+| Setting | Default | Description |
+| :--- | :---: | :--- |
+| `treeresolve.autoMergeImports` | `true` | Automatically resolve non-colliding import statements on file open. |
+| `treeresolve.renderRibbons` | `true` | Render dynamic Bézier ribbons between diff panes. |
+| `treeresolve.scrollSynchronization` | `true` | Synchronize viewport scrolling based on aligned code blocks. |
+| `treeresolve.stageOnSave` | `false` | Automatically run `git add` when saving a fully resolved merge file. |
+| `treeresolve.licensingEndpoint` | `https://treeresolve-licensing.still-systems.workers.dev` | Licensing and trial ticketing gateway URL. |
+| `treeresolve.enableTelemetry` | `true` | Enable anonymous telemetry reporting of auto-merge acceptance rates and resolution time. |
 
 ---
 
-## Security & Enterprise Inquiries
+## Telemetry & Privacy
 
-* **Security Vulnerabilities**: Report security vulnerabilities privately via [GitHub Security Advisories](https://github.com/stillsystems/treeresolve-community/security/advisories/new).
-* **Enterprise Inquiries**: For enterprise evaluations, volume seat licensing, or custom MSA agreements, submit an inquiry via the [Enterprise Portal](https://stillsystems.github.io/treeresolve-community/#enterprise) or open a discussion on the [TreeResolve Community Tracker](https://github.com/stillsystems/treeresolve-community/issues).
+TreeResolve is built with an **offline-first, privacy-respecting** architecture:
+
+* **Metrics Recorded**: When enabled, TreeResolve measures the percentage of deterministic auto-merges accepted (`autoAcceptanceRatePercent`) and the elapsed time spent resolving conflicts (`durationMs`) to improve normalizer heuristics.
+* **Zero Source Code Transmission**: Source code, AST tokens, file paths, repository URLs, branch names, and developer identities are **never** collected or transmitted.
+* **Full User Control (Opt-Out)**: You can disable telemetry at any time by configuring:
+
+  ```json
+  "treeresolve.enableTelemetry": false
+  ```
+
+  TreeResolve also automatically respects VS Code's global setting (`telemetry.telemetryLevel: "off"`). If either setting is disabled, zero telemetry is recorded or sent.
