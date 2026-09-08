@@ -805,7 +805,6 @@ textarea.form-control {
     overflow-x: auto;
     width: 100%;
     padding-bottom: 4px;
-    -webkit-overflow-scrolling: touch;
   }
   .sim-tab {
     white-space: nowrap;
