@@ -1,6 +1,7 @@
 # TreeResolve
 
-[![Version](https://img.shields.io/visual-studio-marketplace/v/stillsystems.treeresolve)](https://marketplace.visualstudio.com/items?itemName=stillsystems.treeresolve)
+[![VS Code Marketplace](https://img.shields.io/badge/VS_Code_Marketplace-v0.4.0-007ACC?logo=visualstudiocode&logoColor=white)](https://marketplace.visualstudio.com/items?itemName=stillsystems.treeresolve)
+[![Open VSX](https://img.shields.io/open-vsx/v/stillsystems/treeresolve?color=purple)](https://open-vsx.org/extension/stillsystems/treeresolve)
 [![License](https://img.shields.io/badge/License-Proprietary-blue.svg)](LICENSE)
 [![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.85.0-brightgreen)](https://code.visualstudio.com)
 [![Website](https://img.shields.io/badge/Website-stillsystems.github.io%2Ftreeresolve--community-blueviolet)](https://stillsystems.github.io/treeresolve-community)
@@ -163,8 +164,10 @@ npx treeresolve merge <base> <local> <remote> <merged>
 
 TreeResolve uses a Reverse Trial model: install the extension and enjoy all Pro features unrestricted for 14 days without entering a credit card or signing up.
 
-| Feature | Community Tier (Free Forever) | Pro Tier ($10/mo or $99/yr) | Enterprise Tier ($20/seat/mo or $199/seat/yr) |
+| Feature | Community Tier (Free Forever) | Pro Tier ($10/mo or $99/yr) | Enterprise Tier ($20/seat/mo or $199/seat/yr)* |
 | :--- | :---: | :---: | :---: |
+| **Direct Checkout** | [Install Free](https://marketplace.visualstudio.com/items?itemName=stillsystems.treeresolve) | [**Get Pro ($99/yr)**](https://buy.stripe.com/test_eVq7sKagT10N5BlehDgUM02) · [($10/mo)](https://buy.stripe.com/test_8x28wOfBd38V9RB0qNgUM01) | [**Buy Fleet Seats**](https://buy.stripe.com/test_7sY4gy2OreRD4xh3CZgUM03) · [Inquire](https://stillsystems.github.io/treeresolve-community/#enterprise) |
+| **Target User** | Open Source / Hobbyists | Individual Professionals | Engineering Teams & Enterprise Fleets |
 | **3-Pane Visual Diffing** | ✅ Included | ✅ Included | ✅ Included |
 | **Dynamic Ribbon Alignment** | ✅ Included | ✅ Included | ✅ Included |
 | **Native Undo/Redo & Save Hooks** | ✅ Included | ✅ Included | ✅ Included |
@@ -172,11 +175,14 @@ TreeResolve uses a Reverse Trial model: install the extension and enjoy all Pro 
 | **Intra-Line Token Alignment** | ❌ Line-based only | ✅ Token-level syntax highlighting | ✅ Token-level syntax highlighting |
 | **Offline Cryptographic Leases** | ✅ Yes | ✅ Ed25519 offline verification | ✅ Wildcard / Multi-repo domain lease |
 | **Centralized / MDM Deployment** | ❌ | ❌ | ✅ Automated dotfile / container rollout |
-| **Billing & Payment Options** | ❌ (Free forever) | Self-serve Credit Card | Self-serve Credit Card, ACH, or PO / Invoicing (Net 30) |
+| **Volume Discounts** | ❌ | ❌ | ✅ Tiered discounts at 50+, 200+, 1,000+ seats |
+| **Billing & Payment Options** | ❌ (Free forever) | Self-serve Credit Card | Credit Card, ACH, Wire, or PO / Invoice (Net 30) |
+
+*\*Enterprise pricing reflects standard base list price. Volume discounting and fleet licensing apply automatically for teams of 50 to 1,000+ developers via custom quote or PO.*
 
 When your 14-day trial ends, TreeResolve automatically degrades to the Community tier. Your editor will never be locked or blocked from resolving conflicts manually. Commercial licenses utilize 30-day offline-first floating leases, and wildcard licenses carry a maximum 90-day validity window.
 
-For organizational procurement, InfoSec assessments, and MDM rollout instructions, refer to the [Enterprise Deployment & Security Guide](ENTERPRISE.md).
+For organizational procurement, volume quotes, InfoSec assessments, and MDM rollout instructions, refer to the [Enterprise Deployment & Security Guide](ENTERPRISE.md) or submit an inquiry on the [Enterprise Portal](https://stillsystems.github.io/treeresolve-community/#enterprise).
 
 ---
 
