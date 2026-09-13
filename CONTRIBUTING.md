@@ -44,6 +44,7 @@ Contributions to our public documentation, website guides, and sample conflicts 
 ### 4. Community Discussions
 
 Have a question about AST merge conflict heuristics, licensing, or integration? Join our [GitHub Discussions](https://github.com/stillsystems/treeresolve-community/discussions):
+
 - **Q&A**: Ask questions and get answers from maintainers and peers.
 - **Ideas**: Propose workflow enhancements or IDE integration ideas.
 - **Show and Tell**: Share how TreeResolve fits into your team's Git workflows.
