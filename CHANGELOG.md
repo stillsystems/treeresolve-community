@@ -5,6 +5,160 @@ All notable changes to the "TreeResolve" extension will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.4] - 2026-09-11
+
+### Security & Hardening
+
+- **Compiled WebAssembly SRI Cryptographic Byte Assertions (`TR-V5-01`)**:
+  - Validated that `TreeSitterService.getLanguage` computes SHA-256 digests over `Uint8Array` bytes and checks against `EXPECTED_WASM_HASHES` prior to calling `Language.load`, aborting immediately upon binary tampering.
+  - Verified that runtime loader assert functions are compiled directly into the production distribution bundle (`dist/src/extension.js`).
+- **Release Hygiene & Clean Semantic Release Cut (`TR-V5-02`)**:
+  - Cut clean release `v0.4.4`, stopping metadata-only point release churn and packaging fresh verified binaries.
+- **Unified Workstation Installation Salting Store (`TR-V5-03`)**:
+  - Unified the installation salt backing store across the VS Code Extension Host and the standalone CLI: canonical workstation secret is persisted to `~/.treeresolve/installation_salt` with strict `0o600` file permissions and synchronized with VS Code `context.secrets`.
+  - Eliminates split-identity drift between GUI merge sessions and terminal/git-hook CLI merges, preventing duplicate seat consumption and premature quota lockout.
+- **Fail-Fast Runtime Engine Guard for Standalone CLI (`TR-V5-04`)**:
+  - Enforced `"engines": { "vscode": "^1.85.0", "node": ">=20.0.0" }` in `package.json`.
+  - Added an upfront, fail-fast Node.js runtime version check at CLI process entry in `src/cli/cli.ts` (`nodeMajorVersion < 20`), outputting an explicit error message and exiting before module loading in older CI runner environments.
+- **Manifest Hygiene & Keyword Standardization (`TR-V5-05`)**:
+  - Standardized marketplace metadata categories and trimmed keyword tags in `package.json`.
+- **Adversarial VSIX Review & Compliance Remediation (`TR-V5-06`)**:
+  - **Eliminated Bundled Undici Network Stack**: Dropped dynamic `require('undici')` from `TelemetryService.ts`, switching completely to Node 20 runtime native WHATWG `fetch` and adding `--external:undici` to esbuild scripts. Shrunk `dist/src/extension.js` from 746.7KB to 227.9KB (-69.5%) and purged all undeclared networking dependencies.
+  - **Bundled Third-Party Open Source Notices (`THIRD_PARTY_LICENSES.md`)**: Consolidated complete MIT license attributions for `jose`, `@vscode/tree-sitter-wasm`, and the 7 bundled Tree-sitter WebAssembly language grammars, ensuring full redistribution license compliance across marketplaces.
+  - **Reconciled Licensing Endpoints**: Unified the single source of truth for the default licensing endpoint to `https://licensing.treeresolve.still.systems` across `FloatingLeaseClient.ts`, `TelemetryService.ts`, and `package.json`, documenting the secondary Cloudflare Workers fallback (`https://treeresolve-licensing.still-systems.workers.dev`).
+  - **Factual Privacy & Non-Identifying Fingerprinting Copy**: Replaced unsubstantiated parenthetical compliance labels ("GDPR & SOC 2 Compliant") with precise technical disclosures ("Zero PII / Privacy-Preserving") explaining that only an anonymous local SHA-256 machine hash is transmitted for reverse trial ticketing.
+  - **Dynamic Ephemeral Salt Fallback**: Removed the static fallback constant in `FloatingLeaseClient.getInstallationSalt()`, dynamically generating and caching an ephemeral in-memory cryptographic hash on degenerate sandbox total fallback to prevent shared static seeds.
+  - **Optimized Marketplace Asset Footprint**: Resized `images/icon.png` to high-quality bicubic 256×256 retina PNG, reducing icon size from 828KB to 70.5KB (-91.5%).
+  - **VSIX Archive Payload Trimming**: Excluded standalone CLI binary (`bin/**`, 1.4MB) from the `.vsix` distribution package via `.vscodeignore` and `scripts/package.js`, reducing the packaged extension from 2.0MB to 789KB (-60.8%).
+  - **Batch Auto-Resolve Observability**: Added an explicit user notification in `batchOutputChannel` when Git conflict indexing is unavailable and scanning falls back to a 200-candidate-file bounded workspace search.
+  - **Documented Custom Editor Scoping Tradeoff**: Documented the architectural rationale in `ARCHITECTURE.md` and `README.md` for registering `customEditors` against `*` with `priority: "option"` to support conflict resolution across arbitrary textual file types without usurping default language editors.
+
+## [0.4.3] - 2026-09-10
+
+### Security & Hardening
+
+- **Asynchronous IPC Message Serialization & Atomic Save Architecture (`TR-V3-01` & `TR-V4-01`)**:
+  - Decoupled hunk resolution decisions from live document buffer modifications: accumulated user selections in an in-memory resolution accumulator without intermediate buffer edits.
+  - Piped all incoming webview IPC messages (`RESOLVE_HUNK`, `COMMIT_MERGE`) through `coordinator.runInMutex` FIFO promise chains in `MergeEditorProvider`, preventing race conditions between rapid keyboard-driven resolutions (`Alt+1`, `Alt+3`, `Alt+B`) and commit triggers (`Ctrl+Enter`).
+  - Hardened `DocumentSyncCoordinator.commitAndSave` to execute exactly one single transactional `vscode.WorkspaceEdit`, verifying conflict marker integrity via `ConflictMarkerParser` and re-syncing baseline document versions if intermediate version bumps occurred, ensuring zero dropped user decisions.
+- **Tree-sitter WASM 30ms Execution Budget & 5,000-Char Line-Length Heuristic (`TR-V3-02` & `TR-V4-02`)**:
+  - Enforced Tree-sitter parser timeout ceiling to 30ms (`parser.setTimeoutMicros(30000)`) on all parser instances.
+  - Implemented an O(N) line-length safety heuristic (`MAX_LINE_LENGTH = 5000`) that immediately bypasses AST parsing for minified bundles, lockfiles, or single-line generated files to prevent Extension Host thread lockups.
+- **WebAssembly Cryptographic SHA-256 Binary Integrity Verification (`TR-V3-03` & `TR-V4-03`)**:
+  - Enforced cryptographic SHA-256 checksum validation against a constant lookup table (`EXPECTED_WASM_HASHES`) for all 7 shipped WebAssembly grammars and the runtime module before passing bytes to `WebAssembly.instantiate` / `Language.load`.
+  - Blocks any tampered, altered, or unsigned WebAssembly bytecode from executing in the VS Code Extension Host context.
+- **Default Salted HMAC-SHA256 Domain Identifiers (`TR-V3-04` & `TR-V4-04`)**:
+  - Updated `DomainLeaseCoordinator.computeDomainId` to strictly default to salted HMAC-SHA256 using the local installation-unique salt, preventing rainbow-table repository identification across external networks.
+  - Integrated `FloatingLeaseClient.initInstallationSalt` with VS Code `context.secrets` storage.
+- **Canvas Diff Ribbon Layout Batching & Frame Budget Preservation (`TR-V4-05`)**:
+  - Decoupled webview ribbon canvas rendering into two distinct phases: Phase 1 batches all DOM layout and bounding box measurements upfront, and Phase 2 executes canvas bezier drawing without interleaved DOM reads, completely eliminating layout thrashing.
+  - Throttled ribbon canvas updates using `requestAnimationFrame` with viewport buffer culling (+/- 100px), eliminating UI frame drops and input stutter on conflicts with 150+ hunks.
+- **Packaging Manifest Tightening & Category Hygiene (`TR-V3-05`)**:
+  - Tightened `package.json` categories to strictly `["SCM Providers", "Programming Languages"]`, removing redundant vestigial categories.
+
+## [0.4.2] - 2026-09-10
+
+### Security & Hardening
+
+- **Linear FIFO Mutex & Atomic Document Snapshot Replacement (`TR-V2-01`)**:
+  - Implemented an internal execution mutex queue (`runInMutex`) in `DocumentSyncCoordinator` to serialize all asynchronous document mutations, eliminating race conditions and interleaved `WorkspaceEdit` applications during rapid keyboard-driven hunk cycling.
+  - Replaced incremental partial range replacements with atomic full-document snapshot edits (`constructResolvedDocumentText`), guaranteeing zero offset drift or line truncation under rapid sequential operations.
+- **Tree-sitter WASM Hard Execution Timeouts & Recursion Tripwires (`TR-V2-02`)**:
+  - Configured hard execution timeouts (`parser.setTimeoutMicros(50000)`) on all Tree-sitter parsers, preventing pathological recursive ASTs from hanging the extension host thread.
+  - Added an oversized buffer safety tripwire (`MAX_PARSE_TEXT_BYTES = 2MB`) and a maximum AST recursion depth cap (`MAX_AST_RECURSION_DEPTH = 128`) with automated parser reset on timeout.
+- **Production Distribution Manifest Sanitization (`TR-V2-03`)**:
+  - Enhanced `scripts/package.js` to automatically sanitize `extension/package.json` during `.vsix` packaging, stripping all internal scripts, development dependencies, and dev worker references from release packages while cleanly restoring the developer workspace.
+  - Configured `.vscodeignore` to exclude development backup artifacts (`*.bak`, `.*.bak`).
+  - Switched default `treeresolve.licensingEndpoint` configuration to production gateway `https://licensing.treeresolve.still.systems`.
+- **Privacy-Preserving Installation Salt & HMAC Domain Hashing (`TR-V2-04`)**:
+  - Implemented a persistent, workstation-private 32-byte installation salt (`FloatingLeaseClient.getInstallationSalt()`) stored strictly locally (`~/.treeresolve/installation_salt` or VS Code global state).
+  - Outbound trial ticket requests now transmit an HMAC-SHA256 salted domain identifier, completely preventing egress proxies and TLS-inspecting networks from identifying corporate internal repository URLs or paths via rainbow tables.
+- **Progressive Chunked Webview Rendering & Frame Budget Preservation (`TR-V2-05`)**:
+  - Refactored `renderLines` in the webview to render initial viewports immediately (250 lines) and stream remaining code rows in 500-line microtask chunks scheduled with `requestAnimationFrame`, eliminating UI stutter and frame freezes on diffs exceeding 100 hunks or 15,000 lines.
+
+- **Hunk Bound Desynchronization & Truncation Elimination (`TR-CORR-01`)**:
+  - Replaced sequential index sweeping (`a++`) in `DocumentSyncCoordinator.applyToDocument` with explicit hunk ID bound tracking and tracked character ranges, preventing buffer truncation and marker offset drift when hunks contain nested conflict markers or comment delimiters.
+- **Tree-sitter WASM Linear Memory Leak Deallocation (`TR-WASM-01`)**:
+  - Added deterministic cleanup hooks (`tree.delete()`) across `TreeSitterService.withTree`, `AstImportNormalizer`, and `AstDeclarationMerger`, eliminating Emscripten linear memory accumulation and C-heap saturation across large batch operations.
+- **Standalone CLI Archive Permissions & Binary Packaging (`TR-PKG-03`)**:
+  - Implemented `scripts/package.js` post-packager to enforce POSIX executable permissions (`0o755`) and hashbangs (`#!/usr/bin/env node`) on `bin/treeresolve.js` within distributed `.vsix` archives.
+- **Webview Canvas Zero-Dimension Resize Guard (`TR-UX-02`)**:
+  - Decoupled ribbon canvas buffer allocation from the scroll path and added zero-dimension guards (`width <= 0 || height <= 0`), eliminating synchronous layout thrashing and cubic Bézier evaluation errors on collapsed panes.
+- **Monotonic Clock-Rollback Lockout Guard (`TR-LIC-01`)**:
+  - Enhanced anti-tamper watermark tracking (`effectiveLastSeen > now`) across `DomainLeaseCoordinator` and `LicenseManager`, immediately invalidating trial credentials and enforcing fallback to `COMMUNITY` tier if system clocks are rolled backward.
+- **Air-Gapped & Corporate Forward Proxy Documentation (`TR-NET-01`)**:
+  - Documented corporate proxy environments (`HTTPS_PROXY`, `NODE_EXTRA_CA_CERTS`), internal mirror endpoints (`treeresolve.licensingEndpoint`), and air-gapped offline key activation via `treeresolve.installLicense`.
+- **Monorepo Resource Exhaustion & Event Loop Starvation Fix (`TR-SEC-01`)**:
+  - Replaced unbounded workspace file scans (`workspace.findFiles('**/*')`) with targeted Git plumbing queries (`git diff --name-only --diff-filter=U`) via `GitPlumbingClient.getConflictedFiles()`, with bounded fallback for non-git workspaces.
+  - Introduced explicit event loop yielding (`await new Promise(r => setTimeout(r, 0))`) between files in batch processing to prevent UI stutter and thread starvation on large repositories.
+- **Document Version & Race Condition Safeguards (`TR-SEC-02`)**:
+  - Added document version tracking (`initialVersion = doc.version`) to `DocumentSyncCoordinator` and command handlers.
+  - Aborts `applyToDocument` transactions if the document version advanced concurrently due to user typing, external formatters, or Git checkout operations during AST analysis.
+- **In-Memory License Cache Expiration (`TR-SEC-03`)**:
+  - Added strict 5-minute TTL eviction to `domainLeaseCache` during batch operations, preventing perpetual license bypass from stale in-memory state.
+- **Strict Pre-Stage Conflict Marker Validation (`TR-UX-01`)**:
+  - Enforced zero-tolerance conflict marker validation (`<<<<<<<`, `=======`, `>>>>>>>`) across `DocumentSyncCoordinator.commitAndSave`, `GitPlumbingClient.stageFile`, and CLI batch resolve before issuing any `git add` command, preventing incomplete merges from polluting the Git index.
+- **Dynamic White-Label Checkout Routing (`TR-CFG-01`)**:
+  - Replaced hardcoded Stripe payment URLs in the extension binary with dynamic routing through `FloatingLeaseClient.getCheckoutUrl()` (`${licensingEndpoint}/checkout`).
+  - Added HTTP 302 dynamic checkout redirect route in `services/licensing-worker`.
+- **Privacy Preservation & PII Elimination**:
+  - Removed local hostnames and usernames from device fingerprint generation.
+  - Derived anonymous machine fingerprints from `vscode.env.machineId` in VS Code and a persistent anonymous UUID (`~/.treeresolve/machine_id`) in standalone CLI.
+- **Strict Binary & Git LFS Pre-Flight Guard**:
+  - Implemented `GitPlumbingClient.isBinaryOrLfs` to detect and safely bypass files exceeding 10MB, containing null bytes (`\0`), or matching Git LFS pointer stubs in both batch auto-resolve and the interactive merge editor.
+- **Restricted Mode Workspace Trust Support**:
+  - Updated `capabilities.untrustedWorkspaces` to `"limited"`, permitting read-only 3-way AST diffing while strictly blocking direct disk write-backs and Git staging until trust is granted.
+
+## [0.4.1] - 2026-09-10
+
+### Added
+
+- **Headless Cryptographic Licensing & Paywall Enforcement**:
+  - Gated AST syntax auto-merge and whole-file lockfile/YAML auto-resolution in `bin/treeresolve.js` behind verified Pro licenses across `auto`, `merge`, and `driver` commands.
+  - Implemented `treeresolve status [dir]` to inspect repository root, remote URL, domain ID, and active entitlement tier.
+  - Implemented `treeresolve license <token>` to install and validate commercial license tokens locally into `~/.treeresolve/license.json` with secure file permissions (`0o600`).
+  - Added primary CI/CD credential resolution via the `TREERESOLVE_LICENSE` environment variable.
+  - Added anti-tamper monotonic clock-rollback guard in headless mode (`~/.treeresolve/state.json`).
+- **Unified Submodule-Aware Repository Identity Resolution**:
+  - Replaced ad-hoc git commands in CLI with `GitPlumbingClient.resolveRepository`, establishing parity between VS Code extension host and headless CLI.
+  - Enhanced `GitPlumbingClient` CLI fallback with first-available remote discovery (`git remote` -> `git remote get-url`) for repos without `origin` (e.g. `upstream` or custom forks).
+  - Enhanced submodule detection via `git rev-parse --show-superproject-working-tree` and `git rev-parse --git-dir` checking for `/modules/`.
+  - Normalized `'local'` fallback to empty remote URL in `DomainLeaseCoordinator.normalizeRemoteUrl` so local offline repositories hash normalized root paths without colliding on a shared string.
+- **Stripe Checkout Webhook & Enterprise Inquiry Gateways**:
+  - Added automated commercial license issuance via Stripe HMAC-SHA256 signed webhooks (`POST /api/v1/stripe/webhook`).
+  - Added enterprise fleet seat and VPC procurement intake route (`POST /api/v1/inquiry`).
+
+- **Standalone Bundled CLI in VSIX Packaging**:
+  - Bundled `bin/treeresolve.js` with esbuild targeting Node 20 as a standalone executable containing all runtime dependencies (`jose`, Tree-sitter WASM loader, AST normalizers).
+  - Configured `.vscodeignore` (`!bin/treeresolve.js`) to guarantee the CLI artifact is included in all packaged `.vsix` releases.
+- **Automated Stripe Pre-Publish Guard**:
+  - Implemented `scripts/check-no-stripe-test-links.js` wired into `npm run prepublish` and `npm run vscode:prepublish` to prevent accidental publication of Stripe sandbox test links in production releases.
+- **Batch Auto-Resolve Observability & Graceful Cancellation**:
+  - Added cancellation support via `vscode.CancellationToken` in `treeresolve.autoResolveBatch`.
+  - Added build, binary, and packaging exclusion filters (`dist`, `out`, `.git`, `.wrangler`, `.vsix`, `.wasm`, `.zip`) to batch file discovery.
+  - Added dedicated `TreeResolve Batch` OutputChannel streaming live file-by-file resolution logs and diagnostics.
+- **Security & Integrity Hardening**:
+  - Pinned `"scope": "machine"` on `treeresolve.licensingEndpoint` in `package.json` to prevent malicious repositories from repointing licensing and telemetry gateways.
+  - Declared `capabilities.untrustedWorkspaces.supported = false` to protect against unauthorized parser and Git execution in untrusted folders.
+  - Sanitized AST error telemetry in `TelemetryService` to send structured `errorCode` categories (`ERR_WASM_LOAD_FAILED`, `ERR_PARSER_INIT_FAILED`, `ERR_PARSE_SYNTAX_ERROR`, `ERR_ANCHOR_EXTRACTION_FAILED`), completely omitting raw error text, file paths, or syntax snippets.
+  - Eliminated `innerHTML` assignments in `MergeEditorProvider`, switching line and intra-line token diff rendering to safe DOM element construction (`createElement`/`textContent`).
+  - Hardened Git CLI executions in `GitPlumbingClient` by inserting `--` path separators.
+
+### Changed
+
+- **Privacy & Fingerprinting Disclosure**: Explicitly documented reverse trial and floating lease machine fingerprinting (`platform:arch:hostname:username` SHA-256) in `README.md`, `ENTERPRISE.md`, and configuration descriptions.
+- **Production Payment Links**: Swapped all Stripe test-mode links for live production payment links across the extension manifest, editor views, README, and documentation portal.
+- **Marketplace Badges Alignment**: Replaced deprecated Shields.io marketplace badge with active, branded VS Code Marketplace and Open VSX dynamic badges in extension documentation.
+
+## [0.4.0] - 2026-09-08
+
+### Added
+
+- **Automated Release CI/CD Pipeline**: Tag-driven GitHub Actions workflow (`.github/workflows/release.yml`) providing automated multi-channel publishing to Open VSX, VS Code Marketplace, and GitHub Releases.
+- **Native Git Merge Driver**: Implemented Git `%O %A %B %L %P` merge driver protocol in CLI companion (`treeresolve driver`) for preemptive AST-level merge conflict resolution and one-command configuration (`treeresolve setup-driver`).
+- **Yarn & PNPM Lockfile Resolvers**: Deterministic 3-way AST reconciliation for `yarn.lock` (v1 and Berry YAML) and `pnpm-lock.yaml` (v6 and v9 schemas) with deletion preservation.
+- **Interactive 3-Way Merge Editor Ergonomics**: Keyboard navigation (`Alt+↓/↑`, `Alt+1/2/3/4/B/Shift+B`, `Ctrl+Enter`), focused hunk highlight ring with auto-scrolling, real-time completion progress bar, and interactive shortcut modal.
+
 ## [0.3.1] - 2026-09-08
 
 ### Changed

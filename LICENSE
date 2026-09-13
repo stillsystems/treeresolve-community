@@ -1,21 +1,47 @@
-MIT License
+# Commercial End-User License Agreement and Terms of Service
 
-Copyright (c) 2026 Still Systems
+**TreeResolve by Still Systems, LLC**  
+Copyright (c) 2026 Still Systems, LLC. All rights reserved.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+IMPORTANT: PLEASE READ CAREFULLY BEFORE INSTALLING, DOWNLOADING, OR USING THIS SOFTWARE.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+This software and associated documentation files (the "Software") are the proprietary property of Still Systems, LLC. Use, distribution, or reproduction of this software is strictly governed by this End-User License Agreement (EULA) and Terms of Service. Unauthorized copying, modification, reverse engineering, redistribution, or publishing of this software, via any medium, is strictly prohibited. Third-party language grammars and libraries are utilized under their respective open-source licenses as set forth in THIRD_PARTY_LICENSES.md.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+---
+
+## 1. GRANT OF LICENSE
+
+Subject to the terms and conditions of this Agreement, Still Systems, LLC ("Licensor") grants you a limited, non-exclusive, non-transferable, revocable license to install and use the TreeResolve extension for Visual Studio Code ("Software") strictly in accordance with your designated Subscription Tier:
+
+* **a. Community Tier**: Free, perpetual, limited license to utilize visual 3-way manual diffing and line-level merge conflict inspection.
+* **b. Evaluation / Trial Tier**: A 14-day fully featured evaluation license starting from the initial installation date, requiring no financial commitment. Upon expiration of the 14-day evaluation period, this license automatically converts to the perpetual Community Tier unless a Commercial / Pro Tier subscription is active.
+* **c. Commercial / Pro Tier**: A paid subscription license granting full access to automated AST semantic resolution, advanced intra-line token alignment, and associated automation tooling.
+
+---
+
+## 2. RESTRICTIONS
+
+Except as explicitly authorized in this Agreement, you agree NOT to:
+
+* **a.** Decompile, disassemble, reverse engineer, or attempt to derive the source code of the Software or its proprietary algorithms.
+* **b.** Modify, patch, circumvent, or disable any licensing, token-verification, or cryptographic features (including offline Ed25519 validation routines).
+* **c.** Sublicense, rent, lease, distribute, republish, or create derivative works based on the Software, in whole or in part.
+* **d.** Remove, alter, or obscure any proprietary notices, labels, or trademarks of Still Systems, LLC.
+
+---
+
+## 3. INTELLECTUAL PROPERTY RIGHTS
+
+The Software, including its architecture, layout, code, deterministic syntax auto-merging engines, documentation, and graphical assets, is and remains the sole proprietary intellectual property of Still Systems, LLC. Language grammars and third-party libraries packaged within the Software are the property of their respective maintainers and are bundled under applicable upstream licenses as enumerated in THIRD_PARTY_LICENSES.md.
+
+---
+
+## 4. DISCLAIMER OF WARRANTIES
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL STILL SYSTEMS, LLC BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+---
+
+## 5. GOVERNING LAW & JURISDICTION
+
+This Agreement shall be governed by and construed in accordance with the laws of the State of Texas, without regard to its conflict of law principles. Any dispute, claim, or controversy arising out of or relating to this Agreement shall be subject to the exclusive jurisdiction of the state and federal courts located within the State of Texas.

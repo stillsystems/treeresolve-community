@@ -1,6 +1,6 @@
 # TreeResolve
 
-[![VS Code Marketplace](https://img.shields.io/badge/VS_Code_Marketplace-v0.4.0-007ACC?logo=visualstudiocode&logoColor=white)](https://marketplace.visualstudio.com/items?itemName=stillsystems.treeresolve)
+[![VS Code Marketplace](https://img.shields.io/badge/VS_Code_Marketplace-v0.4.4-007ACC?logo=visualstudiocode&logoColor=white)](https://marketplace.visualstudio.com/items?itemName=stillsystems.treeresolve)
 [![Open VSX](https://img.shields.io/open-vsx/v/stillsystems/treeresolve?color=purple)](https://open-vsx.org/extension/stillsystems/treeresolve)
 [![License](https://img.shields.io/badge/License-Proprietary-blue.svg)](LICENSE)
 [![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.85.0-brightgreen)](https://code.visualstudio.com)
@@ -75,7 +75,7 @@ TreeResolve identifies the structural context of conflicting blocks. If two chan
 
 TreeResolve's syntax engine expands language support by shipping dedicated language-specific normalizers.
 
-### Currently Supported (v0.3.0)
+### Currently Supported (v0.4.4)
 
 * [x] **TypeScript / JavaScript**: Disjoint imports (named, aliased, side-effect, and type-only) with true 3-way deletion handling and AST declaration merging.
 * [x] **JSON / JSONC**: Nested recursive 3-way key deduplication and conflict detection.
@@ -130,6 +130,10 @@ To scan your entire workspace and auto-resolve all 100% deterministic syntax con
 TreeResolve: Batch Auto-Resolve All Deterministic Conflicts
 ```
 
+* **Graceful Cancellation**: Easily cancel long-running monorepo scans at any point using the progress notification cancel button.
+* **Live Observability**: Live file-by-file processing details, resolved hunk counts, and diagnostic errors stream in real-time to the **TreeResolve Batch** OutputChannel (`View` → `Output` → `TreeResolve Batch`).
+* **Safe Exclusions**: Automatically skips build outputs, package managers, and binary formats (`node_modules`, `dist`, `.git`, `*.wasm`, `*.zip`, etc.).
+
 Or quickly resolve disjoint imports in the active file:
 
 ```plaintext
@@ -146,17 +150,36 @@ To configure Git to use TreeResolve as your default terminal merge tool:
 npx treeresolve setup-git
 ```
 
+To configure Git to use TreeResolve as an automated native merge driver (`%O %A %B %L %P`):
+
+```bash
+npx treeresolve setup-driver
+```
+
 To run a headless batch auto-resolver across your current Git repository before opening manual merge editors:
 
 ```bash
 npx treeresolve auto
 ```
 
-To invoke TreeResolve manually as a 3-way backend:
+To check repository domain licensing status and active entitlement tier:
 
 ```bash
-npx treeresolve merge <base> <local> <remote> <merged>
+npx treeresolve status
 ```
+
+To install or update a commercial license token for headless CLI environments:
+
+```bash
+npx treeresolve license <token>
+```
+
+#### Headless Licensing in CI/CD & Automated Pipelines
+
+In headless environments (terminal runs, CI/CD runners, Git hooks), TreeResolve operates in **Community Tier** by default. To unlock full Pro AST auto-merging and lockfile reconciliation in headless runs:
+
+* Set the `TREERESOLVE_LICENSE` environment variable in your CI runner (e.g. GitHub Actions secret, GitLab CI variable).
+* Or configure `~/.treeresolve/license.json` locally using `npx treeresolve license <token>`.
 
 ---
 
@@ -186,6 +209,21 @@ For organizational procurement, volume quotes, InfoSec assessments, and MDM roll
 
 ---
 
+## Workspace Trust & Security
+
+TreeResolve requires a **Trusted Workspace** (`capabilities.untrustedWorkspaces.supported = false`) to operate safely. Because merge resolution executes Tree-sitter parsers and invokes local Git plumbing operations against repository contents, features are disabled in VS Code Restricted Mode to prevent unauthorized execution against untrusted or unverified codebases.
+
+### Security Hardening & Defense-in-Depth (v0.4.4)
+
+* **Atomic Save Architecture (`TR-V4-01`)**: User resolutions (`Accept Ours`, `Accept Theirs`, `Accept Both`) are accumulated safely in memory without intermediate buffer rewrites. All decisions commit atomically upon save via a single `WorkspaceEdit` with conflict marker integrity validation, completely eliminating state desynchronization races.
+* **Bounded Tree-sitter WASM Execution (`TR-V4-02`)**: Parsers enforce a strict 30ms CPU execution ceiling (`parser.setTimeoutMicros(30000)`) with an upfront 5,000-character line pre-flight filter that safely bypasses minified bundles and pathological lines.
+* **Cryptographic WebAssembly Integrity Verification (`TR-V4-03`, `TR-V5-01`)**: All shipped Tree-sitter `.wasm` grammars are validated against compiled SHA-256 digests prior to runtime compilation and instantiation, blocking execution of tampered or altered binaries.
+* **Unified Salted Domain Identifiers (`TR-V4-04`, `TR-V5-03`)**: Repository domain keys are salted using a unified workstation-unique secret (`HMAC-SHA256`) synchronized across VS Code `secretsStorage` and `~/.treeresolve/installation_salt`, preventing rainbow-table enumeration of internal project paths while eliminating split-identity lease exhaustion between GUI and CLI.
+* **Decoupled Two-Phase Ribbon Layout Engine (`TR-V4-05`)**: Visual Bézier connectors batch DOM reads separately from canvas drawing via `requestAnimationFrame` with viewport culling (+/- 100px), eliminating layout thrashing and preserving steady 60fps interaction on large files.
+* **Headless CLI Runtime Requirements & Engine Guard (`TR-V4-06`, `TR-V5-04`)**: Standalone CLI runner enforces Node.js >= 20.0.0 via manifest declaration and fail-fast runtime entry check to guarantee native WebCrypto API support in bare container environments.
+
+---
+
 ## Extension Settings
 
 | Setting | Default | Description |
@@ -193,22 +231,34 @@ For organizational procurement, volume quotes, InfoSec assessments, and MDM roll
 | `treeresolve.autoMergeImports` | `true` | Automatically resolve non-colliding import statements on file open. |
 | `treeresolve.renderRibbons` | `true` | Render dynamic Bézier ribbons between diff panes. |
 | `treeresolve.scrollSynchronization` | `true` | Synchronize viewport scrolling based on aligned code blocks. |
-| `treeresolve.stageOnSave` | `false` | Automatically run `git add` when saving a fully resolved merge file. |
-| `treeresolve.licensingEndpoint` | `https://treeresolve-licensing.still-systems.workers.dev` | Licensing and trial ticketing gateway URL. |
+| `treeresolve.stageOnSave` | `false` | Automatically run `git add` when saving a fully resolved merge file (strictly blocked if raw conflict markers remain). |
+| `treeresolve.licensingEndpoint` | `https://licensing.treeresolve.still.systems` | Licensing and trial ticketing gateway URL (`scope: machine`). Default: `https://licensing.treeresolve.still.systems` (fallback gateway: `https://treeresolve-licensing.still-systems.workers.dev`). |
 | `treeresolve.enableTelemetry` | `true` | Enable anonymous telemetry reporting of auto-merge acceptance rates and resolution time. |
+
+### Custom Editor Registration & Scoping
+
+TreeResolve contributes a custom 3-way merge editor (`treeresolve.mergeEditor`) configured with `priority: "option"` and `filenamePattern: "*"`. Because Git merge conflicts can emerge in any textual file type across diverse programming languages, configuration formats, and documentation (TypeScript, Python, Go, Rust, JSON, YAML, Markdown, Dockerfiles, etc.), registering against `*` ensures TreeResolve is universally available whenever conflicts occur. By configuring `priority: "option"`, TreeResolve never overrides the user's default language editor and is strictly accessed on-demand via **Open With...** or the `treeresolve.openMergeEditor` command.
 
 ---
 
-## Telemetry & Privacy
+## Telemetry, Licensing & Privacy Disclosure
 
 TreeResolve is built with an **offline-first, privacy-respecting** architecture:
 
-* **Metrics Recorded**: When enabled, TreeResolve measures the percentage of deterministic auto-merges accepted (`autoAcceptanceRatePercent`) and the elapsed time spent resolving conflicts (`durationMs`) to improve normalizer heuristics.
 * **Zero Source Code Transmission**: Source code, AST tokens, file paths, repository URLs, branch names, and developer identities are **never** collected or transmitted.
-* **Full User Control (Opt-Out)**: You can disable telemetry at any time by configuring:
+* **Anonymous Heuristic Metrics**: When `treeresolve.enableTelemetry` is active, TreeResolve measures the aggregate percentage of deterministic auto-merges accepted (`autoAcceptanceRatePercent`), resolution duration (`durationMs`), and coarse syntax error codes (e.g. `ERR_PARSE_SYNTAX_ERROR` without raw text snippets).
+* **Licensing & Reverse Trial Device Fingerprinting (Zero PII / Privacy-Preserving)**: To validate 14-day reverse trials and renew floating enterprise leases without requiring user account registration or passwords, TreeResolve computes an anonymized SHA-256 hash of the machine environment (`platform:arch:machineId`, derived from VS Code's anonymous machine identifier or an anonymous persistent UUID in standalone CLI, truncated to 32 hex characters). It transmits **zero personally identifiable information (no usernames, hostnames, IP addresses, or MAC addresses)** solely to the configured `licensingEndpoint`. This fingerprint is never linked to source code, repositories, or telemetry metrics. Paid offline wildcard licenses and air-gapped deployments never contact the endpoint.
+* **Workspace Trust**: Supports Restricted Mode (`"limited"`). You can safely view and analyze 3-way AST diffs in untrusted workspaces; direct disk write-backs and Git staging commands are disabled until workspace trust is granted.
+* **Full User Control (Opt-Out)**: You can disable anonymous telemetry reporting at any time by configuring:
 
   ```json
   "treeresolve.enableTelemetry": false
   ```
 
-  TreeResolve also automatically respects VS Code's global setting (`telemetry.telemetryLevel: "off"`). If either setting is disabled, zero telemetry is recorded or sent.
+  TreeResolve also automatically respects VS Code's global telemetry setting (`telemetry.telemetryLevel: "off"`). If either setting is disabled, zero telemetry is recorded or sent.
+
+---
+
+## License
+
+Proprietary. Copyright (c) 2026 Still Systems, LLC. All rights reserved. See [LICENSE](LICENSE) for terms. Third-party open source notices and licenses are documented in [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).

@@ -1,4 +1,4 @@
-# Architecture: TreeResolve (v1.7.0 Enterprise Production Specification)
+# Architecture: TreeResolve (v0.4.4 Enterprise Production Specification)
 
 TreeResolve is an offline-first, deterministic 3-way merge conflict resolution engine for VS Code. It replaces raw line-based conflict markers with an off-thread, AST-driven auto-resolution pipeline and a virtualized, hardware-accelerated visual merge viewport.
 
@@ -59,9 +59,9 @@ To ensure reliable operation across Remote SSH, WSL, Dev Containers, and virtual
 
 1. **Primary (`vscode.git` API)**: Inspect active VS Code Git models via `vscode.extensions.getExtension('vscode.git')?.exports.getAPI(1)`. The Extension Host identifies the repository owning the document's `Uri` directly through `gitAPI.getRepository(documentUri)`. This guarantees compatibility with virtual and remote workspaces without spawning external processes.
 2. **Plumbing Fallback (Local CLI)**: If the built-in Git extension is uninitialized or disabled, fall back to executing `child_process.execFile('git', ['rev-parse', '--show-toplevel'], { cwd: path.dirname(documentUri.fsPath) })`.
-3. **Submodule Isolation**:
-   $$\text{DomainID} = \text{Hash}(\text{RepositoryRootPath} + \text{RemoteOriginUrl})$$
-   Submodules establish their own independent `DomainID` based on their nested repository root, ensuring that licensing and resolution policies in submodules remain decoupled from the parent workspace.
+3. **Submodule Isolation & Unified Salted Domain ID (`TR-V4-04`, `TR-V5-03`)**:
+   $$\text{DomainID} = \text{HMAC-SHA256}(\text{RepositoryRootPath} + \text{"::"} + \text{RemoteOriginUrl},\; \text{InstallationSalt})$$
+   Submodules establish their own independent `DomainID` based on their nested repository root. In v0.4.4, derivation strictly defaults to HMAC-SHA256 using a unified workstation installation salt synchronized between VS Code `secretsStorage` and the canonical workstation store `~/.treeresolve/installation_salt` (`0o600`), ensuring that internal repository names cannot be derived via rainbow tables and that CLI and GUI runs produce identical domain hashes without split-identity seat exhaustion.
 
 ### 2.2. Git LFS Pointer Ingestion Pre-Flight
 
@@ -82,10 +82,11 @@ Upstream merge operations and cherry-picks frequently produce non-uniform confli
 To eliminate trial tampering while preserving the zero-latency, offline-first operating doctrine, TreeResolve decouples immediate file-open verification from network availability:
 
 1. **Zero-Latency Local Verification**: The extension inspects cached secrets (`treeresolve.license.<domainId>` or `treeresolve.trial_ticket`) offline. Editor rendering is never blocked waiting on remote network calls.
-2. **Server-Issued Trial Tickets**: On startup, `FloatingLeaseClient` touches the Cloudflare Worker (`POST /api/v1/trial`) with an anonymous, privacy-preserving SHA-256 machine fingerprint (`os.platform + arch + hostname + user`). The worker returns a signed 14-day Ed25519 JWT ticket stored in `context.secrets`.
+2. **Server-Issued Trial Tickets**: On startup, `FloatingLeaseClient` touches the Cloudflare Worker (`POST /api/v1/trial`) with an anonymous, privacy-preserving SHA-256 machine fingerprint (`platform:arch:machineId` derived from `vscode.env.machineId` or an anonymous persistent UUID in standalone CLI; zero PII). The worker returns a signed 14-day Ed25519 JWT ticket stored in `context.secrets`.
 3. **Monotonic Offline Fallback**: If the network is unreachable during initial install, `DomainLeaseCoordinator` evaluates local `globalState` timestamps with monotonic clock-rollback detection as an air-gapped fallback.
 4. **30-Day Floating Leases**: Commercial licenses automatically renew 30-day floating leases via `POST /api/v1/lease/renew` when online.
 5. **Wildcard Hard-Caps & Revocation Manifests**: Tokens with wildcard domain scope (`domainId: '*'`) are constrained to a strict 90-day maximum TTL. `LicenseManager` enforces token revocation via `jti` checks synchronized with edge-cached revocation manifests.
+6. **Automated Seat Reclaiming (`TR-V4-07`)**: The control plane provides `POST /api/v1/lease/reclaim` to reconcile seats during developer workstation migration, OS re-imaging, or salt regeneration without administrative overhead.
 
 ---
 
@@ -120,10 +121,12 @@ When global parsing times out or when re-evaluating isolated Lexical Scope Conta
     $$\text{DocumentColumn} = \begin{cases} \text{SnippetStartColumn} + \text{AdjustedColumn} & \text{if } \text{AdjustedRow} == 0 \\ \text{AdjustedColumn} & \text{if } \text{AdjustedRow} > 0 \end{cases}$$
   This maps error-free CST nodes and point positions directly back to the original document lines.
 
-### 3.2. Dynamic Worker Watchdogs
+### 3.2. Dynamic Worker Watchdogs & Parser Execution Bounds (`TR-V4-02`)
 
-AST parsing tasks run inside dedicated Node `worker_threads` managed via a work-stealing queue:
+AST parsing tasks run inside dedicated Node `worker_threads` managed via a work-stealing queue with strict defensive boundaries:
 
+* **Tree-sitter WASM 30ms Execution Ceiling**: All parser instances invoke `parser.setTimeoutMicros(30000)` before AST generation. If an ambiguous or deeply nested grammar triggers pathological backtracking, the WebAssembly execution halts cleanly at 30ms, preventing Extension Host event loop freezes.
+* **Pathological Line-Length Pre-Flight Filter**: An $O(N)$ scanning heuristic inspects lines before AST parsing. If any line exceeds `MAX_LINE_LENGTH = 5000` (e.g. minified single-line bundles, embedded source maps, or pathological lockfile lines), AST parsing is immediately bypassed, safely routing the hunk to visual line diffing without blocking the Extension Host.
 * **Dynamic Timeout Budget**:
   $$T_{budget} = \max\left(50\text{ms},\; 50\text{ms} + \left(\frac{\text{LOC}}{1{,}000}\right) \times 10\text{ms}\right) \quad [\text{Hard Cap: } 500\text{ms}]$$
 * **Targeted Scope Fallback**: If full-buffer parsing exceeds $T_{budget}$, global parsing halts. The worker extracts the enclosing LSC lines surrounding the Git hunk, wraps them in context-aware scaffolding, and parses the isolated unit before dropping to Tier 2.
@@ -147,27 +150,33 @@ Standard 3-way text and JSON diff engines fail on package lockfiles (`package-lo
 
 ## 4. Concurrency, Monotonic Sequences, & Asymmetric Diff Anchoring
 
-### 4.1. Monotonic Action Sequencing
+### 4.1. Monotonic Action Sequencing & In-Memory Resolution Accumulator (`TR-V4-01`)
 
-To eliminate out-of-order execution when a user rapidly toggles between resolution states (e.g., "Accept Ours" $\to$ "Accept Theirs" $\to$ "Accept Ours"), actions are stamped with a monotonic sequence counter scoped per hunk:
+To eliminate buffer mutation races and out-of-order execution when a user rapidly toggles between resolution states (e.g., "Accept Ours" $\to$ "Accept Theirs" $\to$ "Accept Ours"), actions are handled through a decoupled in-memory resolution pipeline:
 
+* **In-Memory Resolution Accumulation**: Incoming `RESOLVE_HUNK` events update an internal in-memory map of resolutions (`resolvedHunks`) in `MergeEditorProvider` without modifying the live `vscode.TextDocument` buffer. Intermediate button clicks never trigger intermediate disk writes or partial `WorkspaceEdit` passes.
 * **Sequenced Action Tuple**: Every `RESOLVE_HUNK` action emitted by the Webview contains an incrementing integer `actionSeq: number`, a correlation token `actionNonce: string` (UUIDv4), and the target `hunkId`.
 * **State Machine Invariant**: The Extension Host tracks the latest applied sequence number:
   $$\text{highestAppliedSeq}[\text{hunkId}]$$
-* **Stale Drop Rule**: If an incoming message has $\text{actionSeq} \le \text{highestAppliedSeq}[\text{hunkId}]$, the action is immediately discarded as stale. Only transactions where $\text{actionSeq} > \text{highestAppliedSeq}[\text{hunkId}]$ are applied to the `vscode.WorkspaceEdit` pipeline.
-* **Session Lifecycle & Invalidation**: Sequence counters and `highestAppliedSeq` are scoped to the active `documentVersion` and session instance. Any `INIT_SESSION` event or external document invalidation resets `highestAppliedSeq` to prevent stale sequence barriers on file reloads.
-* **Explicit Acknowledgement**: The host emits `ACK_HUNK_RESOLUTION` referencing both `actionSeq` and `actionNonce`, allowing the Webview UI to settle its optimistic button states deterministically.
+* **Stale Drop Rule**: If an incoming message has $\text{actionSeq} \le \text{highestAppliedSeq}[\text{hunkId}]$, the action is immediately discarded as stale. Only transactions where $\text{actionSeq} > \text{highestAppliedSeq}[\text{hunkId}]$ update the in-memory accumulator.
+* **Explicit Acknowledgement**: The host emits `ACK_HUNK_RESOLUTION` referencing both `actionSeq` and `actionNonce`, allowing the Webview UI to settle optimistic button states deterministically.
+* **Atomic Batch Commit Pipeline**: When the user triggers `COMMIT_MERGE` (or Save), the accumulated resolutions are piped into `coordinator.commitAndSave` inside a linear FIFO mutex (`runInMutex`). The coordinator:
+  1. Re-parses the active document buffer with `ConflictMarkerParser` to verify marker structure integrity.
+  2. Synthesizes a single consolidated resolved text buffer from all accumulated user decisions.
+  3. Executes a single atomic `vscode.WorkspaceEdit` transaction replacing the full document range, preventing any intermediate state desynchronization or partial marker retention.
 
 ```text
-Webview UI                                Extension Host                   Active Document Buffer
+Webview UI                                Extension Host                   In-Memory / Buffer
     │                                           │                                    │
     │── RESOLVE_HUNK (seq: 1, Nonce_A, Ours) ──▶│                                    │
     │── RESOLVE_HUNK (seq: 2, Nonce_B, Theirs) ─▶│ [seq: 2 arrives during flight]    │
-    │                                           │ Applies WorkspaceEdit (seq: 2) ───▶│
+    │                                           │ Updates in-memory hunk state       │
     │                                           │ Sets highestAppliedSeq = 2         │
-    │                                           │ Discards seq: 1 payload            │
-    │◀── ACK_HUNK_RESOLUTION (seq: 2, Nonce_B) ─│                                    │
-    │    (Commits final toggle state)           │                                    │
+    │◀── ACK_HUNK_RESOLUTION (seq: 2, Nonce_B) ─│ (UI settles toggle state)          │
+    │                                           │                                    │
+    │── COMMIT_MERGE (stageOnSave: true) ──────▶│ [Acquires runInMutex]              │
+    │                                           │ Validates ConflictMarkerParser     │
+    │                                           │ Applies single atomic WorkspaceEdit▶ [Buffer Committed]
 ```
 
 ### 4.2. Asymmetric Semantic Anchoring
@@ -188,6 +197,13 @@ export interface SemanticAnchor {
   * If `baseRange`, `oursRange`, and `theirsRange` are non-null, diffing runs symmetrically across all three panes.
   * If a range is null on one branch (an asymmetric insertion/deletion), the diff engine anchors the surviving branches together, suppressing misaligned visual ribbon drift across neighboring hunks.
 
+### 4.3. Custom Editor Contribution & File Extension Matching
+
+TreeResolve registers a custom text editor (`treeresolve.mergeEditor`) using `filenamePattern: "*"` and `priority: "option"`.
+
+* **Content-Agnostic File Pattern**: In Git repositories, merge conflicts can emerge in any file type: source code, JSON manifests, YAML pipelines, Markdown documentation, Dockerfiles, and custom DSLs. Because the VS Code Custom Editor API relies solely on declarative glob patterns without dynamic buffer content inspection (it cannot check for `<<<<<<<` markers before opening), registering against `*` ensures TreeResolve is universally accessible.
+* **Non-Intrusive Priority**: Setting `priority: "option"` ensures that TreeResolve is strictly an alternative presentation ("Open With...") and never overrides or interferes with the default editor for any file type unless explicitly invoked by the developer or via `treeresolve.openMergeEditor`.
+
 ---
 
 ## 5. Viewport Rendering & Dynamic Virtualization
@@ -201,11 +217,14 @@ To prevent visual clipping on rotated 4K monitors, ultrawide displays, and ultra
   $$\text{PoolRows} = \left\lceil \frac{\text{ViewportHeight}_{\text{px}}}{\text{LineHeight}_{\text{px}}} \right\rceil + 50 \quad [\text{Overscan Pool}]$$
 * **Resize Observer**: A native `ResizeObserver` on the Webview container re-evaluates `PoolRows` on window dimension shifts, allocating or recycling DOM row nodes dynamically.
 
-### 5.2. Canvas Ribbon Rendering Engine
+### 5.2. Canvas Ribbon Rendering Engine & Two-Phase Layout (`TR-V4-05`)
 
 * Connectors between panes render via an HTML5 `<canvas>` using cubic Bézier paths.
+* **Two-Phase Decoupled Layout Execution**: To completely eliminate layout thrashing during active scrolling and window resizing, ribbon rendering executes in two decoupled phases:
+  * **Phase 1 (Batched Geometry Reads)**: The webview queries DOM metrics (`getBoundingClientRect`, scroll offsets, pane dimensions) in a single pass without performing any canvas mutations.
+  * **Phase 2 (Pure Canvas Drawing)**: Canvas paths and Bézier connectors are evaluated and drawn onto the 2D context using the pre-computed coordinates, without triggering interleaved DOM layout recalculations.
+* **RequestAnimationFrame & Viewport Culling**: Render loops are throttled via `requestAnimationFrame` with a +/- 100px vertical viewport buffer, culling off-screen connectors and preventing UI stutter on files containing 150+ hunks.
 * **Hardware High-DPI Buffer Scaling**: Canvas buffer metrics are scaled by `window.devicePixelRatio` with a corresponding 2D transformation matrix (`ctx.setTransform(dpr, 0, 0, dpr, 0, 0)`). This preserves physical pixel sharpness and prevents sub-pixel blurring or vertical ribbon drift across Retina, high-refresh (120Hz/144Hz), and 4K displays.
-* **Visibility Culling**: Ribbons whose vertical bounds sit outside the visible viewport are excluded from render loops.
 * **Momentum Fallback**: If scroll velocity exceeds 2,500 px/sec, connector rendering drops to bounding polygons ($O(1)$) to preserve steady 60fps frame rates.
 
 ---
@@ -288,25 +307,32 @@ export type WebviewPayload =
 
 ## 7. Security Hardening & Asset Integrity
 
-### 7.1. Subresource Integrity (SRI) Manifest
+### 7.1. Subresource Integrity (SRI) & WebAssembly Binary Verification (`TR-V4-03`, `TR-V5-01`)
 
-* A cryptographically signed `assets.manifest.json` generated during build indexes SHA-256 hashes of all bundled WASM binaries, worker scripts, and stylesheets.
-* On extension activation, the runtime asserts manifest integrity against a hardcoded Ed25519 root signature.
+* **Cryptographic WebAssembly Pre-Flight Assertions**: Prior to invoking `WebAssembly.instantiate` or `Language.load`, `TreeSitterService` asserts that the SHA-256 checksum of the target `.wasm` file strictly matches the compiled immutable digest in `EXPECTED_WASM_HASHES`. If a digest mismatch is detected, execution immediately aborts with an integrity violation error, neutralizing any local binary tampering or supply-chain payload substitution.
+* **Signed Assets Manifest**: A cryptographically signed `assets.manifest.json` generated during build indexes SHA-256 hashes of all bundled WASM binaries, worker scripts, and stylesheets.
+* **Root Signature Verification**: On extension activation, the runtime asserts manifest integrity against a hardcoded Ed25519 root signature.
 
-### 7.2. Webview Content Security Policy
+### 7.2. Webview Content Security Policy & Safe DOM Construction
 
-```html
-<meta http-equiv="Content-Security-Policy" 
-      content="default-src 'none'; 
-               img-src vscode-webview:; 
-               script-src 'nonce-{{nonce}}' 'sha256-{{scriptHash}}'; 
-               style-src 'nonce-{{nonce}}' 'sha256-{{styleHash}}'; 
-               worker-src vscode-webview:; 
-               connect-src 'none'; 
-               object-src 'none'; 
-               frame-ancestors 'none'; 
-               form-action 'none';">
-```
+TreeResolve enforces defense-in-depth within the 3-way merge canvas:
+
+* **Strict Content Security Policy**:
+
+  ```html
+  <meta http-equiv="Content-Security-Policy" 
+        content="default-src 'none'; 
+                 img-src vscode-webview:; 
+                 script-src 'nonce-{{nonce}}' 'sha256-{{scriptHash}}'; 
+                 style-src 'nonce-{{nonce}}' 'sha256-{{styleHash}}'; 
+                 worker-src vscode-webview:; 
+                 connect-src 'none'; 
+                 object-src 'none'; 
+                 frame-ancestors 'none'; 
+                 form-action 'none';">
+  ```
+
+* **Safe DOM Node Construction (Zero `innerHTML`)**: Syntax and token diff highlighting bypasses HTML-string generation and `innerHTML` assignments. Lines and token highlights are constructed purely via `document.createElement('span')` and `document.createTextNode()`, eliminating the possibility of stored DOM-XSS regardless of CSP header configuration.
 
 ### 7.3. Submodule Domain Licensing Lifecycle
 
@@ -314,13 +340,25 @@ export type WebviewPayload =
 * **Air-Gapped Offline Validation**: Ed25519 token signatures verify entirely offline using the bundled public key, ensuring zero outbound code transmission.
 * **Monotonic Anti-Tamper Clock Guard**: The trial coordinator tracks a monotonic `treeresolve.lastSeenTimestamp` in persistent `globalState`. If local system clock manipulation is detected (`Date.now() < lastSeen`), the engine clamps elapsed time to `lastSeen`, preventing negative durations or indefinite trial prolongation.
 
+### 7.4. Configuration Scoping & Workspace Trust Enforcement
+
+* **Machine-Scoped Gateway Configuration**: In `package.json`, `treeresolve.licensingEndpoint` specifies `"scope": "machine"`. This ensures that cloned or untrusted repositories cannot commit `.vscode/settings.json` overrides to silently redirect licensing, trial, or telemetry traffic to an attacker-controlled endpoint.
+* **Workspace Trust Policy**: TreeResolve declares `capabilities.untrustedWorkspaces.supported = false`. Running AST parsers and invoking Git plumbing operations is restricted to trusted workspaces.
+* **Git CLI Argument Injection Prevention**: Low-level plumbing invocations insert `--` argument separators before repository-derived file paths (e.g. `git add -- <file>`) to eliminate parameter injection vectors from malicious filenames.
+
 ---
 
-## 8. Standalone Git Mergetool & Batch Resolution Architecture
+## 8. Standalone Git Mergetool, Driver & Headless Licensing Architecture
 
-TreeResolve provides a zero-dependency standalone CLI companion (`bin/treeresolve.js`) designed for terminal Git workflows and headless CI/CD execution.
+TreeResolve provides a zero-dependency standalone CLI companion (`bin/treeresolve.js`) designed for terminal Git workflows, native Git merge driver operations, and headless CI/CD execution.
 
-### 8.1. Git Mergetool Backend (`treeresolve merge`)
+### 8.1. Build & Bundling Pipeline (`npm run bundle:cli`)
+
+* **Self-Contained Executable & Fail-Fast Runtime Verification (`TR-V4-06`, `TR-V5-04`)**: `bin/treeresolve.js` is bundled via esbuild from `src/cli/cli.ts` targeting Node 20. It enforces a fail-fast runtime verification check (`nodeMajorVersion >= 20`) at process entry before any modules are loaded to guarantee availability of native WebCrypto (`crypto.subtle`) and stream primitives in bare container runners, and embeds `jose`, internal Tree-sitter WASM loaders, normalizers, and a lightweight VS Code shim (`src/cli/vscode-mock.ts`), eliminating any runtime dependency on unbundled `dist/src/**` files.
+* **Standalone CLI Packaging**: Built as a standalone zero-dependency CLI executable via `npm run bundle:cli`. To keep the marketplace `.vsix` extension bundle lightweight, `bin/**` is excluded from the VSIX archive via `.vscodeignore` and sanitized in `scripts/package.js`, allowing the CLI to be distributed independently (e.g. for headless CI/CD containers) without inflating the editor extension package. Packaging verification in `scripts/package.js` inspects the generated archive to guarantee `THIRD_PARTY_LICENSES.md` is included and `bin/**` is excluded.
+* **Pre-Publish Automated Guardrails**: Packaging scripts invoke `scripts/check-no-stripe-test-links.js` during `npm run prepublish` to ensure zero sandbox test URLs (`buy.stripe.com/test_`) reach release packages.
+
+### 8.2. Git Mergetool Backend (`treeresolve merge`)
 
 * **Argument Protocol**: Conforms to Git's 4-argument contract:
 
@@ -332,11 +370,48 @@ TreeResolve provides a zero-dependency standalone CLI companion (`bin/treeresolv
 * **Offline Execution**: Operates purely in Node.js runtime without VS Code dependencies, constructing a synthesized result buffer and resolving disjoint syntax hunks.
 * **Exit Code Semantics**: Returns exit code `0` when all conflicts are resolved or preserved safely, and `1` upon syntax collisions requiring manual intervention.
 
-### 8.2. Headless Batch Auto-Resolver (`treeresolve auto`)
+### 8.3. Native Git Merge Driver (`treeresolve driver`)
+
+* **Argument Protocol**: Implements Git's 5-parameter custom merge driver specification (`%O %A %B %L %P`):
+
+  ```text
+  treeresolve driver <base> <ours> <theirs> <markerLen> <relPath>
+  ```
+
+* **Execution Order**:
+  1. Identical branches: exits `0` immediately.
+  2. One-sided modifications: writes updated branch and exits `0`.
+  3. Whole-file dedicated lockfile & YAML resolvers (`package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`, `*.yaml`): executed off-thread if licensed for Pro tier.
+  4. 3-way syntax reconciliation: invokes `git merge-file -p` to synthesize conflict markers, then executes AST semantic analysis gated on Pro licensing.
+* **Exit Code**: Returns `0` if 100% deterministically auto-resolved, or `1` with conflict markers written to `%A` for developer manual review.
+
+### 8.4. Headless Batch Auto-Resolver (`treeresolve auto`)
 
 * **Unmerged File Discovery**: Executes `git diff --name-only --diff-filter=U` to discover conflicted paths in the working tree.
-* **Syntax Hunk Parsing**: Parses conflict markers via `ConflictMarkerParser` and invokes `ImportNormalizer` and language normalizers.
-* **Automated Staging**: Automatically runs `git add <file>` when 100% of conflict hunks in a file are resolved deterministically.
+* **Syntax Hunk Parsing**: Parses conflict markers via `ConflictMarkerParser` and invokes `SemanticAnalysisService.analyzeAndAutoResolve`.
+* **Automated Staging**: Automatically runs `git add <file>` when 100% of conflict hunks in a file are resolved deterministically (respecting repository `.treeresolverc` policies).
+
+### 8.5. VS Code Batch Auto-Resolve Ergonomics (`treeresolve.autoResolveBatch`)
+
+* **Path & Binary Exclusion**: Filters out build artifacts, dependencies, and binary formats (`dist/**`, `out/**`, `node_modules/**`, `.git/**`, `*.wasm`, `*.vsix`, `*.png`, etc.).
+* **CancellationToken Support**: Allows immediate graceful cancellation during long-running monorepo scans via VS Code's notification progress bar.
+* **Dedicated OutputChannel**: Streams per-file scan status, conflict resolution counts, and diagnostic errors to a dedicated `TreeResolve Batch` OutputChannel.
+
+### 8.6. Headless Cryptographic Licensing & Paywall Enforcement
+
+Headless CLI execution strictly enforces TreeResolve Pro paywall boundaries without relying on VS Code extension host APIs:
+
+* **Repository Domain Scoping**: Computes canonical `DomainID = SHA256(RootPath + "::" + RemoteUrl)` from `git rev-parse --show-toplevel` and `git config --get remote.origin.url`, with automatic backward compatibility for legacy `SHA256(RootPath + RemoteUrl)` tokens.
+* **License Discovery Hierarchy**:
+  1. `process.env.TREERESOLVE_LICENSE`: Primary credential vector for CI/CD runners and ephemeral build environments.
+  2. `~/.treeresolve/license.json` (or `$TREERESOLVE_CONFIG_DIR/license.json`): Persistent local credential store managed via `treeresolve license <token>`.
+* **Air-Gapped Offline Verification**: Candidate tokens are verified locally via `LicenseManager.verifyToken` against the bundled Ed25519 public key, domain hash, monotonic expiration, and token revocation lists.
+* **Gated Execution**:
+  * **Community Tier (`isPro: false`)**: Unauthenticated runs degrade safely to manual review mode (`isPro: false`). AST auto-resolution and whole-file lockfile/YAML mergers are bypassed, preserving conflict markers and returning exit code `1`.
+  * **Pro Tier (`isPro: true`)**: Valid domain-locked or wildcard commercial tokens unlock headless AST auto-resolution and whole-file lockfile merges.
+* **Subcommands**:
+  * `treeresolve status [dir]`: Inspects working directory repo root, remote origin URL, canonical domain hash, and current licensing tier (`PRO` or `COMMUNITY`).
+  * `treeresolve license <token>`: Installs or updates headless license token in user configuration.
 
 ---
 
@@ -351,13 +426,19 @@ TreeResolve implements an offline-first, zero-knowledge telemetry system focused
   Evaluated upon merge save/commit by comparing final hunk resolutions against the initial syntax normalizer output.
 * **Session Duration (`durationMs`)**: Elapsed time in milliseconds between opening the merge editor and saving the resolved buffer.
 * **High-Level Aggregate Context**: `totalHunks`, `autoResolvedHunks`, `acceptedAutoHunks`, and `languageId`.
+* **Structured AST Error Codes**: Normalizer errors emit structured error categories (`ERR_WASM_LOAD_FAILED`, `ERR_PARSER_INIT_FAILED`, `ERR_PARSE_SYNTAX_ERROR`, `ERR_ANCHOR_EXTRACTION_FAILED`) and strictly omit raw error messages, stack traces, or source text.
 
-### 9.2. Zero Data Egress Guarantee
+### 9.2. Device Fingerprinting Disclosure (Reverse Trials & Floating Leases)
+
+* **Cryptographic Hashing (Zero PII / Privacy-Preserving)**: To issue 14-day reverse trials and renew floating enterprise leases without passwords or account registration, TreeResolve computes a SHA-256 hash of `platform:arch:machineId` (derived from `vscode.env.machineId` or an anonymous persistent UUID in standalone CLI, truncated to 32 hex chars; zero PII).
+* **Isolation**: This fingerprint is transmitted solely to the configured licensing gateway (`https://licensing.treeresolve.still.systems`, with secondary fallback gateway `https://treeresolve-licensing.still-systems.workers.dev`) for lease validation and is never correlated with telemetry metrics, source code, or repository contents. Offline wildcard licenses never contact the network.
+
+### 9.3. Zero Data Egress Guarantee
 
 * **No Source Code**: Source code, AST nodes, tokens, variable names, and comments are never transmitted.
 * **No File or Repo Metadata**: File paths, directory structures, repository URLs, branch names, and commit messages are never inspected or transmitted.
 
-### 9.3. Dual Opt-Out Controls
+### 9.4. Dual Opt-Out Controls
 
 1. **Extension-Level Setting**: Users can disable telemetry at any time via `"treeresolve.enableTelemetry": false`.
 2. **VS Code Global Telemetry**: Automatically honors `vscode.env.isTelemetryEnabled` / `telemetry.telemetryLevel: "off"`. Zero events are collected or sent if either flag is disabled.
