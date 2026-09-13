@@ -1,0 +1,56 @@
+name: "Feature / Language Request"
+description: "Propose a new language normalizer, merge strategy, or feature for TreeResolve"
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have an idea for a new language parser, framework normalizer, or workflow integration? We'd love to hear it!
+
+  - type: input
+    id: feature-area
+    attributes:
+      label: Feature / Language Target
+      description: Which language, config format, or tool integration are you proposing?
+      placeholder: "e.g., C++, Kotlin, Swift, Elixir, Terraform HCL, Vue SFC"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: Is your request related to a specific friction point or recurring merge conflict pattern?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed Solution / Resolution Rules
+      description: Describe how TreeResolve should analyze and auto-resolve this construct (e.g. disjoint imports, struct members, configuration keys).
+    validations:
+      required: true
+
+  - type: textarea
+    id: example-conflict
+    attributes:
+      label: Example 3-Way Conflict Scenario
+      description: Provide sample code illustrating Base, Ours, and Theirs and the desired resolved output.
+      render: text
+      placeholder: |
+        // Common Base:
+        ...
+        // Ours:
+        ...
+        // Theirs:
+        ...
+        // Ideal Merged Result:
+        ...
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Any alternative approaches, existing tools, or workarounds you've explored.

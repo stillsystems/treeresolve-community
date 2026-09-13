@@ -1,8 +1,8 @@
-blank_issues_enabled: true
+blank_issues_enabled: false
 contact_links:
-  - name: "💬 Community Discussions"
+  - name: "Community Discussions"
     url: "https://github.com/stillsystems/treeresolve-community/discussions"
-    about: "Ask questions, share ideas, and discuss merge workflows with the community."
-  - name: "🔒 Security Vulnerabilities"
-    url: "https://github.com/stillsystems/treeresolve-community/security/advisories/new"
-    about: "Report security vulnerabilities privately to our engineering team via GitHub Security Advisories."
+    about: "Ask general questions, share merge tips, and discuss ideas with the community."
+  - name: "Enterprise Inquiry & Private Pilots"
+    url: "https://stillsystems.github.io/treeresolve-community/#contact"
+    about: "Request dedicated support, volume site licensing, or enterprise deployment assistance."
