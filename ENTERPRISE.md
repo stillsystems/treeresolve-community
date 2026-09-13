@@ -210,7 +210,7 @@ For headless build systems, containerized CI runners, and terminal merge workflo
 The standalone TreeResolve CLI executable (`bin/treeresolve.js`) runs natively in headless environments without requiring VS Code:
 
 * **Node.js Runtime Requirement**: The CLI bundle targets Node.js 20+ runtime environments (`node >= 20.0.0`) to utilize native cryptographic subroutines (`crypto.subtle`, `crypto.createHmac`) and modern WebAssembly features. Ensure CI/CD runner container base images provide Node.js 20.x LTS or higher.
-* **Hermetic Environment Shims**: When executed outside the VS Code Extension Host, the CLI automatically provides isolated mock shims (`vscode-mock.ts`) to maintain deterministic parsing, diffing, and merge driver compatibility without external editor dependencies.
+* **Hermetic Environment Shims**: When executed outside the VS Code Extension Host, the CLI automatically provides isolated mock shims to maintain deterministic parsing, diffing, and merge driver compatibility without external editor dependencies.
 
 ---
 

@@ -232,7 +232,7 @@ TreeResolve requires a **Trusted Workspace** (`capabilities.untrustedWorkspaces.
 | `treeresolve.renderRibbons` | `true` | Render dynamic Bézier ribbons between diff panes. |
 | `treeresolve.scrollSynchronization` | `true` | Synchronize viewport scrolling based on aligned code blocks. |
 | `treeresolve.stageOnSave` | `false` | Automatically run `git add` when saving a fully resolved merge file (strictly blocked if raw conflict markers remain). |
-| `treeresolve.licensingEndpoint` | `https://licensing.treeresolve.still.systems` | Licensing and trial ticketing gateway URL (`scope: machine`). Default: `https://licensing.treeresolve.still.systems` (fallback gateway: `https://treeresolve-licensing.still-systems.workers.dev`). |
+| `treeresolve.licensingEndpoint` | `https://licensing.treeresolve.still.systems` | Licensing and trial ticketing gateway URL (`scope: machine`). Default: `https://licensing.treeresolve.still.systems`. |
 | `treeresolve.enableTelemetry` | `true` | Enable anonymous telemetry reporting of auto-merge acceptance rates and resolution time. |
 
 ### Custom Editor Registration & Scoping

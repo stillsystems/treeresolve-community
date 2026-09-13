@@ -10,8 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security & Hardening
 
 - **Compiled WebAssembly SRI Cryptographic Byte Assertions**:
-  - Validated that `TreeSitterService.getLanguage` computes SHA-256 digests over `Uint8Array` bytes and checks against `EXPECTED_WASM_HASHES` prior to calling `Language.load`, aborting immediately upon binary tampering.
-  - Verified that runtime loader assert functions are compiled directly into the production distribution bundle (`dist/src/extension.js`).
+  - Validated that the runtime grammar loader computes SHA-256 digests over `Uint8Array` bytes and checks against `EXPECTED_WASM_HASHES` prior to calling `Language.load`, aborting immediately upon binary tampering.
+  - Verified that runtime loader assert functions are compiled directly into the production distribution bundle.
 - **Release Hygiene & Clean Semantic Release Cut**:
   - Cut clean release `v0.4.4`, stopping metadata-only point release churn and packaging fresh verified binaries.
 - **Unified Workstation Installation Salting Store**:
@@ -19,15 +19,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Eliminates split-identity drift between GUI merge sessions and terminal/git-hook CLI merges, preventing duplicate seat consumption and premature quota lockout.
 - **Fail-Fast Runtime Engine Guard for Standalone CLI**:
   - Enforced `"engines": { "vscode": "^1.85.0", "node": ">=20.0.0" }` in `package.json`.
-  - Added an upfront, fail-fast Node.js runtime version check at CLI process entry in `src/cli/cli.ts` (`nodeMajorVersion < 20`), outputting an explicit error message and exiting before module loading in older CI runner environments.
+  - Added an upfront, fail-fast Node.js runtime version check at CLI process entry at CLI process startup (`nodeMajorVersion < 20`), outputting an explicit error message and exiting before module loading in older CI runner environments.
 - **Manifest Hygiene & Keyword Standardization**:
   - Standardized marketplace metadata categories and trimmed keyword tags in `package.json`.
 - **Adversarial VSIX Review & Compliance Remediation**:
-  - **Eliminated Bundled Undici Network Stack**: Dropped dynamic `require('undici')` from `TelemetryService.ts`, switching completely to Node 20 runtime native WHATWG `fetch` and adding `--external:undici` to esbuild scripts. Shrunk `dist/src/extension.js` from 746.7KB to 227.9KB (-69.5%) and purged all undeclared networking dependencies.
+  - **Eliminated Bundled Undici Network Stack**: Dropped dynamic `require('undici')` switching completely to Node 20 runtime native WHATWG `fetch` and adding `--external:undici` to esbuild scripts. Shrunk extension bundle from 746.7KB to 227.9KB (-69.5%) and purged all undeclared networking dependencies.
   - **Bundled Third-Party Open Source Notices (`THIRD_PARTY_LICENSES.md`)**: Consolidated complete MIT license attributions for `jose`, `@vscode/tree-sitter-wasm`, and the 7 bundled Tree-sitter WebAssembly language grammars, ensuring full redistribution license compliance across marketplaces.
-  - **Reconciled Licensing Endpoints**: Unified the single source of truth for the default licensing endpoint to `https://licensing.treeresolve.still.systems` across `FloatingLeaseClient.ts`, `TelemetryService.ts`, and `package.json`, documenting the secondary Cloudflare Workers fallback (`https://treeresolve-licensing.still-systems.workers.dev`).
+  - **Reconciled Licensing Endpoints**: Unified the single source of truth for the default licensing endpoint to `https://licensing.treeresolve.still.systems` across the extension and CLI.
   - **Factual Privacy & Non-Identifying Fingerprinting Copy**: Replaced unsubstantiated parenthetical compliance labels ("GDPR & SOC 2 Compliant") with precise technical disclosures ("Zero PII / Privacy-Preserving") explaining that only an anonymous local SHA-256 machine hash is transmitted for reverse trial ticketing.
-  - **Dynamic Ephemeral Salt Fallback**: Removed the static fallback constant in `FloatingLeaseClient.getInstallationSalt()`, dynamically generating and caching an ephemeral in-memory cryptographic hash on degenerate sandbox total fallback to prevent shared static seeds.
+  - **Dynamic Ephemeral Salt Fallback**: Removed the static fallback constant in salt initialization, dynamically generating and caching an ephemeral in-memory cryptographic hash on degenerate sandbox total fallback to prevent shared static seeds.
   - **Optimized Marketplace Asset Footprint**: Resized `images/icon.png` to high-quality bicubic 256×256 retina PNG, reducing icon size from 828KB to 70.5KB (-91.5%).
   - **VSIX Archive Payload Trimming**: Excluded standalone CLI binary (`bin/**`, 1.4MB) from the `.vsix` distribution package via `.vscodeignore` and `scripts/package.js`, reducing the packaged extension from 2.0MB to 789KB (-60.8%).
   - **Batch Auto-Resolve Observability**: Added an explicit user notification in `batchOutputChannel` when Git conflict indexing is unavailable and scanning falls back to a 200-candidate-file bounded workspace search.
@@ -39,8 +39,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Asynchronous IPC Message Serialization & Atomic Save Architecture**:
   - Decoupled hunk resolution decisions from live document buffer modifications: accumulated user selections in an in-memory resolution accumulator without intermediate buffer edits.
-  - Piped all incoming webview IPC messages (`RESOLVE_HUNK`, `COMMIT_MERGE`) through `coordinator.runInMutex` FIFO promise chains in `MergeEditorProvider`, preventing race conditions between rapid keyboard-driven resolutions (`Alt+1`, `Alt+3`, `Alt+B`) and commit triggers (`Ctrl+Enter`).
-  - Hardened `DocumentSyncCoordinator.commitAndSave` to execute exactly one single transactional `vscode.WorkspaceEdit`, verifying conflict marker integrity via `ConflictMarkerParser` and re-syncing baseline document versions if intermediate version bumps occurred, ensuring zero dropped user decisions.
+  - Piped all incoming webview IPC messages (`RESOLVE_HUNK`, `COMMIT_MERGE`) through serialized FIFO promise chains, preventing race conditions between rapid keyboard-driven resolutions (`Alt+1`, `Alt+3`, `Alt+B`) and commit triggers (`Ctrl+Enter`).
+  - Hardened commit and save pipeline to execute exactly one single transactional `vscode.WorkspaceEdit`, verifying conflict marker integrity and re-syncing baseline document versions if intermediate version bumps occurred, ensuring zero dropped user decisions.
 - **Tree-sitter WASM 30ms Execution Budget & 5,000-Char Line-Length Heuristic**:
   - Enforced Tree-sitter parser timeout ceiling to 30ms (`parser.setTimeoutMicros(30000)`) on all parser instances.
   - Implemented an O(N) line-length safety heuristic (`MAX_LINE_LENGTH = 5000`) that immediately bypasses AST parsing for minified bundles, lockfiles, or single-line generated files to prevent Extension Host thread lockups.
@@ -49,7 +49,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Blocks any tampered, altered, or unsigned WebAssembly bytecode from executing in the VS Code Extension Host context.
 - **Default Salted HMAC-SHA256 Domain Identifiers**:
   - Updated `DomainLeaseCoordinator.computeDomainId` to strictly default to salted HMAC-SHA256 using the local installation-unique salt, preventing rainbow-table repository identification across external networks.
-  - Integrated `FloatingLeaseClient.initInstallationSalt` with VS Code `context.secrets` storage.
+  - Integrated workstation installation salting with VS Code `context.secrets` storage.
 - **Canvas Diff Ribbon Layout Batching & Frame Budget Preservation**:
   - Decoupled webview ribbon canvas rendering into two distinct phases: Phase 1 batches all DOM layout and bounding box measurements upfront, and Phase 2 executes canvas bezier drawing without interleaved DOM reads, completely eliminating layout thrashing.
   - Throttled ribbon canvas updates using `requestAnimationFrame` with viewport buffer culling (+/- 100px), eliminating UI frame drops and input stutter on conflicts with 150+ hunks.
@@ -61,7 +61,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security & Hardening
 
 - **Linear FIFO Mutex & Atomic Document Snapshot Replacement**:
-  - Implemented an internal execution mutex queue (`runInMutex`) in `DocumentSyncCoordinator` to serialize all asynchronous document mutations, eliminating race conditions and interleaved `WorkspaceEdit` applications during rapid keyboard-driven hunk cycling.
+  - Implemented an internal execution mutex queue in the document synchronization coordinator to serialize all asynchronous document mutations, eliminating race conditions and interleaved `WorkspaceEdit` applications during rapid keyboard-driven hunk cycling.
   - Replaced incremental partial range replacements with atomic full-document snapshot edits (`constructResolvedDocumentText`), guaranteeing zero offset drift or line truncation under rapid sequential operations.
 - **Tree-sitter WASM Hard Execution Timeouts & Recursion Tripwires**:
   - Configured hard execution timeouts (`parser.setTimeoutMicros(50000)`) on all Tree-sitter parsers, preventing pathological recursive ASTs from hanging the extension host thread.
@@ -71,15 +71,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Configured `.vscodeignore` to exclude development backup artifacts (`*.bak`, `.*.bak`).
   - Switched default `treeresolve.licensingEndpoint` configuration to production gateway `https://licensing.treeresolve.still.systems`.
 - **Privacy-Preserving Installation Salt & HMAC Domain Hashing**:
-  - Implemented a persistent, workstation-private 32-byte installation salt (`FloatingLeaseClient.getInstallationSalt()`) stored strictly locally (`~/.treeresolve/installation_salt` or VS Code global state).
+  - Implemented a persistent, workstation-private 32-byte installation salt  stored strictly locally (`~/.treeresolve/installation_salt` or VS Code global state).
   - Outbound trial ticket requests now transmit an HMAC-SHA256 salted domain identifier, completely preventing egress proxies and TLS-inspecting networks from identifying corporate internal repository URLs or paths via rainbow tables.
 - **Progressive Chunked Webview Rendering & Frame Budget Preservation**:
   - Refactored `renderLines` in the webview to render initial viewports immediately (250 lines) and stream remaining code rows in 500-line microtask chunks scheduled with `requestAnimationFrame`, eliminating UI stutter and frame freezes on diffs exceeding 100 hunks or 15,000 lines.
 
 - **Hunk Bound Desynchronization & Truncation Elimination**:
-  - Replaced sequential index sweeping (`a++`) in `DocumentSyncCoordinator.applyToDocument` with explicit hunk ID bound tracking and tracked character ranges, preventing buffer truncation and marker offset drift when hunks contain nested conflict markers or comment delimiters.
+  - Replaced sequential index sweeping in document hunk application with explicit hunk ID bound tracking and tracked character ranges, preventing buffer truncation and marker offset drift when hunks contain nested conflict markers or comment delimiters.
 - **Tree-sitter WASM Linear Memory Leak Deallocation**:
-  - Added deterministic cleanup hooks (`tree.delete()`) across `TreeSitterService.withTree`, `AstImportNormalizer`, and `AstDeclarationMerger`, eliminating Emscripten linear memory accumulation and C-heap saturation across large batch operations.
+  - Added deterministic cleanup hooks (`tree.delete()`) across AST parsers and syntax normalizers, eliminating Emscripten linear memory accumulation and C-heap saturation across large batch operations.
 - **Standalone CLI Archive Permissions & Binary Packaging**:
   - Implemented `scripts/package.js` post-packager to enforce POSIX executable permissions (`0o755`) and hashbangs (`#!/usr/bin/env node`) on `bin/treeresolve.js` within distributed `.vsix` archives.
 - **Webview Canvas Zero-Dimension Resize Guard**:
@@ -92,14 +92,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Replaced unbounded workspace file scans (`workspace.findFiles('**/*')`) with targeted Git plumbing queries (`git diff --name-only --diff-filter=U`) via `GitPlumbingClient.getConflictedFiles()`, with bounded fallback for non-git workspaces.
   - Introduced explicit event loop yielding (`await new Promise(r => setTimeout(r, 0))`) between files in batch processing to prevent UI stutter and thread starvation on large repositories.
 - **Document Version & Race Condition Safeguards**:
-  - Added document version tracking (`initialVersion = doc.version`) to `DocumentSyncCoordinator` and command handlers.
+  - Added document version tracking (`initialVersion = doc.version`) to document synchronization coordinators and command handlers.
   - Aborts `applyToDocument` transactions if the document version advanced concurrently due to user typing, external formatters, or Git checkout operations during AST analysis.
 - **In-Memory License Cache Expiration**:
   - Added strict 5-minute TTL eviction to `domainLeaseCache` during batch operations, preventing perpetual license bypass from stale in-memory state.
 - **Strict Pre-Stage Conflict Marker Validation**:
-  - Enforced zero-tolerance conflict marker validation (`<<<<<<<`, `=======`, `>>>>>>>`) across `DocumentSyncCoordinator.commitAndSave`, `GitPlumbingClient.stageFile`, and CLI batch resolve before issuing any `git add` command, preventing incomplete merges from polluting the Git index.
+  - Enforced zero-tolerance conflict marker validation (`<<<<<<<`, `=======`, `>>>>>>>`) across editor saving, Git staging, and CLI batch resolve before issuing any `git add` command, preventing incomplete merges from polluting the Git index.
 - **Dynamic White-Label Checkout Routing**:
-  - Replaced hardcoded Stripe payment URLs in the extension binary with dynamic routing through `FloatingLeaseClient.getCheckoutUrl()` (`${licensingEndpoint}/checkout`).
+  - Replaced hardcoded Stripe payment URLs in the extension binary with dynamic routing through dynamic checkout routing.
   - Added HTTP 302 dynamic checkout redirect route in the licensing service.
 - **Privacy Preservation & PII Elimination**:
   - Removed local hostnames and usernames from device fingerprint generation.
@@ -141,7 +141,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Pinned `"scope": "machine"` on `treeresolve.licensingEndpoint` in `package.json` to prevent malicious repositories from repointing licensing and telemetry gateways.
   - Declared `capabilities.untrustedWorkspaces.supported = false` to protect against unauthorized parser and Git execution in untrusted folders.
   - Sanitized AST error telemetry in `TelemetryService` to send structured `errorCode` categories (`ERR_WASM_LOAD_FAILED`, `ERR_PARSER_INIT_FAILED`, `ERR_PARSE_SYNTAX_ERROR`, `ERR_ANCHOR_EXTRACTION_FAILED`), completely omitting raw error text, file paths, or syntax snippets.
-  - Eliminated `innerHTML` assignments in `MergeEditorProvider`, switching line and intra-line token diff rendering to safe DOM element construction (`createElement`/`textContent`).
+  - Eliminated `innerHTML` assignments in the merge editor, switching line and intra-line token diff rendering to safe DOM element construction (`createElement`/`textContent`).
   - Hardened Git CLI executions in `GitPlumbingClient` by inserting `--` path separators.
 
 ### Changed
@@ -176,12 +176,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Java & C# Deterministic Normalizers
 
-- **Java 3-Way Import Resolver**: Implemented `JavaCSharpNormalizer.resolveJavaImports` providing deterministic 3-way resolution for `import static`, `java.*`/`javax.*` standard library, and third-party packages with deletion preservation.
-- **C# 3-Way Using Directive Resolver**: Implemented `JavaCSharpNormalizer.resolveCSharpUsings` handling `global using`, `using static`, alias declarations, and namespace directives with deletion preservation.
+- **Java 3-Way Import Resolver**: Implemented Java 3-way import normalizer providing deterministic 3-way resolution for `import static`, `java.*`/`javax.*` standard library, and third-party packages with deletion preservation.
+- **C# 3-Way Using Directive Resolver**: Implemented C# 3-way using normalizer handling `global using`, `using static`, alias declarations, and namespace directives with deletion preservation.
 
 #### Repository-Level Configuration (`.treeresolverc`)
 
-- **Project Policy Engine**: Created `RepoConfigService` to discover `.treeresolverc`, `.treeresolverc.json`, and `treeresolve.json` in workspace roots with glob pattern rules for custom auto-merge and auto-staging per filetype.
+- **Project Policy Engine**: Created repository configuration service to discover `.treeresolverc`, `.treeresolverc.json`, and `treeresolve.json` in workspace roots with glob pattern rules for custom auto-merge and auto-staging per filetype.
 
 #### Standalone Git Mergetool CLI Companion & Batch Resolver
 
@@ -215,7 +215,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### YAML Indentation-Safe 3-Way Auto-Resolver
 
-- **Deterministic YAML Mapping Merger**: Implemented `YamlAutoResolver` providing deterministic 3-way conflict resolution for YAML files (Kubernetes manifests, Docker Compose, CI/CD workflows) with strict block indentation, leading/inline comment preservation, and 3-way deletion tracking.
+- **Deterministic YAML Mapping Merger**: Implemented YAML 3-way auto-resolver providing deterministic 3-way conflict resolution for YAML files (Kubernetes manifests, Docker Compose, CI/CD workflows) with strict block indentation, leading/inline comment preservation, and 3-way deletion tracking.
 
 #### Lockfile Semantic Auto-Resolver (`package-lock.json`)
 
@@ -232,12 +232,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Production Build & Minification
 
-- **`esbuild` Single-Bundle Pipeline**: Bundled and minified `dist/src/extension.js` (167 KB) and configured `.vscodeignore` to exclude raw unminified modular files from the VSIX distribution.
+- **`esbuild` Single-Bundle Pipeline**: Bundled and minified extension distribution bundle (167 KB) and configured `.vscodeignore` to exclude raw unminified modular files from the VSIX distribution.
 - **WASM Asset Packaging**: Added `copy:wasm` build target packaging 7 pre-compiled grammar binaries into `dist/wasm/` for 100% offline out-of-the-box readiness.
 
 ### Removed
 
-- **Obsolete `webview-ui` Prototype Scaffold**: Completely removed the abandoned `webview-ui/` directory and all orphaned 0-byte stub files (`ViewportGrid.ts`, `BezierMath.ts`, `myers_diff.wasm`, etc.) in favor of the production, CSP-secured inlined webview engine in `MergeEditorProvider.ts`. Cleaned up dead references from `tsconfig.json` and `.vscodeignore`.
+- **Obsolete `webview-ui` Prototype Scaffold**: Purged obsolete webview prototype stubs in favor of the production, CSP-secured inlined webview engine. Cleaned up dead references from configuration manifests.
 
 ## [0.1.0] - 2026-09-07
 
@@ -278,10 +278,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- **Commit & Save Data Loss Protection**: Rewrote `DocumentSyncCoordinator.constructResolvedDocumentText()` to strictly preserve raw conflict markers and incoming changes (`Theirs`) for any unreviewed or partially resolved hunk; prevented accidental staging of unresolved files to Git by respecting `treeresolve.stageOnSave` only when all hunks are resolved.
+- **Commit & Save Data Loss Protection**: Rewrote document resolution synthesis to strictly preserve raw conflict markers and incoming changes (`Theirs`) for any unreviewed or partially resolved hunk; prevented accidental staging of unresolved files to Git by respecting `treeresolve.stageOnSave` only when all hunks are resolved.
 - **True 3-Way Merge Deletion Handling**: Upgraded `ImportNormalizer` for TypeScript/JavaScript, Python, and JSON to perform true 3-way set difference against Base, honoring intentional deletions and flagging delete-modify conflicts instead of resurrecting deleted symbols via 2-way union.
-- **Recursive Conflict Marker Parsing**: Expanded conflict marker regexes across `ConflictMarkerParser` and `DocumentSyncCoordinator` to support recursive merge runs (`<{7,}`, `|{7,}`, `={7,}\s*$`, `>{7,}`).
-- **Auto-Resolve Command Safety**: Corrected `treeresolve.autoResolveImports` command to use `DocumentSyncCoordinator`, preventing accidental truncation of non-import conflicts.
+- **Recursive Conflict Marker Parsing**: Expanded conflict marker regexes in conflict marker parsing and resolution synthesis to support recursive merge runs (`<{7,}`, `|{7,}`, `={7,}\s*$`, `>{7,}`).
+- **Auto-Resolve Command Safety**: Corrected `treeresolve.autoResolveImports` command to use transactional document synchronization, preventing accidental truncation of non-import conflicts.
 
 ### Changed
 

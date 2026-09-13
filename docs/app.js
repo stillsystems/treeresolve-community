@@ -178,7 +178,7 @@ import (
       const data = Object.fromEntries(formData.entries());
 
       try {
-        const response = await fetch('https://treeresolve-licensing.still-systems.workers.dev/api/v1/inquiry', {
+        const response = await fetch('https://licensing.treeresolve.still.systems/api/v1/inquiry', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
