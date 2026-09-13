@@ -92,10 +92,10 @@ TreeResolve's syntax engine expands language support by shipping dedicated langu
 * [x] **Project Configuration (`.treeresolverc`)**: Repository-level glob policies and custom auto-merge rules.
 * [x] **Universal Line-based 3-Way Diff**: Visual fallback for all other file types.
 
-### In Active Development
+### In Active Development (v0.5.0)
 
-* [ ] **Intra-Line Interactive Token Acceptance**: Micro-level sub-line segment picking.
-* [ ] **Semantic Intra-Line Token Highlighting**: Visual micro-highlighting for variable and argument renames.
+* [x] **Intra-Line Interactive Token Acceptance**: Micro-level sub-line segment picking with 3-way token reconciliation.
+* [x] **Semantic Intra-Line Token Highlighting**: Visual micro-highlighting and syntax badges for variable renames, argument mutations, type annotations, and literal values.
 
 > 💡 **Have a feature idea, language request, or bug report?**  
 > Join the conversation or open an issue in the [TreeResolve Community Tracker](https://github.com/stillsystems/treeresolve-community/issues).
