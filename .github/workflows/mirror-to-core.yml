@@ -6,6 +6,10 @@ on:
   issue_comment:
     types: [created]
 
+permissions:
+  contents: read
+  issues: write
+
 jobs:
   mirror:
     name: Mirror Community Issues to Private Core
@@ -26,3 +30,4 @@ jobs:
           CORE_SYNC_TOKEN: ${{ secrets.CORE_SYNC_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node .github/scripts/mirror-to-core.js
+
