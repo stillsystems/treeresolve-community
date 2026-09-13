@@ -59,9 +59,8 @@ To ensure reliable operation across Remote SSH, WSL, Dev Containers, and virtual
 
 1. **Primary (`vscode.git` API)**: Inspect active VS Code Git models via `vscode.extensions.getExtension('vscode.git')?.exports.getAPI(1)`. The Extension Host identifies the repository owning the document's `Uri` directly through `gitAPI.getRepository(documentUri)`. This guarantees compatibility with virtual and remote workspaces without spawning external processes.
 2. **Plumbing Fallback (Local CLI)**: If the built-in Git extension is uninitialized or disabled, fall back to executing `child_process.execFile('git', ['rev-parse', '--show-toplevel'], { cwd: path.dirname(documentUri.fsPath) })`.
-3. **Submodule Isolation & Unified Salted Domain ID (`TR-V4-04`, `TR-V5-03`)**:
-   $$\text{DomainID} = \text{HMAC-SHA256}(\text{RepositoryRootPath} + \text{"::"} + \text{RemoteOriginUrl},\; \text{InstallationSalt})$$
-   Submodules establish their own independent `DomainID` based on their nested repository root. In v0.4.4, derivation strictly defaults to HMAC-SHA256 using a unified workstation installation salt synchronized between VS Code `secretsStorage` and the canonical workstation store `~/.treeresolve/installation_salt` (`0o600`), ensuring that internal repository names cannot be derived via rainbow tables and that CLI and GUI runs produce identical domain hashes without split-identity seat exhaustion.
+3. **Submodule Isolation & Unified Salted Domain ID**:
+   Submodules establish their own independent `DomainID` based on their nested repository root. Derivation strictly defaults to salted HMAC-SHA256 using a unified workstation installation salt synchronized between VS Code `secretsStorage` and the canonical workstation store `~/.treeresolve/installation_salt` (`0o600`), ensuring that internal repository names cannot be derived via rainbow tables and that CLI and GUI runs produce identical domain hashes without split-identity seat exhaustion.
 
 ### 2.2. Git LFS Pointer Ingestion Pre-Flight
 
@@ -77,16 +76,16 @@ Upstream merge operations and cherry-picks frequently produce non-uniform confli
 * **Hunk-Local Degradation**: Hunks evaluate their base ancestor presence independently. Hunks with valid ancestors upgrade to Tier 2 (or Tier 1 AST auto-resolve), while base-lacking hunks degrade to Tier 3 visual diffing.
 * **Line-Synchronized Stream Padding**: When a hunk lacks base ancestor content, the internal ancestor line stream is padded to match branch length, preventing line index drift and ensuring accurate coordinate projection across subsequent hunks.
 
-### 2.4. Offline-First 30-Day Floating Lease & Serverless Trial Ticketing
+### 2.4. Offline-First 30-Day Floating Lease & Trial Ticketing
 
 To eliminate trial tampering while preserving the zero-latency, offline-first operating doctrine, TreeResolve decouples immediate file-open verification from network availability:
 
 1. **Zero-Latency Local Verification**: The extension inspects cached secrets (`treeresolve.license.<domainId>` or `treeresolve.trial_ticket`) offline. Editor rendering is never blocked waiting on remote network calls.
-2. **Server-Issued Trial Tickets**: On startup, `FloatingLeaseClient` touches the Cloudflare Worker (`POST /api/v1/trial`) with an anonymous, privacy-preserving SHA-256 machine fingerprint (`platform:arch:machineId` derived from `vscode.env.machineId` or an anonymous persistent UUID in standalone CLI; zero PII). The worker returns a signed 14-day Ed25519 JWT ticket stored in `context.secrets`.
+2. **Server-Issued Trial Tickets**: On startup, `FloatingLeaseClient` contacts the TreeResolve licensing service with an anonymous, privacy-preserving SHA-256 machine fingerprint (`platform:arch:machineId` derived from `vscode.env.machineId` or an anonymous persistent UUID in standalone CLI; zero PII). The licensing gateway returns a signed 14-day Ed25519 JWT ticket stored securely in local extension storage.
 3. **Monotonic Offline Fallback**: If the network is unreachable during initial install, `DomainLeaseCoordinator` evaluates local `globalState` timestamps with monotonic clock-rollback detection as an air-gapped fallback.
-4. **30-Day Floating Leases**: Commercial licenses automatically renew 30-day floating leases via `POST /api/v1/lease/renew` when online.
+4. **30-Day Floating Leases**: Commercial licenses automatically renew 30-day floating leases in the background when online.
 5. **Wildcard Hard-Caps & Revocation Manifests**: Tokens with wildcard domain scope (`domainId: '*'`) are constrained to a strict 90-day maximum TTL. `LicenseManager` enforces token revocation via `jti` checks synchronized with edge-cached revocation manifests.
-6. **Automated Seat Reclaiming (`TR-V4-07`)**: The control plane provides `POST /api/v1/lease/reclaim` to reconcile seats during developer workstation migration, OS re-imaging, or salt regeneration without administrative overhead.
+6. **Automated Seat Reclaiming**: The control plane provides automated seat reclaiming to reconcile seats during developer workstation migration, OS re-imaging, or salt regeneration without administrative overhead.
 
 ---
 
@@ -99,37 +98,20 @@ To eliminate trial tampering while preserving the zero-latency, offline-first op
 
 When global parsing times out or when re-evaluating isolated Lexical Scope Containers (LSC), wrapping fragments arbitrarily in synthetic outer classes produces severe parse regressions if the fragment represents a top-level construct (e.g., package declarations, import specifiers) or statement-level blocks inside a method. The AST engine applies **Three-Tier Context-Aware Scaffolding**:
 
-* **Parent Node Classification**: Prior to wrapper injection, the AST engine checks the enclosing syntax kind of the fragment's anchor point:
-  * **Top-Level Form (`compilation_unit`, `source_file`, `module`)**: The snippet is parsed without outer class nesting. If required by the grammar (such as Go), only the necessary top-level header is attached (e.g., `package __stub__\n`).
-  * **Member-Level Form (`class_body`, `struct_body`, `interface_body`)**: The snippet is injected into a synthetic class or struct stub:
-    * *Java*: `class __TreeResolveStub__ { /* <SNIPPET> */ }`
-    * *C#*: `class __TreeResolveStub__ { /* <SNIPPET> */ }`
-    * *C++*: `struct __TreeResolveStub__ { /* <SNIPPET> */ };`
-  * **Statement-Level Form (`block`, `function_body`, `statement_block`)**: When the hunk resides inside a method/function body, bare statements are wrapped within an inner synthetic function stub to avoid grammar rejection:
-    * *Java/C#*: `class __TreeResolveStub__ { void __stub__() { /* <SNIPPET> */ } }`
-    * *C++*: `void __TreeResolveStub__() { /* <SNIPPET> */ }`
-    * *Go*: `package __stub__\nfunc __stub__() { /* <SNIPPET> */ }`
-* **Two-Stage 2D Coordinate Re-Mapping (Bytes & Points)**:
-  Because stub headers introduce prefix bytes and newlines, parser ranges (`{ startByte, endByte, startPosition, endPosition }`) are projected through a two-stage coordinate pipeline:
-  * **Stage 1: Synthetic Buffer $\to$ Snippet-Relative Space**:
-    $$\text{AdjustedByte} = \text{RawByte} - \text{HeaderByteLength}$$
-    $$\text{AdjustedRow} = \text{RawRow} - \text{HeaderLineCount}$$
-    $$\text{AdjustedColumn} = \begin{cases} \text{RawColumn} - \text{HeaderLastLineLength} & \text{if } \text{RawRow} == \text{HeaderLineCount} \\ \text{RawColumn} & \text{if } \text{RawRow} > \text{HeaderLineCount} \end{cases}$$
-  * **Stage 2: Snippet-Relative Space $\to$ Absolute Document Space**:
-    $$\text{DocumentByte} = \text{SnippetStartByte} + \text{AdjustedByte}$$
-    $$\text{DocumentRow} = \text{SnippetStartRow} + \text{AdjustedRow}$$
-    $$\text{DocumentColumn} = \begin{cases} \text{SnippetStartColumn} + \text{AdjustedColumn} & \text{if } \text{AdjustedRow} == 0 \\ \text{AdjustedColumn} & \text{if } \text{AdjustedRow} > 0 \end{cases}$$
-  This maps error-free CST nodes and point positions directly back to the original document lines.
+* **Parent Node Classification**: Prior to wrapper injection, the AST engine identifies the enclosing syntax kind of the fragment's anchor point:
+  * **Top-Level Form**: The snippet is parsed without outer class nesting, attaching only mandatory package headers where required by grammar specifications.
+  * **Member-Level Form**: The snippet is evaluated within language-appropriate synthetic class or struct wrappers matching target language syntax conventions.
+  * **Statement-Level Form**: When the hunk resides inside a method/function body, statements are wrapped within method-level synthetic function bodies to satisfy grammar constraints.
+* **Two-Stage Coordinate Projection**: Because syntactic wrappers introduce prefix bytes and synthetic lines, parser ranges (`startByte`, `endByte`, `startPosition`, `endPosition`) are projected through a two-stage coordinate pipeline that accurately maps syntax tree nodes and point positions back to the original document coordinates with zero offset drift.
 
-### 3.2. Dynamic Worker Watchdogs & Parser Execution Bounds (`TR-V4-02`)
+### 3.2. Dynamic Worker Watchdogs & Parser Execution Bounds
 
 AST parsing tasks run inside dedicated Node `worker_threads` managed via a work-stealing queue with strict defensive boundaries:
 
 * **Tree-sitter WASM 30ms Execution Ceiling**: All parser instances invoke `parser.setTimeoutMicros(30000)` before AST generation. If an ambiguous or deeply nested grammar triggers pathological backtracking, the WebAssembly execution halts cleanly at 30ms, preventing Extension Host event loop freezes.
 * **Pathological Line-Length Pre-Flight Filter**: An $O(N)$ scanning heuristic inspects lines before AST parsing. If any line exceeds `MAX_LINE_LENGTH = 5000` (e.g. minified single-line bundles, embedded source maps, or pathological lockfile lines), AST parsing is immediately bypassed, safely routing the hunk to visual line diffing without blocking the Extension Host.
-* **Dynamic Timeout Budget**:
-  $$T_{budget} = \max\left(50\text{ms},\; 50\text{ms} + \left(\frac{\text{LOC}}{1{,}000}\right) \times 10\text{ms}\right) \quad [\text{Hard Cap: } 500\text{ms}]$$
-* **Targeted Scope Fallback**: If full-buffer parsing exceeds $T_{budget}$, global parsing halts. The worker extracts the enclosing LSC lines surrounding the Git hunk, wraps them in context-aware scaffolding, and parses the isolated unit before dropping to Tier 2.
+* **Dynamic Timeout Budget**: TreeResolve enforces an execution ceiling (up to 500ms scaled with file length) with strict WebAssembly execution limits.
+* **Targeted Scope Fallback**: If full-buffer parsing exceeds the timeout budget, global parsing halts. The worker extracts the enclosing LSC lines surrounding the Git hunk, wraps them in context-aware scaffolding, and parses the isolated unit before dropping to Tier 2.
 
 ### 3.3. Lexical Continuation & Token-Depth Tracking (LCTD)
 
@@ -150,7 +132,7 @@ Standard 3-way text and JSON diff engines fail on package lockfiles (`package-lo
 
 ## 4. Concurrency, Monotonic Sequences, & Asymmetric Diff Anchoring
 
-### 4.1. Monotonic Action Sequencing & In-Memory Resolution Accumulator (`TR-V4-01`)
+### 4.1. Monotonic Action Sequencing & In-Memory Resolution Accumulator
 
 To eliminate buffer mutation races and out-of-order execution when a user rapidly toggles between resolution states (e.g., "Accept Ours" $\to$ "Accept Theirs" $\to$ "Accept Ours"), actions are handled through a decoupled in-memory resolution pipeline:
 
@@ -217,7 +199,7 @@ To prevent visual clipping on rotated 4K monitors, ultrawide displays, and ultra
   $$\text{PoolRows} = \left\lceil \frac{\text{ViewportHeight}_{\text{px}}}{\text{LineHeight}_{\text{px}}} \right\rceil + 50 \quad [\text{Overscan Pool}]$$
 * **Resize Observer**: A native `ResizeObserver` on the Webview container re-evaluates `PoolRows` on window dimension shifts, allocating or recycling DOM row nodes dynamically.
 
-### 5.2. Canvas Ribbon Rendering Engine & Two-Phase Layout (`TR-V4-05`)
+### 5.2. Canvas Ribbon Rendering Engine & Two-Phase Layout
 
 * Connectors between panes render via an HTML5 `<canvas>` using cubic Bézier paths.
 * **Two-Phase Decoupled Layout Execution**: To completely eliminate layout thrashing during active scrolling and window resizing, ribbon rendering executes in two decoupled phases:
@@ -231,83 +213,19 @@ To prevent visual clipping on rotated 4K monitors, ultrawide displays, and ultra
 
 ## 6. Evolvable Protocol Contract
 
-```typescript
-export interface ClientCapabilities {
-  protocolVersion: number;
-  renderMode: 'CANVAS_RIBBONS' | 'FALLBACK_RECTS';
-  slidingWindowSupport: boolean;
-  sriVerification: boolean;
-}
+The visual merge editor communicates with the Extension Host over a strictly typed, versioned IPC protocol. The contract ensures backward and forward compatibility while preventing injection or malformed payload execution:
 
-export interface SemanticAnchor {
-  anchorId: string;
-  nodeType: string;
-  baseRange: [number, number] | null;
-  oursRange: [number, number] | null;
-  theirsRange: [number, number] | null;
-}
-
-export interface BridgeEnvelope<T> {
-  protocolVersion: number;       // Current version: 7
-  minCompatibleVersion: number;  // Floor: 6
-  domainId: string;              // Submodule-aware Git root hash
-  documentUri: string;           // Target file URI
-  documentVersion: number;       // Matches vscode.TextDocument.version
-  timestamp: number;
-  capabilities: ClientCapabilities;
-  payload: T;
-}
-
-// Host -> Webview Payloads
-export type HostPayload =
-  | {
-      type: 'INIT_SESSION';
-      capabilities: ClientCapabilities;
-      anchors: SemanticAnchor[];
-      hunks: Array<{
-        id: string;
-        tier: 'TIER_1_AST' | 'TIER_2_VISUAL_3WAY' | 'TIER_3_VISUAL_2WAY';
-        rangeOurs: [number, number];
-        rangeTheirs: [number, number];
-        rangeBase: [number, number] | null;
-        autoResolvedText: string | null;
-        requiresManualReview: boolean;
-      }>;
-    }
-  | {
-      type: 'ACK_HUNK_RESOLUTION';
-      actionSeq: number;
-      actionNonce: string;
-      hunkId: string;
-      appliedVersion: number;
-    }
-  | {
-      type: 'RECONCILE_STALE_ACTION';
-      conflictedHunkId: string;
-      latestBufferText: string;
-    };
-
-// Webview -> Host Payloads
-export type WebviewPayload =
-  | {
-      type: 'RESOLVE_HUNK';
-      actionSeq: number;
-      actionNonce: string;
-      hunkId: string;
-      action: 'ACCEPT_OURS' | 'ACCEPT_THEIRS' | 'ACCEPT_BOTH' | 'CUSTOM';
-      customText?: string;
-    }
-  | {
-      type: 'COMMIT_MERGE';
-      stageOnSave: boolean;
-    };
-```
+* **Session Initialization (`INIT_SESSION`)**: Dispatches file metadata, semantic anchor locations, and identified conflict hunks along with assigned capability tiers (`TIER_1_AST`, `TIER_2_VISUAL_3WAY`, `TIER_3_VISUAL_2WAY`).
+* **Hunk Resolution (`RESOLVE_HUNK`)**: Transmits user decisions (`ACCEPT_OURS`, `ACCEPT_THEIRS`, `ACCEPT_BOTH`, `CUSTOM`) paired with monotonic sequence numbers (`actionSeq`) and UUID nonces (`actionNonce`).
+* **Resolution Acknowledgement (`ACK_HUNK_RESOLUTION`)**: Acknowledges applied resolutions back to the webview UI to settle optimistic button states.
+* **Merge Commit (`COMMIT_MERGE`)**: Triggers atomic save and staging operations across the document.
+* **Capability Negotiation**: The envelope negotiates render mode (HTML5 Canvas Bézier ribbons vs. linear fallback), viewport sliding window support, and SRI verification.
 
 ---
 
 ## 7. Security Hardening & Asset Integrity
 
-### 7.1. Subresource Integrity (SRI) & WebAssembly Binary Verification (`TR-V4-03`, `TR-V5-01`)
+### 7.1. Subresource Integrity (SRI) & WebAssembly Binary Verification
 
 * **Cryptographic WebAssembly Pre-Flight Assertions**: Prior to invoking `WebAssembly.instantiate` or `Language.load`, `TreeSitterService` asserts that the SHA-256 checksum of the target `.wasm` file strictly matches the compiled immutable digest in `EXPECTED_WASM_HASHES`. If a digest mismatch is detected, execution immediately aborts with an integrity violation error, neutralizing any local binary tampering or supply-chain payload substitution.
 * **Signed Assets Manifest**: A cryptographically signed `assets.manifest.json` generated during build indexes SHA-256 hashes of all bundled WASM binaries, worker scripts, and stylesheets.
@@ -354,7 +272,7 @@ TreeResolve provides a zero-dependency standalone CLI companion (`bin/treeresolv
 
 ### 8.1. Build & Bundling Pipeline (`npm run bundle:cli`)
 
-* **Self-Contained Executable & Fail-Fast Runtime Verification (`TR-V4-06`, `TR-V5-04`)**: `bin/treeresolve.js` is bundled via esbuild from `src/cli/cli.ts` targeting Node 20. It enforces a fail-fast runtime verification check (`nodeMajorVersion >= 20`) at process entry before any modules are loaded to guarantee availability of native WebCrypto (`crypto.subtle`) and stream primitives in bare container runners, and embeds `jose`, internal Tree-sitter WASM loaders, normalizers, and a lightweight VS Code shim (`src/cli/vscode-mock.ts`), eliminating any runtime dependency on unbundled `dist/src/**` files.
+* **Self-Contained Executable & Fail-Fast Runtime Verification**: `bin/treeresolve.js` is bundled via esbuild from `src/cli/cli.ts` targeting Node 20. It enforces a fail-fast runtime verification check (`nodeMajorVersion >= 20`) at process entry before any modules are loaded to guarantee availability of native WebCrypto (`crypto.subtle`) and stream primitives in bare container runners, and embeds `jose`, internal Tree-sitter WASM loaders, normalizers, and a lightweight VS Code shim (`src/cli/vscode-mock.ts`), eliminating any runtime dependency on unbundled `dist/src/**` files.
 * **Standalone CLI Packaging**: Built as a standalone zero-dependency CLI executable via `npm run bundle:cli`. To keep the marketplace `.vsix` extension bundle lightweight, `bin/**` is excluded from the VSIX archive via `.vscodeignore` and sanitized in `scripts/package.js`, allowing the CLI to be distributed independently (e.g. for headless CI/CD containers) without inflating the editor extension package. Packaging verification in `scripts/package.js` inspects the generated archive to guarantee `THIRD_PARTY_LICENSES.md` is included and `bin/**` is excluded.
 * **Pre-Publish Automated Guardrails**: Packaging scripts invoke `scripts/check-no-stripe-test-links.js` during `npm run prepublish` to ensure zero sandbox test URLs (`buy.stripe.com/test_`) reach release packages.
 

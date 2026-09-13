@@ -215,12 +215,12 @@ TreeResolve requires a **Trusted Workspace** (`capabilities.untrustedWorkspaces.
 
 ### Security Hardening & Defense-in-Depth (v0.4.4)
 
-* **Atomic Save Architecture (`TR-V4-01`)**: User resolutions (`Accept Ours`, `Accept Theirs`, `Accept Both`) are accumulated safely in memory without intermediate buffer rewrites. All decisions commit atomically upon save via a single `WorkspaceEdit` with conflict marker integrity validation, completely eliminating state desynchronization races.
-* **Bounded Tree-sitter WASM Execution (`TR-V4-02`)**: Parsers enforce a strict 30ms CPU execution ceiling (`parser.setTimeoutMicros(30000)`) with an upfront 5,000-character line pre-flight filter that safely bypasses minified bundles and pathological lines.
-* **Cryptographic WebAssembly Integrity Verification (`TR-V4-03`, `TR-V5-01`)**: All shipped Tree-sitter `.wasm` grammars are validated against compiled SHA-256 digests prior to runtime compilation and instantiation, blocking execution of tampered or altered binaries.
-* **Unified Salted Domain Identifiers (`TR-V4-04`, `TR-V5-03`)**: Repository domain keys are salted using a unified workstation-unique secret (`HMAC-SHA256`) synchronized across VS Code `secretsStorage` and `~/.treeresolve/installation_salt`, preventing rainbow-table enumeration of internal project paths while eliminating split-identity lease exhaustion between GUI and CLI.
-* **Decoupled Two-Phase Ribbon Layout Engine (`TR-V4-05`)**: Visual Bézier connectors batch DOM reads separately from canvas drawing via `requestAnimationFrame` with viewport culling (+/- 100px), eliminating layout thrashing and preserving steady 60fps interaction on large files.
-* **Headless CLI Runtime Requirements & Engine Guard (`TR-V4-06`, `TR-V5-04`)**: Standalone CLI runner enforces Node.js >= 20.0.0 via manifest declaration and fail-fast runtime entry check to guarantee native WebCrypto API support in bare container environments.
+* **Atomic Save Architecture**: User resolutions (`Accept Ours`, `Accept Theirs`, `Accept Both`) are accumulated safely in memory without intermediate buffer rewrites. All decisions commit atomically upon save via a single `WorkspaceEdit` with conflict marker integrity validation, completely eliminating state desynchronization races.
+* **Bounded Tree-sitter WASM Execution**: Parsers enforce a strict 30ms CPU execution ceiling (`parser.setTimeoutMicros(30000)`) with an upfront 5,000-character line pre-flight filter that safely bypasses minified bundles and pathological lines.
+* **Cryptographic WebAssembly Integrity Verification**: All shipped Tree-sitter `.wasm` grammars are validated against compiled SHA-256 digests prior to runtime compilation and instantiation, blocking execution of tampered or altered binaries.
+* **Unified Salted Domain Identifiers**: Repository domain keys are salted using a unified workstation-unique secret (`HMAC-SHA256`) synchronized across VS Code `secretsStorage` and `~/.treeresolve/installation_salt`, preventing rainbow-table enumeration of internal project paths while eliminating split-identity lease exhaustion between GUI and CLI.
+* **Decoupled Two-Phase Ribbon Layout Engine**: Visual Bézier connectors batch DOM reads separately from canvas drawing via `requestAnimationFrame` with viewport culling (+/- 100px), eliminating layout thrashing and preserving steady 60fps interaction on large files.
+* **Headless CLI Runtime Requirements & Engine Guard**: Standalone CLI runner enforces Node.js >= 20.0.0 via manifest declaration and fail-fast runtime entry check to guarantee native WebCrypto API support in bare container environments.
 
 ---
 

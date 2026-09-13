@@ -90,7 +90,7 @@ For enterprises operating within strict egress-restricted VPCs, corporate TLS-in
    * Network requests feature strict 3–4 second bounded timeouts via `AbortController` to guarantee no editor hanging or command degradation in restrictive network topologies.
 
 3. **Internal Licensing Mirror**:
-   * Deploy an internal instance of the `services/licensing-worker` or an HTTP reverse proxy within your corporate intranet.
+   * Deploy an internal instance of the TreeResolve enterprise licensing service or an HTTP reverse proxy within your corporate intranet.
    * Configure the enterprise endpoint via MDM or VS Code configuration:
 
      ```json
@@ -99,7 +99,7 @@ For enterprises operating within strict egress-restricted VPCs, corporate TLS-in
      }
      ```
 
-### 3.4. Workstation Migration, Salt Invalidation & Floating Seat Reconciliation (`TR-V4-07`)
+### 3.4. Workstation Migration, Salt Invalidation & Floating Seat Reconciliation
 
 To eliminate repository name leakage under network inspection, TreeResolve derives domain identifiers using a local 32-byte installation salt stored in VS Code `secretsStorage` (or `~/.treeresolve/installation_salt`).
 
@@ -205,7 +205,7 @@ For headless build systems, containerized CI runners, and terminal merge workflo
 
 * **Anti-Tamper Monotonic Clock Guard**: Monotonic execution watermarks are persisted to `~/.treeresolve/state.json`, ensuring local clock tampering cannot circumvent license expiration.
 
-### 4.5. Headless CI/CD Runner Prerequisites & Node.js Runtime Isolation (`TR-V4-06`)
+### 4.5. Headless CI/CD Runner Prerequisites & Node.js Runtime Isolation
 
 The standalone TreeResolve CLI executable (`bin/treeresolve.js`) runs natively in headless environments without requiring VS Code:
 
