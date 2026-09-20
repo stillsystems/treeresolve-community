@@ -14,8 +14,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added native Web Crypto HMAC-SHA256 signature verification for `Paddle-Signature` headers (`ts=...;h1=...`) with 5-minute anti-replay protection.
   - Handled `transaction.completed` events for automated commercial Ed25519 JWT license generation and storage.
   - Handled `subscription.canceled` and `subscription.past_due` events for automated license revocation.
-  - Updated dynamic checkout redirect and client checkout links to Paddle Sandbox checkout URLs.
-  - Updated pre-publish link inspection scripts to detect test-mode checkout URLs.
+  - Updated pre-publish link inspection scripts to detect test-mode checkout URLs (`sandbox-buy.paddle.com`).
+
+- **Paddle.js Community Page Checkout Overlay**:
+  - Integrated Paddle.js v2 (`cdn.paddle.com/paddle/v2/paddle.js`) into the GitHub Pages community portal (`docs/index.html`).
+  - All pricing CTA buttons now open the native Paddle.js in-page checkout overlay (`Paddle.Checkout.open`) instead of redirecting to bare Paddle-hosted checkout pages.
+  - Community page supports `?checkout=pro`, `?checkout=monthly`, `?checkout=enterprise`, and `?price=<priceId>` query parameters for deep-linked checkout auto-open.
+  - Updated all checkout entry points — local client default checkout URL, `PADDLE_CHECKOUT_URL` in `wrangler.toml`, and the worker's `/checkout` redirect fallback — to route through `https://stillsystems.github.io/treeresolve-community/?checkout=pro`.
 
 ## [0.4.4] - 2026-09-11
 
@@ -83,11 +88,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Configured `.vscodeignore` to exclude development backup artifacts (`*.bak`, `.*.bak`).
   - Switched default `treeresolve.licensingEndpoint` configuration to production gateway `https://licensing.treeresolve.still.systems`.
 - **Privacy-Preserving Installation Salt & HMAC Domain Hashing**:
-  - Implemented a persistent, workstation-private 32-byte installation salt  stored strictly locally (`~/.treeresolve/installation_salt` or VS Code global state).
+  - Implemented a persistent, workstation-private 32-byte installation salt stored strictly locally (`~/.treeresolve/installation_salt` or VS Code global state).
   - Outbound trial ticket requests now transmit an HMAC-SHA256 salted domain identifier, completely preventing egress proxies and TLS-inspecting networks from identifying corporate internal repository URLs or paths via rainbow tables.
 - **Progressive Chunked Webview Rendering & Frame Budget Preservation**:
   - Refactored `renderLines` in the webview to render initial viewports immediately (250 lines) and stream remaining code rows in 500-line microtask chunks scheduled with `requestAnimationFrame`, eliminating UI stutter and frame freezes on diffs exceeding 100 hunks or 15,000 lines.
-
 - **Hunk Bound Desynchronization & Truncation Elimination**:
   - Replaced sequential index sweeping in document hunk application with explicit hunk ID bound tracking and tracked character ranges, preventing buffer truncation and marker offset drift when hunks contain nested conflict markers or comment delimiters.
 - **Tree-sitter WASM Linear Memory Leak Deallocation**:
@@ -139,7 +143,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Stripe Checkout Webhook & Enterprise Inquiry Gateways**:
   - Added automated commercial license issuance via Stripe HMAC-SHA256 signed webhooks.
   - Added enterprise fleet seat and VPC procurement intake route.
-
 - **Standalone Bundled CLI in VSIX Packaging**:
   - Bundled `bin/treeresolve.js` with esbuild targeting Node 20 as a standalone executable containing all runtime dependencies (`jose`, Tree-sitter WASM loader, AST normalizers).
   - Configured `.vscodeignore` (`!bin/treeresolve.js`) to guarantee the CLI artifact is included in all packaged `.vsix` releases.

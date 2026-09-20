@@ -202,4 +202,51 @@ import (
       }
     });
   }
+
+  // 3. Paddle.js Checkout Integration
+  const PADDLE_CLIENT_TOKEN = 'test_a4cc28e4971c99f1dbbbcdfdfa0';
+
+  if (window.Paddle) {
+    Paddle.Environment.set('sandbox');
+    Paddle.Initialize({
+      token: PADDLE_CLIENT_TOKEN,
+      eventCallback: (data) => {
+        console.log('Paddle event:', data);
+      }
+    });
+  }
+
+  function openCheckout(priceId) {
+    if (window.Paddle) {
+      Paddle.Checkout.open({
+        items: [{ priceId: priceId, quantity: 1 }]
+      });
+    } else {
+      console.warn('Paddle.js not loaded');
+    }
+  }
+
+  document.querySelectorAll('[data-paddle-price]').forEach((el) => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      const priceId = el.getAttribute('data-paddle-price');
+      if (priceId) {
+        openCheckout(priceId);
+      }
+    });
+  });
+
+  // Auto-open checkout if query parameter ?price= or ?checkout= is present
+  const urlParams = new URLSearchParams(window.location.search);
+  const directPrice = urlParams.get('price');
+  const directCheckout = urlParams.get('checkout');
+  if (directPrice) {
+    setTimeout(() => openCheckout(directPrice), 500);
+  } else if (directCheckout === 'pro' || directCheckout === 'yearly') {
+    setTimeout(() => openCheckout('pri_01m2zxfdbpg00xay389wj2pt1b'), 500);
+  } else if (directCheckout === 'monthly') {
+    setTimeout(() => openCheckout('pri_01m2zxb0htcnexpf56mj140y4n'), 500);
+  } else if (directCheckout === 'enterprise') {
+    setTimeout(() => openCheckout('pri_01m2zxykkb4yp3qdz3bftd9wxq'), 500);
+  }
 });
