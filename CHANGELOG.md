@@ -5,6 +5,18 @@ All notable changes to the "TreeResolve" extension will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Licensing & Billing
+
+- **Paddle Billing Integration**:
+  - Migrated Cloudflare licensing worker from Stripe to Paddle Billing (`POST /api/v1/paddle/webhook`).
+  - Added native Web Crypto HMAC-SHA256 signature verification for `Paddle-Signature` headers (`ts=...;h1=...`) with 5-minute anti-replay protection.
+  - Handled `transaction.completed` events for automated commercial Ed25519 JWT license generation and storage.
+  - Handled `subscription.canceled` and `subscription.past_due` events for automated license revocation.
+  - Updated dynamic checkout redirect and client checkout links to Paddle Sandbox checkout URLs.
+  - Updated pre-publish link inspection scripts to detect test-mode checkout URLs.
+
 ## [0.4.4] - 2026-09-11
 
 ### Security & Hardening

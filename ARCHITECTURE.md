@@ -274,7 +274,7 @@ TreeResolve provides a zero-dependency standalone CLI companion (`bin/treeresolv
 
 * **Self-Contained Executable & Fail-Fast Runtime Verification**: The standalone executable `bin/treeresolve.js` is bundled via esbuild targeting Node 20. It enforces a fail-fast runtime verification check (`nodeMajorVersion >= 20`) at process entry before any modules are loaded to guarantee availability of native WebCrypto (`crypto.subtle`) and stream primitives in bare container runners, and embeds `jose`, internal Tree-sitter WASM loaders, normalizers, and isolated mock shims, eliminating any runtime dependency on external files.
 * **Standalone CLI Packaging**: Built as a standalone zero-dependency CLI executable via `npm run bundle:cli`. To keep the marketplace `.vsix` extension bundle lightweight, `bin/**` is excluded from the VSIX archive via `.vscodeignore` and sanitized in `scripts/package.js`, allowing the CLI to be distributed independently (e.g. for headless CI/CD containers) without inflating the editor extension package. Packaging verification in `scripts/package.js` inspects the generated archive to guarantee `THIRD_PARTY_LICENSES.md` is included and `bin/**` is excluded.
-* **Pre-Publish Automated Guardrails**: Packaging scripts invoke `scripts/check-no-stripe-test-links.js` during `npm run prepublish` to ensure zero sandbox test URLs (`buy.stripe.com/test_`) reach release packages.
+* **Pre-Publish Automated Guardrails**: Packaging scripts invoke `scripts/check-no-stripe-test-links.js` during `npm run prepublish` to ensure zero sandbox test URLs (`sandbox-buy.paddle.com`, `buy.stripe.com/test_`) reach release packages.
 
 ### 8.2. Git Mergetool Backend (`treeresolve merge`)
 

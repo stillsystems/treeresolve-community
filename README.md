@@ -189,7 +189,7 @@ TreeResolve uses a Reverse Trial model: install the extension and enjoy all Pro 
 
 | Feature | Community Tier (Free Forever) | Pro Tier ($10/mo or $99/yr) | Enterprise Tier ($20/seat/mo or $199/seat/yr)* |
 | :--- | :---: | :---: | :---: |
-| **Direct Checkout** | [Install Free](https://marketplace.visualstudio.com/items?itemName=stillsystems.treeresolve) | [**Get Pro ($99/yr)**](https://buy.stripe.com/test_eVq7sKagT10N5BlehDgUM02) · [($10/mo)](https://buy.stripe.com/test_8x28wOfBd38V9RB0qNgUM01) | [**Buy Fleet Seats**](https://buy.stripe.com/test_7sY4gy2OreRD4xh3CZgUM03) · [Inquire](https://stillsystems.github.io/treeresolve-community/#enterprise) |
+| **Direct Checkout** | [Install Free](https://marketplace.visualstudio.com/items?itemName=stillsystems.treeresolve) | [**Get Pro ($99/yr)**](https://sandbox-buy.paddle.com/checkout?price=pri_01m2zxfdbpg00xay389wj2pt1b) · [($10/mo)](https://sandbox-buy.paddle.com/checkout?price=pri_01m2zxb0htcnexpf56mj140y4n) | [**Buy Fleet Seats**](https://sandbox-buy.paddle.com/checkout?price=pri_01m2zxykkb4yp3qdz3bftd9wxq) · [Inquire](https://stillsystems.github.io/treeresolve-community/#enterprise) |
 | **Target User** | Open Source / Hobbyists | Individual Professionals | Engineering Teams & Enterprise Fleets |
 | **3-Pane Visual Diffing** | ✅ Included | ✅ Included | ✅ Included |
 | **Dynamic Ribbon Alignment** | ✅ Included | ✅ Included | ✅ Included |
