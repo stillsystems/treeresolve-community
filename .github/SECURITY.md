@@ -1,6 +1,6 @@
 # Security Policy
 
-Still Systems and the TreeResolve team take security and privacy seriously. TreeResolve is designed with an offline-first architecture, air-gapped cryptographic licensing, and a strict Content Security Policy to protect your source code.
+Still Systems and the TreeResolve team take security and privacy seriously. TreeResolve is designed with an offline-first architecture, air-gapped cryptographic licensing, and a strict Content Security Policy to protect your source code. See [PRIVACY.md](../PRIVACY.md) for data-handling practices.
 
 ---
 

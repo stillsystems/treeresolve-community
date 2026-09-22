@@ -7,10 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.5] - 2026-09-22
+
 ### Licensing & Billing
 
 - **Paddle Billing Integration**: Migrated checkout and license delivery from Stripe to Paddle Billing, including automated license issuance on purchase and automated revocation on cancellation or failed payment.
 - **In-Page Checkout**: The community page now opens checkout in an in-page overlay instead of redirecting to an external page, with support for deep-linked checkout via URL parameters.
+
+### Marketplace Compliance
+
+- **Trial Pricing Label**: Declared `"pricing": "Trial"` in the extension manifest for accurate Visual Studio Marketplace labeling of the reverse-trial model.
+- **Privacy & Support Policies**: Added `PRIVACY.md` and `SUPPORT.md`, linked from the README and community sync set.
+- **Manifest Hygiene**: Set publisher author metadata, gallery banner, Q&A URL, and corrected Marketplace categories to `Other`.
+- **Documentation Alignment**: Synchronized version badges, VS Code engine requirement (`^1.138.0`), workspace-trust (`limited`), and default licensing endpoint copy with runtime behavior.
+- **Packaging Guardrails**: Fixed prepublish checkout-link scan path (`tools/check-no-stripe-test-links.js`).
+- **Licensing Default**: Standardized the default licensing gateway to `https://licensing.treeresolve.still.systems`.
 
 ## [0.4.4] - 2026-09-11
 

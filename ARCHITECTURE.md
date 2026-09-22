@@ -1,4 +1,4 @@
-# Architecture: TreeResolve (v0.4.4 Enterprise Production Specification)
+# Architecture: TreeResolve (v0.4.5 Enterprise Production Specification)
 
 TreeResolve is an offline-first, deterministic 3-way merge conflict resolution engine for VS Code. It replaces raw line-based conflict markers with an off-thread, AST-driven auto-resolution pipeline and a virtualized, hardware-accelerated visual merge viewport.
 
@@ -261,7 +261,7 @@ TreeResolve enforces defense-in-depth within the 3-way merge canvas:
 ### 7.4. Configuration Scoping & Workspace Trust Enforcement
 
 * **Machine-Scoped Gateway Configuration**: In `package.json`, `treeresolve.licensingEndpoint` specifies `"scope": "machine"`. This ensures that cloned or untrusted repositories cannot commit `.vscode/settings.json` overrides to silently redirect licensing, trial, or telemetry traffic to an attacker-controlled endpoint.
-* **Workspace Trust Policy**: TreeResolve declares `capabilities.untrustedWorkspaces.supported = false`. Running AST parsers and invoking Git plumbing operations is restricted to trusted workspaces.
+* **Workspace Trust Policy**: TreeResolve declares `capabilities.untrustedWorkspaces.supported = "limited"`. Read-only 3-way AST diffing is permitted in untrusted workspaces; disk write-backs and Git staging are blocked until trust is granted.
 * **Git CLI Argument Injection Prevention**: Low-level plumbing invocations insert `--` argument separators before repository-derived file paths (e.g. `git add -- <file>`) to eliminate parameter injection vectors from malicious filenames.
 
 ---
@@ -273,8 +273,8 @@ TreeResolve provides a zero-dependency standalone CLI companion (`bin/treeresolv
 ### 8.1. Build & Bundling Pipeline (`npm run bundle:cli`)
 
 * **Self-Contained Executable & Fail-Fast Runtime Verification**: The standalone executable `bin/treeresolve.js` is bundled via esbuild targeting Node 20. It enforces a fail-fast runtime verification check (`nodeMajorVersion >= 20`) at process entry before any modules are loaded to guarantee availability of native WebCrypto (`crypto.subtle`) and stream primitives in bare container runners, and embeds `jose`, internal Tree-sitter WASM loaders, normalizers, and isolated mock shims, eliminating any runtime dependency on external files.
-* **Standalone CLI Packaging**: Built as a standalone zero-dependency CLI executable via `npm run bundle:cli`. To keep the marketplace `.vsix` extension bundle lightweight, `bin/**` is excluded from the VSIX archive via `.vscodeignore` and sanitized in `scripts/package.js`, allowing the CLI to be distributed independently (e.g. for headless CI/CD containers) without inflating the editor extension package. Packaging verification in `scripts/package.js` inspects the generated archive to guarantee `THIRD_PARTY_LICENSES.md` is included and `bin/**` is excluded.
-* **Pre-Publish Automated Guardrails**: Packaging scripts invoke `scripts/check-no-stripe-test-links.js` during `npm run prepublish` to ensure zero sandbox test URLs (`sandbox-buy.paddle.com`, `buy.stripe.com/test_`) reach release packages.
+* **Standalone CLI Packaging**: Built as a standalone zero-dependency CLI executable via `npm run bundle:cli`. To keep the marketplace `.vsix` extension bundle lightweight, `bin/**` is excluded from the VSIX archive via `.vscodeignore` and sanitized in `tools/package.js`, allowing the CLI to be distributed independently (e.g. for headless CI/CD containers) without inflating the editor extension package. Packaging verification in `tools/package.js` inspects the generated archive to guarantee `THIRD_PARTY_LICENSES.md` is included and `bin/**` is excluded.
+* **Pre-Publish Automated Guardrails**: Packaging scripts invoke `tools/check-no-stripe-test-links.js` during `npm run prepublishOnly` to ensure zero sandbox test URLs (`sandbox-buy.paddle.com`, `buy.stripe.com/test_`) reach release packages.
 
 ### 8.2. Git Mergetool Backend (`treeresolve merge`)
 

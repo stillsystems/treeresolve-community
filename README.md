@@ -1,13 +1,13 @@
 # TreeResolve
 
-[![VS Code Marketplace](https://img.shields.io/badge/VS_Code_Marketplace-v0.4.4-007ACC?logo=visualstudiocode&logoColor=white)](https://marketplace.visualstudio.com/items?itemName=stillsystems.treeresolve)
+[![VS Code Marketplace](https://img.shields.io/badge/VS_Code_Marketplace-v0.4.5-007ACC?logo=visualstudiocode&logoColor=white)](https://marketplace.visualstudio.com/items?itemName=stillsystems.treeresolve)
 [![Open VSX](https://img.shields.io/open-vsx/v/stillsystems/treeresolve?color=purple)](https://open-vsx.org/extension/stillsystems/treeresolve)
 [![License](https://img.shields.io/badge/License-Proprietary-blue.svg)](LICENSE)
-[![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.85.0-brightgreen)](https://code.visualstudio.com)
+[![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.138.0-brightgreen)](https://code.visualstudio.com)
 [![Website](https://img.shields.io/badge/Website-stillsystems.github.io%2Ftreeresolve--community-blueviolet)](https://stillsystems.github.io/treeresolve-community)
 
 **Deterministic, syntax-aware 3-way merge conflict resolution for VS Code.**  
-Turn tedious manual rebase slogs into effortless operations with zero hallucinations, zero cloud lock-in, and instant local execution.
+Turn tedious manual rebase slogs into effortless operations with zero hallucinations, local-first execution, and no source-code egress to LLMs or cloud merge services.
 
 ---
 
@@ -18,13 +18,13 @@ Standard Git and native merge tools operate strictly on raw text lines. When two
 **TreeResolve replaces line-based guesswork with local syntax comprehension:**
 
 * **Deterministic Syntax Auto-Resolution**: Analyzes code structurally to safely auto-resolve non-colliding syntax elements (disjoint imports and JSON keys).
-* **Zero AI / Zero Hallucinations**: 100% programmatic and rule-driven. Your code is never transmitted to an LLM or third-party cloud service—merges are provably correct, offline-ready, and reproducible.
+* **Zero AI / Zero Hallucinations**: 100% programmatic and rule-driven. Your code is never transmitted to an LLM or third-party cloud merge service—merges are provably correct, reproducible, and work offline once licensed (or during local editing).
 * **Synchronized 3-Way Canvas**: A smooth visual editor with dynamic Bézier ribbons linking your branches (`Ours`, `Merged Result`, and `Theirs`).
-* **Responsive Local Performance**: Efficient diff alignment and canvas rendering without external cloud dependencies.
+* **Responsive Local Performance**: Efficient diff alignment and canvas rendering without sending source code to external services.
 
 ---
 
-![TreeResolve 3-Way Merge Editor Viewport](images/preview.png)
+![TreeResolve 3-Way Merge Editor Viewport](https://stillsystems.github.io/treeresolve-community/images/preview.png)
 
 ---
 
@@ -40,7 +40,7 @@ TreeResolve identifies the structural context of conflicting blocks. If two chan
 
 ### 🎨 Visual 3-Pane Viewport
 
-![3-Way Diff with Base Common Ancestor](images/diff3-base.png)
+![3-Way Diff with Base Common Ancestor](https://stillsystems.github.io/treeresolve-community/images/diff3-base.png)
 
 * **Dynamic Bézier Ribbons**: Visually connects changes between `Current (Ours)`, `Merged Result`, and `Incoming (Theirs)` panes with hardware-accelerated curves.
 * **Base Ancestor Inspection**: 1-click expandable drawer revealing the exact common ancestor code both branches diverged from.
@@ -49,7 +49,8 @@ TreeResolve identifies the structural context of conflicting blocks. If two chan
 
 ### 🔒 Offline-First & Enterprise-Ready
 
-* **Air-Gapped Operation**: Runs entirely on your local machine. Zero source code egress, zero cloud dependencies.
+* **Local Merge Execution**: Parsing, AST analysis, and conflict resolution run entirely on your machine. Source code is never transmitted for merging.
+* **Air-Gapped Licensing**: Offline wildcard / enterprise keys verify via Ed25519 locally with no network calls. Reverse trials and floating leases contact the licensing gateway only for ticket issuance/renewal (see [Privacy](PRIVACY.md)).
 * **Native Undo/Redo**: Integrates directly with VS Code's `WorkspaceEdit` API—standard `Cmd+Z`, `Cmd+Shift+Z`, and `Cmd+S` work seamlessly out of the box.
 
 ---
@@ -75,7 +76,7 @@ TreeResolve identifies the structural context of conflicting blocks. If two chan
 
 TreeResolve's syntax engine expands language support by shipping dedicated language-specific normalizers.
 
-### Currently Supported (v0.4.4)
+### Currently Supported (v0.4.5)
 
 * [x] **TypeScript / JavaScript**: Disjoint imports (named, aliased, side-effect, and type-only) with true 3-way deletion handling and AST declaration merging.
 * [x] **JSON / JSONC**: Nested recursive 3-way key deduplication and conflict detection.
@@ -211,9 +212,9 @@ For organizational procurement, volume quotes, InfoSec assessments, and MDM roll
 
 ## Workspace Trust & Security
 
-TreeResolve requires a **Trusted Workspace** (`capabilities.untrustedWorkspaces.supported = false`) to operate safely. Because merge resolution executes Tree-sitter parsers and invokes local Git plumbing operations against repository contents, features are disabled in VS Code Restricted Mode to prevent unauthorized execution against untrusted or unverified codebases.
+TreeResolve supports **limited** operation in untrusted workspaces (`capabilities.untrustedWorkspaces.supported = "limited"`). You can view and analyze 3-way AST diffs in Restricted Mode; automatic staging and disk write-backs remain disabled until the workspace is trusted. Full merge write-back and Git plumbing require a Trusted Workspace because Tree-sitter parsers and local Git operations run against repository contents.
 
-### Security Hardening & Defense-in-Depth (v0.4.4)
+### Security Hardening & Defense-in-Depth (v0.4.5)
 
 * **Atomic Save Architecture**: User resolutions (`Accept Ours`, `Accept Theirs`, `Accept Both`) are accumulated safely in memory without intermediate buffer rewrites. All decisions commit atomically upon save via a single `WorkspaceEdit` with conflict marker integrity validation, completely eliminating state desynchronization races.
 * **Bounded Tree-sitter WASM Execution**: Parsers enforce a strict 30ms CPU execution ceiling (`parser.setTimeoutMicros(30000)`) with an upfront 5,000-character line pre-flight filter that safely bypasses minified bundles and pathological lines.
@@ -243,11 +244,11 @@ TreeResolve contributes a custom 3-way merge editor (`treeresolve.mergeEditor`) 
 
 ## Telemetry, Licensing & Privacy Disclosure
 
-TreeResolve is built with an **offline-first, privacy-respecting** architecture:
+TreeResolve is built with an **offline-first, privacy-respecting** architecture. Full details are in [PRIVACY.md](PRIVACY.md).
 
-* **Zero Source Code Transmission**: Source code, AST tokens, file paths, repository URLs, branch names, and developer identities are **never** collected or transmitted.
+* **Zero Source Code Transmission**: Source code, AST tokens, file paths, repository URLs, branch names, and developer identities are **never** collected or transmitted for merge analysis.
 * **Anonymous Heuristic Metrics**: When `treeresolve.enableTelemetry` is active, TreeResolve measures the aggregate percentage of deterministic auto-merges accepted (`autoAcceptanceRatePercent`), resolution duration (`durationMs`), and coarse syntax error codes (e.g. `ERR_PARSE_SYNTAX_ERROR` without raw text snippets).
-* **Licensing & Reverse Trial Device Fingerprinting (Zero PII / Privacy-Preserving)**: To validate 14-day reverse trials and renew floating enterprise leases without requiring user account registration or passwords, TreeResolve computes an anonymized SHA-256 hash of the machine environment (`platform:arch:machineId`, derived from VS Code's anonymous machine identifier or an anonymous persistent UUID in standalone CLI, truncated to 32 hex characters). It transmits **zero personally identifiable information (no usernames, hostnames, IP addresses, or MAC addresses)** solely to the configured `licensingEndpoint`. This fingerprint is never linked to source code, repositories, or telemetry metrics. Paid offline wildcard licenses and air-gapped deployments never contact the endpoint.
+* **Licensing & Reverse Trial Device Fingerprinting**: To validate 14-day reverse trials and renew floating enterprise leases without requiring user account registration or passwords, TreeResolve computes an anonymized SHA-256 hash of the machine environment (`platform:arch:machineId`, derived from VS Code's anonymous machine identifier or an anonymous persistent UUID in standalone CLI, truncated to 32 hex characters). It transmits **no usernames, hostnames, or MAC addresses** solely to the configured `licensingEndpoint` (default: `https://licensing.treeresolve.still.systems`). This fingerprint is never linked to source code, repositories, or telemetry metrics. Paid offline wildcard licenses and air-gapped deployments never contact the endpoint for validation.
 * **Workspace Trust**: Supports Restricted Mode (`"limited"`). You can safely view and analyze 3-way AST diffs in untrusted workspaces; direct disk write-backs and Git staging commands are disabled until workspace trust is granted.
 * **Full User Control (Opt-Out)**: You can disable anonymous telemetry reporting at any time by configuring:
 
@@ -259,6 +260,12 @@ TreeResolve is built with an **offline-first, privacy-respecting** architecture:
 
 ---
 
+## Support
+
+See [SUPPORT.md](SUPPORT.md) for community issues, Pro billing, and Enterprise contact paths.
+
+---
+
 ## License
 
-Proprietary. Copyright (c) 2026 Still Systems, LLC. All rights reserved. See [LICENSE](LICENSE) for terms. Third-party open source notices and licenses are documented in [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
+Proprietary. Copyright (c) 2026 Still Systems, LLC. All rights reserved. See [LICENSE](LICENSE) for terms, [PRIVACY.md](PRIVACY.md) for privacy practices, and [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md) for open-source notices.
