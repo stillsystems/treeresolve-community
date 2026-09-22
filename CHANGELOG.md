@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Privacy & Support Policies**: Added `PRIVACY.md` and `SUPPORT.md`, linked from the README and community sync set.
 - **Manifest Hygiene**: Set publisher author metadata, gallery banner, Q&A URL, and corrected Marketplace categories to `Other`.
 - **Documentation Alignment**: Synchronized version badges, VS Code engine requirement (`^1.138.0`), workspace-trust (`limited`), and default licensing endpoint copy with runtime behavior.
-- **Packaging Guardrails**: Fixed prepublish checkout-link scan path (`tools/check-no-stripe-test-links.js`).
+- **Packaging Guardrails**: Prepublish checkout-link scan (`tools/check-no-test-checkout-links.js`) blocks Paddle sandbox URLs from release packages.
 - **Licensing Default**: Standardized the default licensing gateway to `https://licensing.treeresolve.still.systems`.
 
 ## [0.4.4] - 2026-09-11
