@@ -95,10 +95,10 @@ TreeResolve's syntax engine expands language support by shipping dedicated langu
 
 ### In Active Development (v0.5.0)
 
-Product milestone, separate from the 0.4.5 marketplace go-live. Implemented on main; not a gate for the Live billing cutover or the VSIX upload.
+Product milestone, separate from the 0.4.5 marketplace go-live. Token acceptance apply-path is on main; AST-backed semantic badges in the merge canvas are still being wired.
 
-* [x] **Intra-Line Interactive Token Acceptance**: Micro-level sub-line segment picking with 3-way token reconciliation.
-* [x] **Semantic Intra-Line Token Highlighting**: Visual micro-highlighting and syntax badges for variable renames, argument mutations, type annotations, and literal values.
+* [x] **Intra-Line Interactive Token Acceptance**: Micro-level sub-line segment picking with 3-way token reconciliation (host `TokenDiffEngine` + webview pickers).
+* [ ] **Semantic Intra-Line Token Highlighting**: `SemanticTokenClassifier` is implemented and unit-tested; merge-canvas rendering still uses a heuristic fallback until the host classifier is wired into the webview protocol.
 
 > 💡 **Have a feature idea, language request, or bug report?**  
 > Join the conversation or open an issue in the [TreeResolve Community Tracker](https://github.com/stillsystems/treeresolve-community/issues).
