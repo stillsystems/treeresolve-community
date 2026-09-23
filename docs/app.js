@@ -203,20 +203,32 @@ import (
     });
   }
 
-  // 3. Paddle.js Checkout Integration
-  const PADDLE_CLIENT_TOKEN = 'test_a4cc28e4971c99f1dbbbcdfdfa0';
+  // 3. Paddle.js Checkout Integration (token injected via docs/config.js — never commit secrets)
+  const docsConfig = window.__TREERESOLVE_DOCS__ || {};
+  const paddleCfg = docsConfig.paddle || {};
+  const paddleToken = paddleCfg.clientToken;
+  const paddleEnvironment = paddleCfg.environment || 'sandbox';
+  const prices = paddleCfg.prices || {};
 
-  if (window.Paddle) {
-    Paddle.Environment.set('sandbox');
+  if (window.Paddle && paddleToken) {
+    if (paddleEnvironment === 'sandbox') {
+      Paddle.Environment.set('sandbox');
+    }
     Paddle.Initialize({
-      token: PADDLE_CLIENT_TOKEN,
+      token: paddleToken,
       eventCallback: (data) => {
         console.log('Paddle event:', data);
       }
     });
+  } else if (!paddleToken) {
+    console.warn('Paddle client token not configured. Copy docs/config.example.js to docs/config.js for local preview.');
   }
 
   function openCheckout(priceId) {
+    if (!paddleToken) {
+      console.warn('Checkout unavailable: Paddle client token not configured');
+      return;
+    }
     if (window.Paddle) {
       Paddle.Checkout.open({
         items: [{ priceId: priceId, quantity: 1 }]
@@ -243,10 +255,10 @@ import (
   if (directPrice) {
     setTimeout(() => openCheckout(directPrice), 500);
   } else if (directCheckout === 'pro' || directCheckout === 'yearly') {
-    setTimeout(() => openCheckout('pri_01m2zxfdbpg00xay389wj2pt1b'), 500);
+    setTimeout(() => openCheckout(prices.proAnnual || 'pri_01m2zxfdbpg00xay389wj2pt1b'), 500);
   } else if (directCheckout === 'monthly') {
-    setTimeout(() => openCheckout('pri_01m2zxb0htcnexpf56mj140y4n'), 500);
+    setTimeout(() => openCheckout(prices.proMonthly || 'pri_01m2zxb0htcnexpf56mj140y4n'), 500);
   } else if (directCheckout === 'enterprise') {
-    setTimeout(() => openCheckout('pri_01m2zxykkb4yp3qdz3bftd9wxq'), 500);
+    setTimeout(() => openCheckout(prices.enterprise || 'pri_01m2zxykkb4yp3qdz3bftd9wxq'), 500);
   }
 });
