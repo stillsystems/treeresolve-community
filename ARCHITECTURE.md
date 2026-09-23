@@ -349,7 +349,7 @@ TreeResolve implements an offline-first, zero-knowledge telemetry system focused
 ### 9.2. Device Fingerprinting Disclosure (Reverse Trials & Floating Leases)
 
 * **Cryptographic Hashing (Zero PII / Privacy-Preserving)**: To issue 14-day reverse trials and renew floating enterprise leases without passwords or account registration, TreeResolve computes a SHA-256 hash of `platform:arch:machineId` (derived from `vscode.env.machineId` or an anonymous persistent UUID in standalone CLI, truncated to 32 hex chars; zero PII).
-* **Isolation**: This fingerprint is transmitted solely to the configured licensing gateway (`https://licensing.treeresolve.still.systems`) for lease validation and is never correlated with telemetry metrics, source code, or repository contents. Offline wildcard licenses never contact the network.
+* **Isolation**: This fingerprint is transmitted solely to the configured licensing gateway (`https://treeresolve-licensing.still-systems.workers.dev`) for lease validation and is never correlated with telemetry metrics, source code, or repository contents. Offline wildcard licenses never contact the network.
 
 ### 9.3. Zero Data Egress Guarantee
 

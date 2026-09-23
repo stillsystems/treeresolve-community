@@ -233,7 +233,7 @@ TreeResolve supports **limited** operation in untrusted workspaces (`capabilitie
 | `treeresolve.renderRibbons` | `true` | Render dynamic Bézier ribbons between diff panes. |
 | `treeresolve.scrollSynchronization` | `true` | Synchronize viewport scrolling based on aligned code blocks. |
 | `treeresolve.stageOnSave` | `false` | Automatically run `git add` when saving a fully resolved merge file (strictly blocked if raw conflict markers remain). |
-| `treeresolve.licensingEndpoint` | `https://licensing.treeresolve.still.systems` | Licensing and trial ticketing gateway URL (`scope: machine`). Default: `https://licensing.treeresolve.still.systems`. |
+| `treeresolve.licensingEndpoint` | `https://treeresolve-licensing.still-systems.workers.dev` | Licensing and trial ticketing gateway URL (`scope: machine`). Default: `https://treeresolve-licensing.still-systems.workers.dev`. |
 | `treeresolve.enableTelemetry` | `true` | Enable anonymous telemetry reporting of auto-merge acceptance rates and resolution time. |
 
 ### Custom Editor Registration & Scoping
@@ -248,7 +248,7 @@ TreeResolve is built with an **offline-first, privacy-respecting** architecture.
 
 * **Zero Source Code Transmission**: Source code, AST tokens, file paths, repository URLs, branch names, and developer identities are **never** collected or transmitted for merge analysis.
 * **Anonymous Heuristic Metrics**: When `treeresolve.enableTelemetry` is active, TreeResolve measures the aggregate percentage of deterministic auto-merges accepted (`autoAcceptanceRatePercent`), resolution duration (`durationMs`), and coarse syntax error codes (e.g. `ERR_PARSE_SYNTAX_ERROR` without raw text snippets).
-* **Licensing & Reverse Trial Device Fingerprinting**: To validate 14-day reverse trials and renew floating enterprise leases without requiring user account registration or passwords, TreeResolve computes an anonymized SHA-256 hash of the machine environment (`platform:arch:machineId`, derived from VS Code's anonymous machine identifier or an anonymous persistent UUID in standalone CLI, truncated to 32 hex characters). It transmits **no usernames, hostnames, or MAC addresses** solely to the configured `licensingEndpoint` (default: `https://licensing.treeresolve.still.systems`). This fingerprint is never linked to source code, repositories, or telemetry metrics. Paid offline wildcard licenses and air-gapped deployments never contact the endpoint for validation.
+* **Licensing & Reverse Trial Device Fingerprinting**: To validate 14-day reverse trials and renew floating enterprise leases without requiring user account registration or passwords, TreeResolve computes an anonymized SHA-256 hash of the machine environment (`platform:arch:machineId`, derived from VS Code's anonymous machine identifier or an anonymous persistent UUID in standalone CLI, truncated to 32 hex characters). It transmits **no usernames, hostnames, or MAC addresses** solely to the configured `licensingEndpoint` (default: `https://treeresolve-licensing.still-systems.workers.dev`). This fingerprint is never linked to source code, repositories, or telemetry metrics. Paid offline wildcard licenses and air-gapped deployments never contact the endpoint for validation.
 * **Workspace Trust**: Supports Restricted Mode (`"limited"`). You can safely view and analyze 3-way AST diffs in untrusted workspaces; direct disk write-backs and Git staging commands are disabled until workspace trust is granted.
 * **Full User Control (Opt-Out)**: You can disable anonymous telemetry reporting at any time by configuring:
 

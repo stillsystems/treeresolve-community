@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Licensing gateway default**: Default `treeresolve.licensingEndpoint` is now `https://treeresolve-licensing.still-systems.workers.dev` (workers.dev). Custom domain deferred until Still Systems registers a domain it owns.
+
 ## [0.4.5] - 2026-09-22
 
 ### Licensing & Billing
@@ -21,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Manifest Hygiene**: Set publisher author metadata, gallery banner, Q&A URL, and corrected Marketplace categories to `Other`.
 - **Documentation Alignment**: Synchronized version badges, VS Code engine requirement (`^1.138.0`), workspace-trust (`limited`), and default licensing endpoint copy with runtime behavior.
 - **Packaging Guardrails**: Prepublish checkout-link scan (`tools/check-no-test-checkout-links.js`) blocks Paddle sandbox URLs from release packages.
-- **Licensing Default**: Standardized the default licensing gateway to `https://licensing.treeresolve.still.systems`.
+- **Licensing Default**: Standardized the default licensing gateway to `https://treeresolve-licensing.still-systems.workers.dev`.
 
 ## [0.4.4] - 2026-09-11
 

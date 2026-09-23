@@ -30,7 +30,7 @@ We do **not** collect or transmit:
 
 To issue 14-day reverse trials and renew floating leases without requiring an account, TreeResolve may send an anonymized SHA-256 fingerprint derived from `platform:arch:machineId` (VS Code machine ID, or a persistent anonymous UUID in the CLI), truncated to 32 hex characters, plus a salted domain identifier for seat binding.
 
-This request goes only to the configured licensing endpoint (default: `https://licensing.treeresolve.still.systems`, or your enterprise gateway). Offline wildcard / air-gapped licenses do not contact the network for validation.
+This request goes only to the configured licensing endpoint (default: `https://treeresolve-licensing.still-systems.workers.dev`, or your enterprise gateway). Offline wildcard / air-gapped licenses do not contact the network for validation.
 
 ### 2.3. Anonymous product telemetry (optional)
 
