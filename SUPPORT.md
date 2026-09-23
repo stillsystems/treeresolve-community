@@ -21,12 +21,21 @@ Before opening an issue, include:
 
 ## Pro subscribers
 
-Self-serve billing, invoices, and cancellations are handled through **Paddle** (Merchant of Record) via the checkout / customer portal links on the [product site](https://stillsystems.github.io/treeresolve-community/#pricing).
+Self-serve billing, invoices, and cancellations are handled through **Paddle** (Merchant of Record):
+
+* VS Code: Command Palette → `TreeResolve: Open Billing Portal`
+* CLI: `npx treeresolve portal [licenseKey]` (prints `GET /api/v1/portal?licenseKey=` URL)
+* Product site checkout: [pricing](https://stillsystems.github.io/treeresolve-community/#pricing)
 
 License activation:
 
 * VS Code: Command Palette → `TreeResolve: Install Pro License Key`
 * CLI / CI: `npx treeresolve license <token>` or `TREERESOLVE_LICENSE`
+
+After a laptop migration or salt reset, reclaim your floating lease:
+
+* VS Code: `TreeResolve: Reclaim Floating Lease (Machine Migration)`
+* CLI: `npx treeresolve reclaim [licenseKey]`
 
 ---
 

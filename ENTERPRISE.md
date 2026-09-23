@@ -106,7 +106,24 @@ To eliminate repository name leakage under network inspection, TreeResolve deriv
 * **Workstation Migration & Salt Regeneration**: If an engineer migrates laptops, re-images an operating system, or clears local application storage, a new random installation salt is generated. This alters the locally derived repository `domainId`.
 * **Enterprise Mitigation**:
   * **Organization Wildcard Licenses (`domainId: '*'`)**: Enterprise accounts are authenticated at the organization tier and are completely unaffected by local salt rotation across developer laptops.
-  * **Floating Lease Reclaiming**: The Still Systems licensing gateway reconciles floating seats against authenticated user identity and lease expiration timestamps rather than client-generated repository salts, preventing duplicate seat consumption during machine refreshes.
+  * **Floating Lease Reclaiming**: After a machine migration or salt reset, reclaim a 30-day floating lease for the new `domainId`:
+
+    ```bash
+    # CLI
+    npx treeresolve reclaim <licenseKey>
+
+    # VS Code Command Palette
+    TreeResolve: Reclaim Floating Lease (Machine Migration)
+    ```
+
+    This calls `POST /api/v1/lease/reclaim` on the licensing worker and stores the new lease for offline verification.
+  * **Self-Serve Billing Portal**: Pro subscribers can open invoices, update payment methods, or cancel via:
+
+    ```bash
+    npx treeresolve portal [licenseKey]
+    ```
+
+    Or in VS Code: `TreeResolve: Open Billing Portal` (routes through `GET /api/v1/portal?licenseKey=`).
 
 ---
 

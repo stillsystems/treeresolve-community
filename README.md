@@ -95,7 +95,7 @@ TreeResolve's syntax engine expands language support by shipping dedicated langu
 
 ### In Active Development (v0.5.0)
 
-Product milestone, separate from the 0.4.5 marketplace go-live. Token acceptance and AST-backed semantic badges are on main; floating-lease client wiring remains.
+Product milestone, separate from the 0.4.5 marketplace go-live. Token acceptance, AST semantic badges, and floating-lease renew / portal / reclaim clients are on main.
 
 * [x] **Intra-Line Interactive Token Acceptance**: Micro-level sub-line segment picking with 3-way token reconciliation (host `TokenDiffEngine` + webview pickers).
 * [x] **Semantic Intra-Line Token Highlighting**: Host classifies tokens (`SemanticTokenClassifier`) and ships `lineTokenDiffs` on `INIT_SESSION`; webview renders AST/heuristic badges without a duplicated lexer.
