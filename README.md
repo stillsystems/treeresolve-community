@@ -95,6 +95,8 @@ TreeResolve's syntax engine expands language support by shipping dedicated langu
 
 ### In Active Development (v0.5.0)
 
+Product milestone, separate from the 0.4.5 marketplace go-live. Implemented on main; not a gate for the Live billing cutover or the VSIX upload.
+
 * [x] **Intra-Line Interactive Token Acceptance**: Micro-level sub-line segment picking with 3-way token reconciliation.
 * [x] **Semantic Intra-Line Token Highlighting**: Visual micro-highlighting and syntax badges for variable renames, argument mutations, type annotations, and literal values.
 

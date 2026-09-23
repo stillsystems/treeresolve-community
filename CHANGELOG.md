@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Product (v0.5.0 — not the marketplace go-live)
+
+Ships on its own version. The 0.4.5 go-live (Live Paddle cutover and Marketplace upload) does not wait on this work and does not bump the package to 0.5.0.
+
+- **Intra-Line Interactive Token Acceptance**: Sub-line segment picking with 3-way token reconciliation.
+- **Semantic Intra-Line Token Highlighting**: Syntax badges for renames, argument changes, type annotations, and literal values.
+
 ### Changed
 
 - **Licensing gateway default**: Default `treeresolve.licensingEndpoint` is now `https://treeresolve-licensing.still-systems.workers.dev` (workers.dev). Custom domain deferred until Still Systems registers a domain it owns.
