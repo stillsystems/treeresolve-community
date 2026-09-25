@@ -184,7 +184,13 @@ import (
       const data = Object.fromEntries(formData.entries());
 
       try {
-        const response = await fetch('https://treeresolve-licensing.still-systems.workers.dev/api/v1/inquiry', {
+        // Override via docs/config.js → licensingEndpoint once custom domain is live.
+        // Canonical target: https://licensing.stillsystems.com
+        const licensingBase = (
+          docsConfig.licensingEndpoint ||
+          'https://treeresolve-licensing.still-systems.workers.dev'
+        ).replace(/\/+$/, '');
+        const response = await fetch(`${licensingBase}/api/v1/inquiry`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

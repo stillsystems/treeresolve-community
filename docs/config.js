@@ -9,6 +9,7 @@ window.__TREERESOLVE_DOCS__ = {
       "enterprise": "pri_01m2zxykkb4yp3qdz3bftd9wxq"
     }
   },
+  "licensingEndpoint": "https://treeresolve-licensing.still-systems.workers.dev",
   "analytics": {
     "cloudflareToken": "bcb511aa13df46fc8743b888d9b1c935"
   }

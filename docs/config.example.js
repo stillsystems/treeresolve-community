@@ -22,6 +22,9 @@ window.__TREERESOLVE_DOCS__ = {
       enterprise: 'pri_01m2zxykkb4yp3qdz3bftd9wxq'
     }
   },
+  // After DNS cutover: set to 'https://licensing.stillsystems.com'
+  // (leave unset to keep workers.dev for enterprise inquiry POSTs).
+  licensingEndpoint: '',
   analytics: {
     // Cookie-free pageviews (GitHub Pages is not CF-proxied — manual beacon required)
     cloudflareToken: ''

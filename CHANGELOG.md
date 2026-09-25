@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Ready for launch cutover
+
+- **Licensing custom domain (ready-to-flip)**: Canonical launch host is `https://licensing.stillsystems.com`. Client defaults remain on `https://treeresolve-licensing.still-systems.workers.dev` until `USE_CUSTOM_LICENSING_DOMAIN` is flipped after Cloudflare Custom Domain + DNS cutover. Wrangler Custom Domain route block is prepared (commented) for the licensing Worker deploy config.
+
 ## [1.0.0] - 2026-09-25
 
 ### Launch
