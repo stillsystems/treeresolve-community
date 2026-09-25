@@ -10,7 +10,6 @@ window.__TREERESOLVE_DOCS__ = {
     }
   },
   "analytics": {
-    "cloudflareToken": "bcb511aa13df46fc8743b888d9b1c935",
-    "plausibleDomain": ""
+    "cloudflareToken": "bcb511aa13df46fc8743b888d9b1c935"
   }
 };

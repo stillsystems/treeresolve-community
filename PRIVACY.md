@@ -13,7 +13,7 @@ This Privacy Policy describes how TreeResolve (the VS Code extension, standalone
 * **Optional anonymous product telemetry** may be sent when enabled.
 * **Licensing / trial requests** may send an anonymized machine fingerprint to our licensing gateway.
 * **Payments** are processed by our Merchant of Record (Paddle); we do not store full payment card numbers.
-* **Marketing site analytics** (optional) may measure aggregate pageviews and conversion events on the public documentation site only — never inside the extension or CLI.
+* **Marketing site analytics** (optional) may measure aggregate pageviews on the public documentation site only — never inside the extension or CLI.
 
 ---
 
@@ -61,12 +61,9 @@ If you contact us (GitHub issues, enterprise inquiry forms, email), we process t
 
 ### 2.6. Public documentation site analytics (optional)
 
-The marketing / documentation site at [stillsystems.github.io/treeresolve-community](https://stillsystems.github.io/treeresolve-community/) may load privacy-oriented web analytics when configured by Still Systems:
+The marketing / documentation site at [stillsystems.github.io/treeresolve-community](https://stillsystems.github.io/treeresolve-community/) may load **Cloudflare Web Analytics** when configured by Still Systems — cookie-free aggregate pageviews and performance (no advertising profile).
 
-* **Cloudflare Web Analytics** — cookie-free aggregate pageviews and performance (no advertising profile)
-* **Plausible Analytics** (optional) — cookie-free custom events such as install clicks, checkout opens, and enterprise inquiry submissions
-
-These scripts run only on the public site. They are **not** bundled into the VS Code extension or CLI, and they do not receive source code or repository contents. If analytics tokens are unset, no third-party analytics scripts are loaded.
+This script runs only on the public site. It is **not** bundled into the VS Code extension or CLI, and it does not receive source code or repository contents. If the analytics token is unset, no third-party analytics script is loaded.
 
 ---
 
@@ -99,7 +96,7 @@ Where GDPR or similar laws apply, bases include contract performance, legitimate
 | Licensing / telemetry gateway | Still Systems (Cloudflare Workers / edge hosting) | Trials, leases, telemetry ingestion |
 | Payments | Paddle | Checkout, tax, subscription billing |
 | Issue tracking (optional) | GitHub | Public community support |
-| Documentation site analytics (optional) | Cloudflare Web Analytics / Plausible | Aggregate pageviews and conversion events on the public docs site only |
+| Documentation site analytics (optional) | Cloudflare Web Analytics | Aggregate pageviews on the public docs site only |
 
 ---
 

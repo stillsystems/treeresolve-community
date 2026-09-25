@@ -1,28 +1,12 @@
 /* ==========================================================================
-   TreeResolve — Interactive Simulator, Analytics & Enterprise Form Controller
+   TreeResolve — Interactive Simulator, Checkout & Enterprise Form Controller
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
   const docsConfig = window.__TREERESOLVE_DOCS__ || {};
 
-  // 0. Privacy-respecting analytics (optional — tokens from docs/config.js)
-  const analyticsCfg = docsConfig.analytics || {};
-  initAnalytics(analyticsCfg);
-  const track = createTracker(analyticsCfg);
-
-  document.querySelectorAll('[data-track]').forEach((el) => {
-    el.addEventListener('click', () => {
-      const name = el.getAttribute('data-track');
-      if (!name) return;
-      const props = {};
-      const placement = el.getAttribute('data-track-placement');
-      const plan = el.getAttribute('data-track-plan');
-      if (placement) props.placement = placement;
-      if (plan) props.plan = plan;
-      track(name, props);
-    });
-  });
-
+  // Optional Cloudflare Web Analytics (token from docs/config.js)
+  initCloudflareAnalytics(docsConfig.analytics || {});
   initMobileNav();
 
   // 1. Interactive Conflict Simulator Data
@@ -169,7 +153,6 @@ import (
       currentScenario = tab.dataset.lang;
       isResolved = false;
       updateSimulatorView();
-      track('simulator_tab', { lang: currentScenario });
     });
   });
 
@@ -177,7 +160,6 @@ import (
     toggleBtn.addEventListener('click', () => {
       isResolved = !isResolved;
       updateSimulatorView();
-      track(isResolved ? 'simulator_resolve' : 'simulator_reset', { lang: currentScenario });
     });
   }
 
@@ -214,14 +196,12 @@ import (
           formStatus.className = 'form-status success';
           formStatus.innerHTML = '✅ <strong>Inquiry received!</strong> Thank you for reaching out. We will review your project requirements and follow up promptly.';
           inquiryForm.reset();
-          track('inquiry_submit', { seats: data.seats || '', environment: data.security || '' });
         } else {
           throw new Error('Submission returned status ' + response.status);
         }
       } catch {
         formStatus.className = 'form-status error';
         formStatus.innerHTML = `⚠️ Submission temporarily unavailable. Please submit an inquiry on the <a href="https://github.com/stillsystems/treeresolve-community/discussions" target="_blank" rel="noopener" style="color: #60a5fa; text-decoration: underline;">TreeResolve Community Portal</a>.`;
-        track('inquiry_error');
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Submit Enterprise Inquiry';
@@ -240,17 +220,7 @@ import (
       Paddle.Environment.set('sandbox');
     }
     Paddle.Initialize({
-      token: paddleToken,
-      eventCallback: (data) => {
-        const name = data && data.name;
-        if (name === 'checkout.loaded') {
-          track('checkout_loaded', { event: name });
-        } else if (name === 'checkout.completed') {
-          track('checkout_complete', { event: name });
-        } else if (name === 'checkout.closed') {
-          track('checkout_closed', { event: name });
-        }
-      }
+      token: paddleToken
     });
   } else if (!paddleToken) {
     console.warn('Paddle client token not configured. Copy docs/config.example.js to docs/config.js for local preview.');
@@ -262,7 +232,6 @@ import (
       return;
     }
     if (window.Paddle) {
-      track('checkout_open', { priceId: priceId });
       Paddle.Checkout.open({
         items: [{ priceId: priceId, quantity: 1 }]
       });
@@ -326,48 +295,15 @@ function initMobileNav() {
 }
 
 /**
- * Load optional Cloudflare Web Analytics (pageviews) and Plausible (custom events).
- * Both are privacy-oriented and only activate when configured in docs/config.js.
+ * Load optional Cloudflare Web Analytics when a site token is configured.
  */
-function initAnalytics(analyticsCfg) {
+function initCloudflareAnalytics(analyticsCfg) {
   const cfToken = analyticsCfg.cloudflareToken;
-  if (cfToken) {
-    const script = document.createElement('script');
-    script.type = 'module';
-    script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
-    script.setAttribute('data-cf-beacon', JSON.stringify({ token: cfToken }));
-    document.head.appendChild(script);
-  }
+  if (!cfToken) return;
 
-  const plausibleDomain = analyticsCfg.plausibleDomain;
-  if (plausibleDomain) {
-    window.plausible =
-      window.plausible ||
-      function () {
-        (window.plausible.q = window.plausible.q || []).push(arguments);
-      };
-    const script = document.createElement('script');
-    script.defer = true;
-    script.setAttribute('data-domain', plausibleDomain);
-    script.src = 'https://plausible.io/js/script.tagged-events.js';
-    document.head.appendChild(script);
-  }
-}
-
-function createTracker(analyticsCfg) {
-  const enabled = Boolean(analyticsCfg.plausibleDomain);
-  return function track(eventName, props) {
-    if (!eventName) return;
-    try {
-      if (enabled && typeof window.plausible === 'function') {
-        if (props && Object.keys(props).length > 0) {
-          window.plausible(eventName, { props: props });
-        } else {
-          window.plausible(eventName);
-        }
-      }
-    } catch {
-      // Analytics must never break checkout or forms
-    }
-  };
+  const script = document.createElement('script');
+  script.type = 'module';
+  script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+  script.setAttribute('data-cf-beacon', JSON.stringify({ token: cfToken }));
+  document.head.appendChild(script);
 }
