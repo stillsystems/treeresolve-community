@@ -142,14 +142,9 @@ body {
   width: 34px;
   height: 34px;
   border-radius: 8px;
-  background: linear-gradient(135deg, #38bdf8, #a855f7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 1.1rem;
-  color: #fff;
-  box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+  display: block;
+  object-fit: cover;
+  flex-shrink: 0;
 }
 
 .nav-toggle {
@@ -1220,7 +1215,6 @@ textarea.form-control {
   .brand-icon {
     width: 30px;
     height: 30px;
-    font-size: 0.95rem;
   }
   .hero {
     padding: 60px 0 30px;
