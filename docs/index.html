@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TreeResolve — Deterministic, Syntax-Aware 3-Way Merge Conflicts</title>
   <meta name="description" content="Deterministic, syntax-aware 3-way merge conflict resolution for VS Code and Git. Zero hallucinations, local-first execution, and no source-code egress to LLMs.">
+  <link rel="canonical" href="https://stillsystems.github.io/treeresolve-community/">
   <link rel="icon" type="image/png" href="images/icon.png">
   
   <!-- OpenGraph / Facebook / LinkedIn / Discord -->
@@ -21,7 +22,87 @@
   <meta name="twitter:description" content="Deterministic, syntax-aware 3-way merge conflict resolution for VS Code and Git. Zero hallucinations, local-first execution, and no source-code egress to LLMs.">
   <meta name="twitter:image" content="https://stillsystems.github.io/treeresolve-community/images/preview.png">
 
-  <link rel="stylesheet" href="styles.css?v=0.4.2">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "TreeResolve",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Windows, macOS, Linux",
+        "description": "Deterministic, syntax-aware 3-way merge conflict resolution for VS Code and Git. Zero hallucinations, local-first execution, and no source-code egress to LLMs.",
+        "url": "https://stillsystems.github.io/treeresolve-community/",
+        "image": "https://stillsystems.github.io/treeresolve-community/images/preview.png",
+        "softwareVersion": "0.4.5",
+        "author": {
+          "@type": "Organization",
+          "name": "Still Systems, LLC",
+          "url": "https://github.com/stillsystems"
+        },
+        "offers": [
+          {
+            "@type": "Offer",
+            "name": "Community",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          {
+            "@type": "Offer",
+            "name": "Pro (annual)",
+            "price": "99.00",
+            "priceCurrency": "USD"
+          }
+        ],
+        "downloadUrl": "https://marketplace.visualstudio.com/items?itemName=stillsystems.treeresolve",
+        "installUrl": "https://marketplace.visualstudio.com/items?itemName=stillsystems.treeresolve",
+        "softwareHelp": "https://github.com/stillsystems/treeresolve-community/blob/main/SUPPORT.md",
+        "license": "https://github.com/stillsystems/treeresolve-community/blob/main/LICENSE",
+        "isAccessibleForFree": true
+      },
+      {
+        "@type": "WebSite",
+        "name": "TreeResolve",
+        "url": "https://stillsystems.github.io/treeresolve-community/",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Still Systems, LLC"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What happens after the 14-day reverse trial?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "TreeResolve automatically degrades to the free Community tier. Your editor is never locked — you keep the 3-pane merge canvas and can resolve conflicts manually. Upgrade to Pro anytime for unlimited deterministic AST auto-merge."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does my source code leave my machine?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Parsing, AST analysis, and conflict resolution run locally. TreeResolve does not send source code, conflict hunks, or repository contents to LLMs or cloud merge services."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How is TreeResolve different from AI merge tools?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "TreeResolve is zero-AI and deterministic: the same inputs always produce the same merge result. There are no hallucinations, no prompt leakage, and no dependency on a remote model."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="stylesheet" href="styles.css?v=0.4.5">
   <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 </head>
 <body>
@@ -35,21 +116,30 @@
         <div class="brand-icon">TR</div>
         <span>TreeResolve</span>
       </a>
-      <ul class="nav-links">
-        <li><a href="#simulator">Live Demo</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#cli">Git CLI</a></li>
-        <li><a href="#pricing">Pricing</a></li>
-        <li><a href="#enterprise">Enterprise</a></li>
-      </ul>
-      <div class="nav-actions">
-        <a href="https://github.com/stillsystems/treeresolve-community" target="_blank" rel="noopener" class="btn btn-outline btn-sm">
-          <svg height="18" width="18" viewBox="0 0 16 16" fill="currentColor">
-            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-          </svg>
-          GitHub
-        </a>
-        <a href="#pricing" class="btn btn-primary btn-sm">Get Pro</a>
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-panel" aria-label="Open menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+      <div class="nav-panel" id="nav-panel">
+        <ul class="nav-links">
+          <li><a href="#simulator">Live Demo</a></li>
+          <li><a href="#how-it-works">How it Works</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#languages">Languages</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#enterprise">Enterprise</a></li>
+        </ul>
+        <div class="nav-actions">
+          <a href="https://github.com/stillsystems/treeresolve-community" target="_blank" rel="noopener" class="btn btn-outline btn-sm">
+            <svg height="18" width="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            GitHub
+          </a>
+          <a href="#pricing" class="btn btn-primary btn-sm">Get Pro</a>
+        </div>
       </div>
     </div>
   </nav>
@@ -71,15 +161,31 @@
         Turn tedious manual rebase slogs into effortless operations. TreeResolve replaces line-based guesswork with local concrete syntax tree comprehension—zero hallucinations, local-first execution, and no source-code egress to LLMs or cloud merge services.
       </p>
       <div class="hero-cta">
-        <a href="https://marketplace.visualstudio.com/items?itemName=stillsystems.treeresolve" target="_blank" rel="noopener" class="btn btn-primary btn-lg">
+        <a href="https://marketplace.visualstudio.com/items?itemName=stillsystems.treeresolve" target="_blank" rel="noopener" class="btn btn-primary btn-lg" data-track="install_marketplace" data-track-placement="hero">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
           </svg>
           Install VS Code Extension
         </a>
-        <a href="#enterprise" class="btn btn-outline btn-lg">
-          Contact Enterprise Sales
+        <a href="https://open-vsx.org/extension/stillsystems/treeresolve" target="_blank" rel="noopener" class="btn btn-outline btn-lg" data-track="install_openvsx" data-track-placement="hero">
+          Install via Open VSX
         </a>
+      </div>
+      <p class="hero-secondary-link">
+        Fleet rollout or Net 30? <a href="#enterprise" data-track="nav_enterprise" data-track-placement="hero">Contact Enterprise Sales →</a>
+      </p>
+
+      <div class="trust-bar" aria-label="Distribution and trust signals">
+        <a class="trust-chip" href="https://marketplace.visualstudio.com/items?itemName=stillsystems.treeresolve" target="_blank" rel="noopener" data-track="install_marketplace" data-track-placement="trust_bar">
+          <img src="https://img.shields.io/badge/VS_Code_Marketplace-v0.4.5-007ACC?logo=visualstudiocode&logoColor=white" alt="VS Code Marketplace v0.4.5" width="168" height="20" loading="lazy">
+        </a>
+        <a class="trust-chip" href="https://open-vsx.org/extension/stillsystems/treeresolve" target="_blank" rel="noopener" data-track="install_openvsx" data-track-placement="trust_bar">
+          <img src="https://img.shields.io/open-vsx/v/stillsystems/treeresolve?color=purple&label=Open%20VSX" alt="Open VSX Registry" width="120" height="20" loading="lazy">
+        </a>
+        <a class="trust-chip" href="https://github.com/stillsystems/treeresolve-community" target="_blank" rel="noopener" data-track="nav_github" data-track-placement="trust_bar">
+          <img src="https://img.shields.io/badge/GitHub-Community-181717?logo=github&logoColor=white" alt="TreeResolve on GitHub" width="128" height="20" loading="lazy">
+        </a>
+        <span class="trust-note">14-day reverse trial · No credit card · Zero source egress</span>
       </div>
 
       <!-- Hero Viewport Media Preview -->
@@ -116,6 +222,32 @@
       <div class="stat-item">
         <div class="stat-num">49/49</div>
         <div class="stat-label">Automated Unit Verification Tests</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it Works -->
+  <section id="how-it-works" class="container how-section">
+    <div class="section-header">
+      <span class="section-tag">Workflow</span>
+      <h2 class="section-title">From Conflict to Commit in Three Steps</h2>
+      <p class="section-desc">Install once. When Git flags a merge or rebase conflict, TreeResolve opens a syntax-aware canvas—or auto-resolves what is safely disjoint.</p>
+    </div>
+    <div class="how-grid">
+      <div class="how-step">
+        <span class="how-num">1</span>
+        <h3 class="how-title">Install</h3>
+        <p class="how-text">Add TreeResolve from the VS Code Marketplace or Open VSX. Enjoy a 14-day reverse trial with full Pro features—no credit card.</p>
+      </div>
+      <div class="how-step">
+        <span class="how-num">2</span>
+        <h3 class="how-title">Open the conflict</h3>
+        <p class="how-text">When a merge or rebase hits a conflict, open the file and choose <strong>Resolve with TreeResolve</strong>, or run batch auto-resolve for clean syntax cases.</p>
+      </div>
+      <div class="how-step">
+        <span class="how-num">3</span>
+        <h3 class="how-title">Resolve &amp; save</h3>
+        <p class="how-text">Disjoint AST changes merge automatically. True conflicts stay visible in the 3-pane canvas. Save with normal editor undo—then continue your rebase.</p>
       </div>
     </div>
   </section>
@@ -211,6 +343,105 @@
     </div>
   </section>
 
+  <!-- Languages + Comparison -->
+  <section id="languages" class="container languages-section">
+    <div class="section-header">
+      <span class="section-tag">Language Support</span>
+      <h2 class="section-title">Compiler-Grade Where It Matters</h2>
+      <p class="section-desc">Dedicated AST normalizers for popular stacks. Every other text file still opens in the 3-way visual canvas.</p>
+    </div>
+
+    <div class="lang-table-wrap">
+      <table class="lang-table">
+        <thead>
+          <tr>
+            <th scope="col">Language</th>
+            <th scope="col">Deterministic auto-merge</th>
+            <th scope="col">3-way visual diff</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>TypeScript / JavaScript</td>
+            <td>AST imports &amp; structural declarations</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Python</td>
+            <td>AST imports &amp; functions</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>JSON / JSONC</td>
+            <td>Deep non-colliding keys</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Lockfiles (<code>package-lock.json</code>)</td>
+            <td>Semver + integrity alignment</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Go</td>
+            <td>Imports, structs &amp; fields</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Rust</td>
+            <td>Use trees, structs &amp; enum variants</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>YAML</td>
+            <td>Indentation-safe key union</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Java</td>
+            <td>Package &amp; static imports</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>C#</td>
+            <td>Using / static / global directives</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>All other languages</td>
+            <td>Line-based fallback</td>
+            <td>Yes</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="compare" class="container compare-section">
+    <div class="section-header">
+      <span class="section-tag">Positioning</span>
+      <h2 class="section-title">Not Line Guesswork. Not an LLM.</h2>
+      <p class="section-desc">TreeResolve sits between classic Git merge UIs and AI merge assistants—with deterministic local AST math and zero source egress.</p>
+    </div>
+    <div class="compare-grid">
+      <div class="compare-card">
+        <h3 class="compare-title">vs Line-based Git</h3>
+        <ul class="compare-list">
+          <li>Git conflicts on disjoint edits that never touch the same syntax nodes</li>
+          <li>TreeResolve parses the AST and auto-merges safe set-differences</li>
+          <li>True overlapping edits still surface for human review</li>
+        </ul>
+      </div>
+      <div class="compare-card compare-card-accent">
+        <h3 class="compare-title">vs AI merge tools</h3>
+        <ul class="compare-list">
+          <li>Zero AI — same inputs always produce the same result</li>
+          <li>No hallucinations, prompts, or model drift</li>
+          <li>Source never leaves your machine; works air-gapped</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
   <!-- CLI Showcase Banner -->
   <section id="cli" class="container">
     <div class="cli-banner">
@@ -266,8 +497,11 @@
             <li><span class="check-icon">✓</span> Anonymous Merge Metrics (Opt-Out Control)</li>
           </ul>
           <div class="pricing-cta">
-            <a href="https://marketplace.visualstudio.com/items?itemName=stillsystems.treeresolve" target="_blank" rel="noopener" class="btn btn-outline">
+            <a href="https://marketplace.visualstudio.com/items?itemName=stillsystems.treeresolve" target="_blank" rel="noopener" class="btn btn-outline" data-track="install_marketplace" data-track-placement="pricing_community">
               Install Free Extension
+            </a>
+            <a href="https://open-vsx.org/extension/stillsystems/treeresolve" target="_blank" rel="noopener" class="pricing-sublink" data-track="install_openvsx" data-track-placement="pricing_community">
+              Prefer Open VSX / VSCodium? →
             </a>
           </div>
         </div>
@@ -320,12 +554,89 @@
             <a href="#pricing" data-paddle-price="pri_01m2zxykkb4yp3qdz3bftd9wxq" class="btn btn-outline">
               Buy Fleet Seats ($199/seat)
             </a>
-            <a href="#enterprise" class="pricing-sublink">
+            <a href="#enterprise" class="pricing-sublink" data-track="nav_enterprise" data-track-placement="pricing_enterprise">
               Request Custom Quote or Net 30 Terms →
             </a>
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="container faq-section">
+    <div class="section-header">
+      <span class="section-tag">FAQ</span>
+      <h2 class="section-title">Answers Before You Install</h2>
+      <p class="section-desc">Trial, privacy, language support, and how TreeResolve differs from AI merge tools.</p>
+    </div>
+
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>What happens after the 14-day reverse trial?</summary>
+        <p>
+          TreeResolve automatically degrades to the free Community tier. Your editor is never locked —
+          you keep the 3-pane merge canvas and can resolve conflicts manually. Upgrade to Pro anytime
+          for unlimited deterministic AST auto-merge. No credit card is required to start the trial.
+        </p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Does my source code leave my machine?</summary>
+        <p>
+          No. Parsing, AST analysis, and conflict resolution run locally. TreeResolve does not send
+          source code, conflict hunks, or repository contents to LLMs or cloud merge services.
+          See the <a href="https://github.com/stillsystems/treeresolve-community/blob/main/PRIVACY.md" target="_blank" rel="noopener">Privacy Policy</a>.
+        </p>
+      </details>
+
+      <details class="faq-item">
+        <summary>What is the anonymous device fingerprint used for?</summary>
+        <p>
+          To issue reverse trials and renew floating leases without accounts or passwords, TreeResolve
+          may send an anonymized SHA-256 hash of <code>platform:arch:machineId</code> (truncated to 32 hex
+          characters). No usernames, hostnames, or MAC addresses are included. Offline / air-gapped
+          enterprise keys never contact the licensing endpoint for validation.
+        </p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Which languages get deterministic auto-merge?</summary>
+        <p>
+          Dedicated AST normalizers cover TypeScript/JavaScript, Python, Go, Rust, Java, C#, JSON/JSONC,
+          YAML, and npm lockfiles. All other languages still open in the 3-way visual canvas with a
+          graceful line-based fallback. Language support expands over time — see the README matrix for details.
+        </p>
+      </details>
+
+      <details class="faq-item">
+        <summary>How is this different from AI merge tools?</summary>
+        <p>
+          TreeResolve is zero-AI and deterministic: the same inputs always produce the same merge result.
+          There are no hallucinations, no prompt leakage, and no dependency on a remote model. If two
+          changes are syntactically disjoint, they merge; true conflicts stay visible for you to decide.
+        </p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Do I need the VS Code extension, the CLI, or both?</summary>
+        <p>
+          The extension gives you the interactive 3-way canvas inside VS Code. The standalone CLI
+          (<code>npx treeresolve</code>) works as a Git mergetool and for headless / CI auto-resolution.
+          Both share the same licensing model. Headless runs default to Community unless a Pro or
+          Enterprise license is configured.
+        </p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Where can I install if I use VSCodium or Open VSX?</summary>
+        <p>
+          Install from the
+          <a href="https://marketplace.visualstudio.com/items?itemName=stillsystems.treeresolve" target="_blank" rel="noopener">VS Code Marketplace</a>
+          or the
+          <a href="https://open-vsx.org/extension/stillsystems/treeresolve" target="_blank" rel="noopener">Open VSX Registry</a>.
+        </p>
+      </details>
     </div>
   </section>
 
@@ -431,11 +742,13 @@
       </div>
       <ul class="footer-links">
         <li><a href="https://github.com/stillsystems/treeresolve-community/blob/main/PRIVACY.md" target="_blank" rel="noopener">Privacy</a></li>
+        <li><a href="https://github.com/stillsystems/treeresolve-community/blob/main/LICENSE" target="_blank" rel="noopener">Terms</a></li>
         <li><a href="https://github.com/stillsystems/treeresolve-community/blob/main/SUPPORT.md" target="_blank" rel="noopener">Support</a></li>
         <li><a href="https://github.com/stillsystems/treeresolve-community/blob/main/ENTERPRISE.md" target="_blank" rel="noopener">Enterprise Guide</a></li>
         <li><a href="https://github.com/stillsystems/treeresolve-community/blob/main/ARCHITECTURE.md" target="_blank" rel="noopener">Architecture</a></li>
         <li><a href="https://github.com/stillsystems/treeresolve-community/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Changelog</a></li>
         <li><a href="https://github.com/stillsystems/treeresolve-community/issues" target="_blank" rel="noopener">Community Tracker</a></li>
+        <li><a href="https://open-vsx.org/extension/stillsystems/treeresolve" target="_blank" rel="noopener">Open VSX</a></li>
       </ul>
     </div>
   </footer>

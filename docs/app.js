@@ -1,8 +1,30 @@
 /* ==========================================================================
-   TreeResolve — Interactive Simulator & Enterprise Form Controller
+   TreeResolve — Interactive Simulator, Analytics & Enterprise Form Controller
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
+  const docsConfig = window.__TREERESOLVE_DOCS__ || {};
+
+  // 0. Privacy-respecting analytics (optional — tokens from docs/config.js)
+  const analyticsCfg = docsConfig.analytics || {};
+  initAnalytics(analyticsCfg);
+  const track = createTracker(analyticsCfg);
+
+  document.querySelectorAll('[data-track]').forEach((el) => {
+    el.addEventListener('click', () => {
+      const name = el.getAttribute('data-track');
+      if (!name) return;
+      const props = {};
+      const placement = el.getAttribute('data-track-placement');
+      const plan = el.getAttribute('data-track-plan');
+      if (placement) props.placement = placement;
+      if (plan) props.plan = plan;
+      track(name, props);
+    });
+  });
+
+  initMobileNav();
+
   // 1. Interactive Conflict Simulator Data
   const scenarios = {
     typescript: {
@@ -147,6 +169,7 @@ import (
       currentScenario = tab.dataset.lang;
       isResolved = false;
       updateSimulatorView();
+      track('simulator_tab', { lang: currentScenario });
     });
   });
 
@@ -154,6 +177,7 @@ import (
     toggleBtn.addEventListener('click', () => {
       isResolved = !isResolved;
       updateSimulatorView();
+      track(isResolved ? 'simulator_resolve' : 'simulator_reset', { lang: currentScenario });
     });
   }
 
@@ -190,12 +214,14 @@ import (
           formStatus.className = 'form-status success';
           formStatus.innerHTML = '✅ <strong>Inquiry received!</strong> Thank you for reaching out. We will review your project requirements and follow up promptly.';
           inquiryForm.reset();
+          track('inquiry_submit', { seats: data.seats || '', environment: data.security || '' });
         } else {
           throw new Error('Submission returned status ' + response.status);
         }
       } catch {
         formStatus.className = 'form-status error';
         formStatus.innerHTML = `⚠️ Submission temporarily unavailable. Please submit an inquiry on the <a href="https://github.com/stillsystems/treeresolve-community/discussions" target="_blank" rel="noopener" style="color: #60a5fa; text-decoration: underline;">TreeResolve Community Portal</a>.`;
+        track('inquiry_error');
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Submit Enterprise Inquiry';
@@ -204,7 +230,6 @@ import (
   }
 
   // 3. Paddle.js Checkout Integration (token injected via docs/config.js — never commit secrets)
-  const docsConfig = window.__TREERESOLVE_DOCS__ || {};
   const paddleCfg = docsConfig.paddle || {};
   const paddleToken = paddleCfg.clientToken;
   const paddleEnvironment = paddleCfg.environment || 'sandbox';
@@ -217,7 +242,14 @@ import (
     Paddle.Initialize({
       token: paddleToken,
       eventCallback: (data) => {
-        console.log('Paddle event:', data);
+        const name = data && data.name;
+        if (name === 'checkout.loaded') {
+          track('checkout_loaded', { event: name });
+        } else if (name === 'checkout.completed') {
+          track('checkout_complete', { event: name });
+        } else if (name === 'checkout.closed') {
+          track('checkout_closed', { event: name });
+        }
       }
     });
   } else if (!paddleToken) {
@@ -230,6 +262,7 @@ import (
       return;
     }
     if (window.Paddle) {
+      track('checkout_open', { priceId: priceId });
       Paddle.Checkout.open({
         items: [{ priceId: priceId, quantity: 1 }]
       });
@@ -262,3 +295,79 @@ import (
     setTimeout(() => openCheckout(prices.enterprise || 'pri_01m2zxykkb4yp3qdz3bftd9wxq'), 500);
   }
 });
+
+function initMobileNav() {
+  const navbar = document.querySelector('.navbar');
+  const toggle = document.getElementById('nav-toggle');
+  const panel = document.getElementById('nav-panel');
+  if (!navbar || !toggle || !panel) return;
+
+  function setOpen(open) {
+    navbar.classList.toggle('nav-open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  }
+
+  toggle.addEventListener('click', () => {
+    setOpen(!navbar.classList.contains('nav-open'));
+  });
+
+  panel.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => setOpen(false));
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setOpen(false);
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 900) setOpen(false);
+  });
+}
+
+/**
+ * Load optional Cloudflare Web Analytics (pageviews) and Plausible (custom events).
+ * Both are privacy-oriented and only activate when configured in docs/config.js.
+ */
+function initAnalytics(analyticsCfg) {
+  const cfToken = analyticsCfg.cloudflareToken;
+  if (cfToken) {
+    const script = document.createElement('script');
+    script.type = 'module';
+    script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    script.setAttribute('data-cf-beacon', JSON.stringify({ token: cfToken }));
+    document.head.appendChild(script);
+  }
+
+  const plausibleDomain = analyticsCfg.plausibleDomain;
+  if (plausibleDomain) {
+    window.plausible =
+      window.plausible ||
+      function () {
+        (window.plausible.q = window.plausible.q || []).push(arguments);
+      };
+    const script = document.createElement('script');
+    script.defer = true;
+    script.setAttribute('data-domain', plausibleDomain);
+    script.src = 'https://plausible.io/js/script.tagged-events.js';
+    document.head.appendChild(script);
+  }
+}
+
+function createTracker(analyticsCfg) {
+  const enabled = Boolean(analyticsCfg.plausibleDomain);
+  return function track(eventName, props) {
+    if (!eventName) return;
+    try {
+      if (enabled && typeof window.plausible === 'function') {
+        if (props && Object.keys(props).length > 0) {
+          window.plausible(eventName, { props: props });
+        } else {
+          window.plausible(eventName);
+        }
+      }
+    } catch {
+      // Analytics must never break checkout or forms
+    }
+  };
+}

@@ -8,5 +8,9 @@ window.__TREERESOLVE_DOCS__ = {
       "proMonthly": "pri_01m2zxb0htcnexpf56mj140y4n",
       "enterprise": "pri_01m2zxykkb4yp3qdz3bftd9wxq"
     }
+  },
+  "analytics": {
+    "cloudflareToken": "bcb511aa13df46fc8743b888d9b1c935",
+    "plausibleDomain": ""
   }
 };

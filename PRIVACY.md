@@ -1,6 +1,6 @@
 # TreeResolve Privacy Policy
 
-**Effective date:** 2026-09-22  
+**Effective date:** 2026-09-24  
 **Controller:** Still Systems, LLC (“Still Systems”, “we”, “us”)
 
 This Privacy Policy describes how TreeResolve (the VS Code extension, standalone CLI, and related licensing services) handles information when you install or use the Software. It supplements the [Commercial End-User License Agreement](LICENSE).
@@ -13,6 +13,7 @@ This Privacy Policy describes how TreeResolve (the VS Code extension, standalone
 * **Optional anonymous product telemetry** may be sent when enabled.
 * **Licensing / trial requests** may send an anonymized machine fingerprint to our licensing gateway.
 * **Payments** are processed by our Merchant of Record (Paddle); we do not store full payment card numbers.
+* **Marketing site analytics** (optional) may measure aggregate pageviews and conversion events on the public documentation site only — never inside the extension or CLI.
 
 ---
 
@@ -58,6 +59,15 @@ Pro and Enterprise purchases are processed by **Paddle** as Merchant of Record. 
 
 If you contact us (GitHub issues, enterprise inquiry forms, email), we process the information you voluntarily provide to respond.
 
+### 2.6. Public documentation site analytics (optional)
+
+The marketing / documentation site at [stillsystems.github.io/treeresolve-community](https://stillsystems.github.io/treeresolve-community/) may load privacy-oriented web analytics when configured by Still Systems:
+
+* **Cloudflare Web Analytics** — cookie-free aggregate pageviews and performance (no advertising profile)
+* **Plausible Analytics** (optional) — cookie-free custom events such as install clicks, checkout opens, and enterprise inquiry submissions
+
+These scripts run only on the public site. They are **not** bundled into the VS Code extension or CLI, and they do not receive source code or repository contents. If analytics tokens are unset, no third-party analytics scripts are loaded.
+
 ---
 
 ## 3. Purpose and legal bases
@@ -89,6 +99,7 @@ Where GDPR or similar laws apply, bases include contract performance, legitimate
 | Licensing / telemetry gateway | Still Systems (Cloudflare Workers / edge hosting) | Trials, leases, telemetry ingestion |
 | Payments | Paddle | Checkout, tax, subscription billing |
 | Issue tracking (optional) | GitHub | Public community support |
+| Documentation site analytics (optional) | Cloudflare Web Analytics / Plausible | Aggregate pageviews and conversion events on the public docs site only |
 
 ---
 

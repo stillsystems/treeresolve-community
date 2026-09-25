@@ -4,9 +4,12 @@
  * Setup (local preview):
  *   copy docs/config.example.js docs/config.js
  *   set paddle.clientToken to your Paddle *client* token (Dashboard → Developer Tools)
+ *   optionally set analytics.cloudflareToken (Cloudflare Web Analytics → Manage site)
+ *   optionally set analytics.plausibleDomain (e.g. "stillsystems.github.io") for conversion events
  *
  * docs/config.js is gitignored. Community sync injects it from GitHub Actions secrets:
  *   PADDLE_CLIENT_TOKEN, PADDLE_ENVIRONMENT (sandbox|production)
+ *   CF_WEB_ANALYTICS_TOKEN (optional), PLAUSIBLE_DOMAIN (optional)
  *
  * Do not commit real client tokens. Rotate any token that was previously committed.
  */
@@ -19,5 +22,11 @@ window.__TREERESOLVE_DOCS__ = {
       proMonthly: 'pri_01m2zxb0htcnexpf56mj140y4n',
       enterprise: 'pri_01m2zxykkb4yp3qdz3bftd9wxq'
     }
+  },
+  analytics: {
+    // Cookie-free pageviews (GitHub Pages is not CF-proxied — manual beacon required)
+    cloudflareToken: '',
+    // Optional: Plausible custom events for install / checkout / inquiry (privacy-friendly)
+    plausibleDomain: ''
   }
 };
