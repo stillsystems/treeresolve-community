@@ -28,7 +28,7 @@ If you discover an issue, unexpected behavior, or syntax parsing failure during 
 
 ### 2. Requesting Support for New Languages
 
-TreeResolve supports TypeScript, JavaScript, Python, Go, Rust, and JSON. We prioritize adding new Tree-sitter language grammars based on community demand.
+TreeResolve supports TypeScript, JavaScript, Python, Go, Rust, Java, C#, JSON/JSONC, YAML, and common lockfiles (`package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`). We prioritize adding new Tree-sitter language grammars based on community demand.
 
 - To request a new language or grammar normalizer, use our **[Language / AST Feature Request Template](https://github.com/stillsystems/treeresolve-community/issues/new?template=feature_request.yml)**.
 - Include links to the official Tree-sitter grammar repository if available.

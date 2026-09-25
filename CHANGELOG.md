@@ -7,9 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Product (v0.5.0 — not the marketplace go-live)
+## [1.0.0] - 2026-09-25
 
-Ships on its own version. The 0.4.5 go-live (Live Paddle cutover and Marketplace upload) does not wait on this work and does not bump the package to 0.5.0.
+### Launch
+
+- **1.0.0 launch posture**: Version badges, CLI, landing page, and marketplace-facing docs aligned to `1.0.0` for first public release.
+- **Pricing language matrix**: Pro tier copy now lists the full shipped AST/normalizer set (TS/JS, Python, Go, Rust, Java, C#, JSON/JSONC, YAML, and npm/Yarn/PNPM lockfiles)—matching README reality.
+- **Landing trust strip**: Replaced the small absolute `49/49` unit-test count with qualitative CI-gated verification copy.
+
+### Product (folded from prior 0.5.0 lane)
 
 - **Intra-Line Interactive Token Acceptance**: Sub-line segment picking with 3-way token reconciliation.
 - **Semantic Intra-Line Token Highlighting**: Syntax badges for renames, argument changes, type annotations, and literal values.

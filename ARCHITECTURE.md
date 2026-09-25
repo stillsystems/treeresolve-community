@@ -1,4 +1,4 @@
-# Architecture: TreeResolve (v0.4.5 Enterprise Production Specification)
+# Architecture: TreeResolve (v1.0.0 Enterprise Production Specification)
 
 TreeResolve is an offline-first, deterministic 3-way merge conflict resolution engine for VS Code. It replaces raw line-based conflict markers with an off-thread, AST-driven auto-resolution pipeline and a virtualized, hardware-accelerated visual merge viewport.
 

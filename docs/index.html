@@ -34,7 +34,7 @@
         "description": "Deterministic, syntax-aware 3-way merge conflict resolution for VS Code and Git. Zero hallucinations, local-first execution, and no source-code egress to LLMs.",
         "url": "https://stillsystems.github.io/treeresolve-community/",
         "image": "https://stillsystems.github.io/treeresolve-community/images/preview.png",
-        "softwareVersion": "0.4.5",
+        "softwareVersion": "1.0.0",
         "author": {
           "@type": "Organization",
           "name": "Still Systems, LLC",
@@ -102,7 +102,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="styles.css?v=0.4.5">
+  <link rel="stylesheet" href="styles.css?v=1.0.0">
   <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 </head>
 <body>
@@ -150,7 +150,7 @@
       <div class="hero-badge-wrap">
         <div class="badge">
           <span class="badge-dot"></span>
-          TreeResolve v0.4.5 Live • Zero-AI Deterministic Merge Engine
+          TreeResolve v1.0.0 Live • Zero-AI Deterministic Merge Engine
         </div>
       </div>
       <h1 class="hero-title">
@@ -177,7 +177,7 @@
 
       <div class="trust-bar" aria-label="Distribution and trust signals">
         <a class="trust-chip" href="https://marketplace.visualstudio.com/items?itemName=stillsystems.treeresolve" target="_blank" rel="noopener">
-          <img src="https://img.shields.io/badge/VS_Code_Marketplace-v0.4.5-007ACC?logo=visualstudiocode&logoColor=white" alt="VS Code Marketplace v0.4.5" width="168" height="20" loading="lazy">
+          <img src="https://img.shields.io/badge/VS_Code_Marketplace-v1.0.0-007ACC?logo=visualstudiocode&logoColor=white" alt="VS Code Marketplace v1.0.0" width="168" height="20" loading="lazy">
         </a>
         <a class="trust-chip" href="https://open-vsx.org/extension/stillsystems/treeresolve" target="_blank" rel="noopener">
           <img src="https://img.shields.io/open-vsx/v/stillsystems/treeresolve?color=purple&label=Open%20VSX" alt="Open VSX Registry" width="120" height="20" loading="lazy">
@@ -220,8 +220,8 @@
         <div class="stat-label">Sandboxed WASM Grammars Bundled</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num">49/49</div>
-        <div class="stat-label">Automated Unit Verification Tests</div>
+        <div class="stat-num">CI</div>
+        <div class="stat-label">Gated Unit Suite Before Every Release</div>
       </div>
     </div>
   </section>
@@ -377,8 +377,8 @@
             <td>Yes</td>
           </tr>
           <tr>
-            <td>Lockfiles (<code>package-lock.json</code>)</td>
-            <td>Semver + integrity alignment</td>
+            <td>Lockfiles (<code>package-lock.json</code>, <code>yarn.lock</code>, <code>pnpm-lock.yaml</code>)</td>
+            <td>Semver / key union &amp; integrity alignment</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -518,8 +518,8 @@
           <ul class="pricing-features">
             <li><span class="check-icon">✓</span> <strong>Everything in Community</strong></li>
             <li><span class="check-icon">✓</span> <strong>Unlimited Deterministic AST Auto-Merge</strong></li>
-            <li><span class="check-icon">✓</span> TS/JS, Python, Go & Rust AST Normalizers</li>
-            <li><span class="check-icon">✓</span> Yarn & PNPM Lockfile Resolvers</li>
+            <li><span class="check-icon">✓</span> TS/JS, Python, Go, Rust, Java &amp; C# AST Normalizers</li>
+            <li><span class="check-icon">✓</span> JSON/JSONC, YAML &amp; Lockfile Resolvers (npm, Yarn, PNPM)</li>
             <li><span class="check-icon">✓</span> Intra-Line Token-Level Micro-Diffing</li>
             <li><span class="check-icon">✓</span> Native Git Pre-Conflict Merge Driver</li>
             <li><span class="check-icon">✓</span> Offline Cryptographic Ed25519 Leases</li>

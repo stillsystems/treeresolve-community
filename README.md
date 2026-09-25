@@ -1,6 +1,6 @@
 # TreeResolve
 
-[![VS Code Marketplace](https://img.shields.io/badge/VS_Code_Marketplace-v0.4.5-007ACC?logo=visualstudiocode&logoColor=white)](https://marketplace.visualstudio.com/items?itemName=stillsystems.treeresolve)
+[![VS Code Marketplace](https://img.shields.io/badge/VS_Code_Marketplace-v1.0.0-007ACC?logo=visualstudiocode&logoColor=white)](https://marketplace.visualstudio.com/items?itemName=stillsystems.treeresolve)
 [![Open VSX](https://img.shields.io/open-vsx/v/stillsystems/treeresolve?color=purple)](https://open-vsx.org/extension/stillsystems/treeresolve)
 [![License](https://img.shields.io/badge/License-Proprietary-blue.svg)](LICENSE)
 [![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.138.0-brightgreen)](https://code.visualstudio.com)
@@ -62,7 +62,7 @@ TreeResolve identifies the structural context of conflicting blocks. If two chan
 | **TypeScript / JavaScript** | ✅ AST Disjoint Imports & Structural Declarations | ✅ Supported |
 | **Python** | ✅ AST Disjoint Imports & Functions | ✅ Supported |
 | **JSON / JSONC** | ✅ Deep Non-colliding Keys | ✅ Supported |
-| **Lockfiles (package-lock.json)** | ✅ 3-Way Semver Merge & Integrity Alignment | ✅ Supported |
+| **Lockfiles (`package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`)** | ✅ 3-Way Semver / Key Union & Integrity Alignment | ✅ Supported |
 | **Go** | ✅ AST Disjoint Imports, Structs & Member Fields | ✅ Supported |
 | **Rust** | ✅ AST Use Trees, Structs & Enum Variants | ✅ Supported |
 | **YAML** | ✅ Indentation-Safe 3-Way Key Union & Comments | ✅ Supported |
@@ -76,7 +76,7 @@ TreeResolve identifies the structural context of conflicting blocks. If two chan
 
 TreeResolve's syntax engine expands language support by shipping dedicated language-specific normalizers.
 
-### Currently Supported (v0.4.5)
+### Currently Supported (v1.0.0)
 
 * [x] **TypeScript / JavaScript**: Disjoint imports (named, aliased, side-effect, and type-only) with true 3-way deletion handling and AST declaration merging.
 * [x] **JSON / JSONC**: Nested recursive 3-way key deduplication and conflict detection.
@@ -86,19 +86,18 @@ TreeResolve's syntax engine expands language support by shipping dedicated langu
 * [x] **YAML**: Indentation-safe 3-way key-value merging for Kubernetes manifests, Docker Compose, and CI/CD pipelines with comment preservation.
 * [x] **Java**: 3-way package and static import normalization with group ordering and deletion preservation.
 * [x] **C#**: 3-way `global using`, `using static`, alias declarations, and namespace directives with deletion preservation.
-* [x] **Lockfiles (`package-lock.json`)**: 3-way semver range comparison and integrity alignment.
+* [x] **Lockfiles (`package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`)**: 3-way semver / key-union reconciliation and integrity alignment.
 * [x] **Standalone Git Mergetool CLI (`treeresolve`)**: Zero-dependency command-line interface for terminal Git merges and headless CI pipelines.
 * [x] **Batch Conflict Auto-Resolver**: Headless scanning and 1-step resolution across entire worktrees.
 * [x] **Intra-Line Token Micro-Diffing**: Visual word/token-level diff highlighting in the 3-way merge canvas.
+* [x] **Intra-Line Interactive Token Acceptance**: Micro-level sub-line segment picking with 3-way token reconciliation.
+* [x] **Semantic Intra-Line Token Highlighting**: Host-classified AST/heuristic badges on the merge canvas.
 * [x] **Project Configuration (`.treeresolverc`)**: Repository-level glob policies and custom auto-merge rules.
 * [x] **Universal Line-based 3-Way Diff**: Visual fallback for all other file types.
 
-### In Active Development (v0.5.0)
+### Next
 
-Product milestone, separate from the 0.4.5 marketplace go-live. Token acceptance, AST semantic badges, and floating-lease renew / portal / reclaim clients are on main.
-
-* [x] **Intra-Line Interactive Token Acceptance**: Micro-level sub-line segment picking with 3-way token reconciliation (host `TokenDiffEngine` + webview pickers).
-* [x] **Semantic Intra-Line Token Highlighting**: Host classifies tokens (`SemanticTokenClassifier`) and ships `lineTokenDiffs` on `INIT_SESSION`; webview renders AST/heuristic badges without a duplicated lexer.
+Roadmap items and language requests are tracked in the [TreeResolve Community Tracker](https://github.com/stillsystems/treeresolve-community/issues).
 
 > 💡 **Have a feature idea, language request, or bug report?**  
 > Join the conversation or open an issue in the [TreeResolve Community Tracker](https://github.com/stillsystems/treeresolve-community/issues).
@@ -216,7 +215,7 @@ For organizational procurement, volume quotes, InfoSec assessments, and MDM roll
 
 TreeResolve supports **limited** operation in untrusted workspaces (`capabilities.untrustedWorkspaces.supported = "limited"`). You can view and analyze 3-way AST diffs in Restricted Mode; automatic staging and disk write-backs remain disabled until the workspace is trusted. Full merge write-back and Git plumbing require a Trusted Workspace because Tree-sitter parsers and local Git operations run against repository contents.
 
-### Security Hardening & Defense-in-Depth (v0.4.5)
+### Security Hardening & Defense-in-Depth (v1.0.0)
 
 * **Atomic Save Architecture**: User resolutions (`Accept Ours`, `Accept Theirs`, `Accept Both`) are accumulated safely in memory without intermediate buffer rewrites. All decisions commit atomically upon save via a single `WorkspaceEdit` with conflict marker integrity validation, completely eliminating state desynchronization races.
 * **Bounded Tree-sitter WASM Execution**: Parsers enforce a strict 30ms CPU execution ceiling (`parser.setTimeoutMicros(30000)`) with an upfront 5,000-character line pre-flight filter that safely bypasses minified bundles and pathological lines.
