@@ -1,7 +1,8 @@
 # TreeResolve
 
-[![VS Code Marketplace](https://img.shields.io/badge/VS_Code_Marketplace-v1.0.0-007ACC?logo=visualstudiocode&logoColor=white)](https://marketplace.visualstudio.com/items?itemName=stillsystems.treeresolve)
-[![Open VSX](https://img.shields.io/open-vsx/v/stillsystems/treeresolve?color=purple)](https://open-vsx.org/extension/stillsystems/treeresolve)
+[![npm](https://img.shields.io/npm/v/treeresolve?color=cb3837&label=npm)](https://www.npmjs.com/package/treeresolve)
+[![VS Code Marketplace](https://img.shields.io/badge/VS_Code_Marketplace-Coming_soon-007ACC?logo=visualstudiocode&logoColor=white)](#getting-started)
+[![Open VSX](https://img.shields.io/badge/Open_VSX-Coming_soon-purple)](#getting-started)
 [![License](https://img.shields.io/badge/License-Proprietary-blue.svg)](LICENSE)
 [![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.138.0-brightgreen)](https://code.visualstudio.com)
 [![Website](https://img.shields.io/badge/Website-stillsystems.github.io%2Ftreeresolve--community-blueviolet)](https://stillsystems.github.io/treeresolve-community)
@@ -108,11 +109,14 @@ Roadmap items and language requests are tracked in the [TreeResolve Community Tr
 
 ### 1. Installation
 
-Install **TreeResolve** from the VS Code Marketplace or by running:
+**CLI (live on npm @ 1.0.0):**
 
 ```bash
-ext install stillsystems.treeresolve
+npx treeresolve --version
+# or: npm install -g treeresolve
 ```
+
+**VS Code / VSCodium extension:** Marketplace and Open VSX listings are coming shortly (package `stillsystems.treeresolve`). Until then, use the CLI above for mergetool and headless workflows.
 
 ### 2. Resolving a Merge Conflict in VS Code
 
@@ -191,7 +195,7 @@ TreeResolve uses a Reverse Trial model: install the extension and enjoy all Pro 
 
 | Feature | Community Tier (Free Forever) | Pro Tier ($10/mo or $99/yr) | Enterprise Tier ($20/seat/mo or $199/seat/yr)* |
 | :--- | :---: | :---: | :---: |
-| **Direct Checkout** | [Install Free](https://marketplace.visualstudio.com/items?itemName=stillsystems.treeresolve) | [**Get Pro ($99/yr)**](https://stillsystems.github.io/treeresolve-community/?checkout=pro) · [($10/mo)](https://stillsystems.github.io/treeresolve-community/?checkout=monthly) | [**Buy Fleet Seats**](https://stillsystems.github.io/treeresolve-community/?checkout=enterprise) · [Inquire](https://stillsystems.github.io/treeresolve-community/#enterprise) |
+| **Direct Checkout** | Free forever · Extension listing shortly · [CLI on npm](https://www.npmjs.com/package/treeresolve) | [**Get Pro ($99/yr)**](https://stillsystems.github.io/treeresolve-community/?checkout=pro) · [($10/mo)](https://stillsystems.github.io/treeresolve-community/?checkout=monthly) | [**Buy Fleet Seats**](https://stillsystems.github.io/treeresolve-community/?checkout=enterprise) · [Inquire](https://stillsystems.github.io/treeresolve-community/#enterprise) |
 | **Target User** | Open Source / Hobbyists | Individual Professionals | Engineering Teams & Enterprise Fleets |
 | **3-Pane Visual Diffing** | ✅ Included | ✅ Included | ✅ Included |
 | **Dynamic Ribbon Alignment** | ✅ Included | ✅ Included | ✅ Included |

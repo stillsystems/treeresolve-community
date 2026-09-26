@@ -131,11 +131,11 @@ To eliminate repository name leakage under network inspection, TreeResolve deriv
 
 ### 4.1. Silent Installation via MDM
 
-TreeResolve can be packaged and distributed silently across your developer fleet.
+TreeResolve can be packaged and distributed silently across your developer fleet once the VS Code Marketplace listing is live (`stillsystems.treeresolve`). Until then, provision the CLI via npm (`treeresolve@1.0.0`) for headless / mergetool workflows.
 
 #### Microsoft Intune / Windows MDM
 
-Deploy via PowerShell script or Intune Win32 App:
+Deploy via PowerShell script or Intune Win32 App (after Marketplace publish):
 
 ```powershell
 # Install extension silently for all users
@@ -144,7 +144,7 @@ code --install-extension stillsystems.treeresolve --force
 
 #### Jamf Pro / macOS Fleet
 
-Deploy via Jamf shell policy:
+Deploy via Jamf shell policy (after Marketplace publish):
 
 ```bash
 #!/bin/bash
