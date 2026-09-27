@@ -55,7 +55,7 @@ the extension id):
 ```json
 {
   "extensions.allowed": {
-    "stillsystems": true
+    "still-systems": true
   }
 }
 ```
@@ -66,7 +66,7 @@ publisher:
 ```json
 {
   "extensions.allowed": {
-    "stillsystems.treeresolve": true
+    "still-systems.ss-treeresolve": true
   }
 }
 ```
@@ -76,7 +76,7 @@ Or allow only listed versions:
 ```json
 {
   "extensions.allowed": {
-    "stillsystems.treeresolve": ["1.0.0"]
+    "still-systems.ss-treeresolve": ["1.0.0"]
   }
 }
 ```
@@ -90,7 +90,7 @@ JSON string (not JSONC — no comments).
 Example policy payload:
 
 ```json
-{"stillsystems.treeresolve":true}
+{"still-systems.ss-treeresolve":true}
 ```
 
 If policy JSON is invalid, VS Code ignores it — check **Show Window Log**.

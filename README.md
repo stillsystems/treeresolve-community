@@ -125,7 +125,7 @@ npx treeresolve --version
 # or: npm install -g treeresolve
 ```
 
-**VS Code / VSCodium extension:** Marketplace and Open VSX listings are coming shortly (package `stillsystems.treeresolve`). Until then, use the CLI above for mergetool and headless workflows.
+**VS Code / VSCodium extension:** Marketplace listing uses package `still-systems.ss-treeresolve` (Open VSX coming shortly). Until Marketplace is live, use the CLI above for mergetool and headless workflows.
 
 ### 2. Resolving a Merge Conflict in VS Code
 

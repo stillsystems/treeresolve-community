@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **VS Code Marketplace identity**: Manifest `publisher` is `still-systems`, extension `name` is `ss-treeresolve` (id `still-systems.ss-treeresolve`), and `displayName` is `TreeResolve by Still Systems, LLC`. CLI/npm bin stays `treeresolve`. GitHub org remains `stillsystems`.
+
 ### Product
 
 - **Lockfiles-first positioning (Grok #8)**: Marketplace description, README, and landing hero lead with `package-lock.json` auto-merge plus **Review Auto-Resolved Conflicts**. yarn/pnpm stay explicitly partial (aligned with [community #6](https://github.com/stillsystems/treeresolve-community/issues/6)). New post-resolve Review action, first-run tip, Tier-1 policy labels in the merge canvas, and Batch log per-hunk policies.

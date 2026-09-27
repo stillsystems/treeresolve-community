@@ -132,7 +132,7 @@ To eliminate repository name leakage under network inspection, TreeResolve deriv
 
 ### 4.1. Silent Installation via MDM
 
-TreeResolve can be packaged and distributed silently across your developer fleet once the VS Code Marketplace listing is live (`stillsystems.treeresolve`). Until then, distribute a **verified offline VSIX** (SHA-256 + Sigstore) from a GitHub Release, or provision the CLI via npm (`treeresolve@1.0.0`) for headless / mergetool workflows. Full steps and `AllowedExtensions` allow-list examples: [docs/trust/offline-vsix.md](docs/trust/offline-vsix.md).
+TreeResolve can be packaged and distributed silently across your developer fleet once the VS Code Marketplace listing is live (`still-systems.ss-treeresolve`). Until then, distribute a **verified offline VSIX** (SHA-256 + Sigstore) from a GitHub Release, or provision the CLI via npm (`treeresolve@1.0.0`) for headless / mergetool workflows. Full steps and `AllowedExtensions` allow-list examples: [docs/trust/offline-vsix.md](docs/trust/offline-vsix.md).
 
 #### Microsoft Intune / Windows MDM
 
@@ -140,7 +140,7 @@ Deploy via PowerShell script or Intune Win32 App (after Marketplace publish):
 
 ```powershell
 # Install extension silently for all users
-code --install-extension stillsystems.treeresolve --force
+code --install-extension still-systems.ss-treeresolve --force
 ```
 
 #### Jamf Pro / macOS Fleet
@@ -150,7 +150,7 @@ Deploy via Jamf shell policy (after Marketplace publish):
 ```bash
 #!/bin/bash
 # Install extension silently under current logged-in user
-sudo -u $(stat -f "%Su" /dev/console) code --install-extension stillsystems.treeresolve --force
+sudo -u $(stat -f "%Su" /dev/console) code --install-extension still-systems.ss-treeresolve --force
 ```
 
 ### 4.2. Centralized VS Code Settings Configuration
