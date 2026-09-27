@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **Open VSX id**: Published as [`still-systems.ss-treeresolve`](https://open-vsx.org/extension/still-systems/ss-treeresolve) to match Marketplace (prior `stillsystems.treeresolve` listing remains historical).
+- **Open VSX**: Public listing remains [`stillsystems.treeresolve`](https://open-vsx.org/extension/stillsystems/treeresolve); `still-systems` namespace created for parity (verify on Open VSX before public).
 
 ## [1.0.0] - 2026-09-27
 
