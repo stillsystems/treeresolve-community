@@ -32,6 +32,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **VS Code Marketplace identity**: Manifest `publisher` is `still-systems`, extension `name` is `ss-treeresolve` (id `still-systems.ss-treeresolve`), and `displayName` is `TreeResolve by Still Systems, LLC`. CLI/npm bin stays `treeresolve`. GitHub org remains `stillsystems`.
+- **Community Pro-unlock hunk tip**: When free-tier users hit a Pro-gated conflict in the merge canvas (lockfiles, other languages, full syntax), each manual hunk shows a short tip such as “Pro unlocks lockfile auto-merge” / “Pro unlocks this language” (yarn/pnpm tips stay partial) plus an Upgrade link — not only the generic header chrome.
+- **Free / paid line (Grok #9)**: Community keeps a taste of syntax auto-merge — TS/JS/Python import resolution in the IDE. Pro sells lockfiles, full-language AST, batch/CLI/CI, and `.treeresolverc` governance.
+- **Pro per-person licenses (Grok #10)**: Pro binds to the purchaser (`binding: person`, any repo, up to 3 machines via fingerprint seats). Enterprise keeps seats + org wildcards. `installLicense` no longer requires per-repo activation.
 
 ### Product
 
@@ -52,12 +55,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Licensing custom domain (ready-to-flip)**: Canonical launch host is `https://licensing.stillsystems.com`. Client defaults remain on `https://treeresolve-licensing.still-systems.workers.dev` until `USE_CUSTOM_LICENSING_DOMAIN` is flipped after Cloudflare Custom Domain + DNS cutover. Wrangler Custom Domain route block is prepared (commented) for the licensing Worker deploy config.
 
-### Changed
-
-- **Community Pro-unlock hunk tip**: When free-tier users hit a Pro-gated conflict in the merge canvas (lockfiles, other languages, full syntax), each manual hunk shows a short tip such as “Pro unlocks lockfile auto-merge” / “Pro unlocks this language” (yarn/pnpm tips stay partial) plus an Upgrade link — not only the generic header chrome.
-- **Free / paid line (Grok #9)**: Community keeps a taste of syntax auto-merge — TS/JS/Python import resolution in the IDE. Pro sells lockfiles, full-language AST, batch/CLI/CI, and `.treeresolverc` governance.
-- **Pro per-person licenses (Grok #10)**: Pro binds to the purchaser (`binding: person`, any repo, up to 3 machines via fingerprint seats). Enterprise keeps seats + org wildcards. `installLicense` no longer requires per-repo activation.
-
 ## [1.0.0] - 2026-09-25
 
 ### Launch
@@ -71,7 +68,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Intra-Line Interactive Token Acceptance**: Sub-line segment picking with 3-way token reconciliation.
 - **Semantic Intra-Line Token Highlighting**: Syntax badges for renames, argument changes, type annotations, and literal values.
 
-### Changed
+### Gateway
 
 - **Licensing gateway default**: Default `treeresolve.licensingEndpoint` is now `https://treeresolve-licensing.still-systems.workers.dev` (workers.dev). Custom domain deferred until Still Systems registers a domain it owns.
 

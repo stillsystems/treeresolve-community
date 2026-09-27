@@ -1,87 +1,32 @@
 # Contributing to TreeResolve
 
-Thank you for your interest in contributing to **TreeResolve**!
+TreeResolve is a **proprietary** VS Code extension by Still Systems, LLC. The public companion repo [`stillsystems/treeresolve-community`](https://github.com/stillsystems/treeresolve-community) is for issues, language requests, discussions, docs, and the community site — not for open-source development of the product core.
 
-TreeResolve provides deterministic, syntax-aware 3-way merge conflict resolution for VS Code powered by Tree-sitter. We appreciate contributions from the community—whether that involves reporting bugs, proposing new programming language grammars, improving documentation, or participating in discussions.
+Please follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 
----
+## Security
 
-## Code of Conduct
+Do **not** file public issues for security bugs. Use [SECURITY.md](.github/SECURITY.md).
 
-All contributors and participants are expected to adhere to our [Code of Conduct](CODE_OF_CONDUCT.md). Please report any unacceptable behavior to [billy.kidd34@gmail.com](mailto:billy.kidd34@gmail.com).
+## How to help
 
----
+1. **Bugs** — [Bug report](https://github.com/stillsystems/treeresolve-community/issues/new?template=bug_report.yml). Include language, a minimal Base/Ours/Theirs snippet, expected vs actual, OS, and extension version.
+2. **Language / feature requests** — [Feature request](https://github.com/stillsystems/treeresolve-community/issues/new?template=feature_request.yml). Link any relevant Tree-sitter grammar.
+3. **Docs / site** — Typo fixes and clearer guides on [treeresolve-community](https://github.com/stillsystems/treeresolve-community) are welcome via pull request against `main`.
+4. **Questions** — [Discussions](https://github.com/stillsystems/treeresolve-community/discussions).
 
-## How Can You Contribute?
+Supported languages and lockfile depth are summarized on the [website](https://stillsystems.github.io/treeresolve-community/) and in [README.md](README.md).
 
-### 1. Reporting Bugs
+## Pull requests
 
-If you discover an issue, unexpected behavior, or syntax parsing failure during a merge conflict:
+`main` is PR-only on the community companion (and on the private core). For docs/site PRs:
 
-1. Check existing issues on our [Issue Tracker](https://github.com/stillsystems/treeresolve-community/issues) to ensure it hasn't already been reported.
-2. If not, open a new issue using the **[Bug Report Template](https://github.com/stillsystems/treeresolve-community/issues/new?template=bug_report.yml)**.
-3. Provide a minimal reproducible example, including:
-   - Programming language & file extension.
-   - The conflict snippet (Base, Ours, Theirs).
-   - Expected resolution vs. observed behavior.
-   - Operating system and VS Code extension version.
+1. Fork `treeresolve-community`
+2. Branch from `main`
+3. Open a PR with a short description of the change
 
-### 2. Requesting Support for New Languages
+Core product source is not accepted via public PRs.
 
-TreeResolve supports TypeScript, JavaScript, Python, Go, Rust, Java, C#, JSON/JSONC, YAML, and lockfiles with uneven depth: dedicated rules for `package-lock.json`, and thinner / partial helpers for `yarn.lock` and `pnpm-lock.yaml` (see [community issue #6](https://github.com/stillsystems/treeresolve-community/issues/6)). We prioritize adding new Tree-sitter language grammars based on community demand.
+## Licensing of contributions
 
-- To request a new language or grammar normalizer, use our **[Language / AST Feature Request Template](https://github.com/stillsystems/treeresolve-community/issues/new?template=feature_request.yml)**.
-- Include links to the official Tree-sitter grammar repository if available.
-
-### 3. Improving Documentation & Examples
-
-Contributions to our public documentation, website guides, and sample conflicts are warmly welcomed:
-
-- Fix typos, unclear phrasing, or outdated steps.
-- Add practical merge conflict examples demonstrating AST reconciliation.
-- Improve our [Interactive Documentation](https://stillsystems.github.io/treeresolve-community/).
-
-### 4. Community Discussions
-
-Have a question about AST merge conflict heuristics, licensing, or integration? Join our [GitHub Discussions](https://github.com/stillsystems/treeresolve-community/discussions):
-
-- **Q&A**: Ask questions and get answers from maintainers and peers.
-- **Ideas**: Propose workflow enhancements or IDE integration ideas.
-- **Show and Tell**: Share how TreeResolve fits into your team's Git workflows.
-
----
-
-## Submitting Pull Requests
-
-For documentation, examples, and community site improvements:
-
-1. Fork the [treeresolve-community](https://github.com/stillsystems/treeresolve-community) repository.
-2. Create a focused topic branch (`git checkout -b docs/clarify-ast-resolution`).
-3. Commit your changes with clear, descriptive commit messages.
-4. Verify markdown formatting and links.
-5. Push to your fork and submit a Pull Request against the `main` branch.
-6. Fill out the pull request template checklist.
-
-A maintainer will review your pull request promptly.
-
----
-
-## Local development tests
-
-- **Unit** (mocked `vscode`): `npm run test:unit`
-- **Conflict fixtures** (release-gate corpus): `npm run test:fixtures`
-- **Extension host** (`@vscode/test-cli` + `@vscode/test-electron`): `npm run test:integration`
-
-On headless Linux CI (and most Linux agents without a display), run the host suite under Xvfb:
-
-```bash
-xvfb-run -a npm run test:integration
-```
-
-GitHub Actions ubuntu runners already include `xvfb-run`. macOS and Windows do not need Xvfb.
-
----
-
-## Licensing of Contributions
-
-By contributing to TreeResolve Community repositories, you agree that your contributions will be licensed under the repository's [MIT License](LICENSE).
+By contributing to `treeresolve-community` (issues, discussions, docs, or PRs), you agree that Still Systems, LLC may use your contribution under the same terms as the project [LICENSE](LICENSE) (commercial EULA / Terms of Service), including without a separate MIT grant. Third-party components remain under their own licenses in [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
