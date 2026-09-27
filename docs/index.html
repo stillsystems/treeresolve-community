@@ -604,8 +604,9 @@
           To issue reverse trials and renew floating leases without accounts or passwords, TreeResolve
           may send an anonymized SHA-256 hash of <code>platform:arch:machineId</code> (truncated to 32 hex
           characters). No usernames, hostnames, or MAC addresses are included. Offline / air-gapped
-          enterprise keys never contact the licensing endpoint for validation. The public licensing
-          gateway target is <code>https://licensing.stillsystems.com</code> (Still Systems owned domain).
+          enterprise keys never contact the licensing endpoint for validation. Licensing traffic
+          currently uses <code>https://treeresolve-licensing.still-systems.workers.dev</code>;
+          <code>https://licensing.stillsystems.com</code> is the planned custom-domain cutover (not live yet).
         </p>
       </details>
 
