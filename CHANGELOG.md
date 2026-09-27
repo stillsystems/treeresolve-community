@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Documentation
+
+- **Doc accuracy (Grok #11)**: Removed the undocumented editor tab-bar button claim; clarified lockfile coverage (`package-lock.json` dedicated, yarn/pnpm partial); moved `.treeresolverc` `$schema` off third-party `still.systems` onto Still Systems GitHub Pages; dialed Net-60 / MSA / SLA copy to solo-capable commitments.
+
 ### Compatibility
 
 - **Lowered `engines.vscode` to `^1.90.0`**: Honest floor for API usage plus Node 20 extension-host runtime (native `fetch`, esbuild `--target=node20`). Widens Marketplace / Open VSX / Cursor / VSCodium install reach vs `^1.138.0`. CI smoke-tests activation on `1.90.0` and `stable`.

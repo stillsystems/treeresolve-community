@@ -172,7 +172,7 @@
         </a>
       </div>
       <p class="hero-secondary-link">
-        Fleet rollout or Net 30? <a href="#enterprise">Contact Enterprise Sales →</a>
+        Fleet rollout or invoiced quote? <a href="#enterprise">Contact Enterprise →</a>
       </p>
 
       <div class="trust-bar" aria-label="Distribution and trust signals">
@@ -245,7 +245,7 @@
       <div class="how-step">
         <span class="how-num">2</span>
         <h3 class="how-title">Open the conflict</h3>
-        <p class="how-text">When a merge or rebase hits a conflict, open the file and choose <strong>Resolve with TreeResolve</strong>, or run batch auto-resolve for clean syntax cases.</p>
+        <p class="how-text">When a merge or rebase hits a conflict, open the file and run <strong>TreeResolve: Open 3-Way Merge Editor</strong> from the Command Palette (or <strong>Reopen Editor With…</strong>), or run batch auto-resolve for clean syntax cases.</p>
       </div>
       <div class="how-step">
         <span class="how-num">3</span>
@@ -380,8 +380,13 @@
             <td>Yes</td>
           </tr>
           <tr>
-            <td>Lockfiles (<code>package-lock.json</code>, <code>yarn.lock</code>, <code>pnpm-lock.yaml</code>)</td>
-            <td>Semver / key union &amp; integrity alignment</td>
+            <td>npm Lockfile (<code>package-lock.json</code>)</td>
+            <td>Dedicated 3-way semver / integrity alignment</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>yarn.lock / pnpm-lock.yaml</td>
+            <td>Partial key-union / YAML 3-way (denser cases stay manual)</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -551,14 +556,14 @@
             <li><span class="check-icon">✓</span> Centralized MDM, Intune & Jamf Distribution</li>
             <li><span class="check-icon">✓</span> Air-Gapped & SCIF Network Compliance</li>
             <li><span class="check-icon">✓</span> Volume Discounts (50+, 200+, 1,000+ seats)</li>
-            <li><span class="check-icon">✓</span> Invoicing, Net 30, ACH & PO Support</li>
+            <li><span class="check-icon">✓</span> Invoicing / PO by quote for qualifying fleets</li>
           </ul>
           <div class="pricing-cta">
             <a href="#pricing" data-paddle-price="pri_01m2zxykkb4yp3qdz3bftd9wxq" class="btn btn-outline">
               Buy Fleet Seats ($199/seat)
             </a>
             <a href="#enterprise" class="pricing-sublink">
-              Request Custom Quote or Net 30 Terms →
+              Request Custom Quote or Invoice Terms →
             </a>
           </div>
         </div>
@@ -608,8 +613,10 @@
         <summary>Which languages get deterministic auto-merge?</summary>
         <p>
           Dedicated AST normalizers cover TypeScript/JavaScript, Python, Go, Rust, Java, C#, JSON/JSONC,
-          YAML, and npm lockfiles. All other languages still open in the 3-way visual canvas with a
-          graceful line-based fallback. Language support expands over time — see the README matrix for details.
+          and YAML. Lockfile auto-merge is deepest for <code>package-lock.json</code>; <code>yarn.lock</code> and
+          <code>pnpm-lock.yaml</code> are partial (see
+          <a href="https://github.com/stillsystems/treeresolve-community/issues/6" target="_blank" rel="noopener">known limitations #6</a>).
+          All other languages still open in the 3-way visual canvas with a graceful line-based fallback.
         </p>
       </details>
 
@@ -651,7 +658,7 @@
           <span class="section-tag">Enterprise & Security</span>
           <h3>Procurement, MDM & Custom Inquiries</h3>
           <p>
-            Deploy TreeResolve securely across hundreds of engineering seats. We support centralized MDM rollout, air-gapped cryptographic licensing, and dedicated SLA contracts.
+            Deploy TreeResolve across engineering seats with MDM-friendly rollout docs, air-gapped cryptographic licensing, and support targets a solo vendor can meet.
           </p>
 
           <ul class="enterprise-points">
@@ -665,7 +672,7 @@
             </li>
             <li>
               <span class="check-icon">✓</span>
-              <span><strong>Commercial Invoicing:</strong> Net 30 / Net 60 payment terms, ACH, wire transfers, and corporate POs.</span>
+              <span><strong>Commercial Invoicing:</strong> Self-serve card via Paddle; invoiced / PO (Net-30 case-by-case) for qualifying fleets. Extended Net-60 is not standard.</span>
             </li>
             <li>
               <span class="check-icon">✓</span>

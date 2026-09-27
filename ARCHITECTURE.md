@@ -129,6 +129,8 @@ Standard 3-way text and JSON diff engines fail on package lockfiles (`package-lo
 * **Disjoint Package Set Union**: Disjoint package additions introduced on separate branches are merged into the `packages` map without collision.
 * **Incompatible Major Divergence Guard**: When two branches update a package across different major versions (e.g., `2.0.0` vs `1.5.0`), the resolver safely flags a collision and routes the hunk for human review.
 
+`yarn.lock` and `pnpm-lock.yaml` have thinner helpers (entry / key-union and YAML 3-way). Treat their auto-merge coverage as **partial** relative to `package-lock.json`; denser or format-edge conflicts stay for human review (community known limitations).
+
 ---
 
 ## 4. Concurrency, Monotonic Sequences, & Asymmetric Diff Anchoring
@@ -300,7 +302,7 @@ TreeResolve provides a zero-dependency standalone CLI companion (`bin/treeresolv
 * **Execution Order**:
   1. Identical branches: exits `0` immediately.
   2. One-sided modifications: writes updated branch and exits `0`.
-  3. Whole-file dedicated lockfile & YAML resolvers (`package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`, `*.yaml`): executed off-thread if licensed for Pro tier.
+  3. Whole-file lockfile & YAML resolvers (`package-lock.json` dedicated; `yarn.lock` / `pnpm-lock.yaml` thinner / partial; `*.yaml`): executed off-thread if licensed for Pro tier.
   4. 3-way syntax reconciliation: invokes `git merge-file -p` to synthesize conflict markers, then executes AST semantic analysis gated on Pro licensing.
 * **Exit Code**: Returns `0` if 100% deterministically auto-resolved, or `1` with conflict markers written to `%A` for developer manual review.
 

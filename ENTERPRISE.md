@@ -172,10 +172,12 @@ Security and platform teams can check a `.treeresolverc` or `treeresolve.json` f
 
 ```json
 {
-  "$schema": "https://treeresolve.still.systems/schema/treeresolverc.json",
+  "$schema": "https://stillsystems.github.io/treeresolve-community/schema/treeresolverc.json",
+  "autoMergeImports": true,
+  "stageOnSave": false,
   "rules": [
     {
-      "pattern": "**/*.lock",
+      "pattern": "**/package-lock.json",
       "autoMerge": true,
       "stageOnSave": true
     },
@@ -184,13 +186,11 @@ Security and platform teams can check a `.treeresolverc` or `treeresolve.json` f
       "autoMerge": false,
       "stageOnSave": false
     }
-  ],
-  "features": {
-    "offlineVerification": true,
-    "submoduleTraversal": true
-  }
+  ]
 }
 ```
+
+The `$schema` URL is hosted on Still Systems–controlled GitHub Pages (`stillsystems.github.io`). Do not point editors at third-party domains for this schema.
 
 ### 4.4. Headless CI/CD & CLI Deployment
 
@@ -234,11 +234,12 @@ The standalone TreeResolve CLI executable (`bin/treeresolve.js`) runs natively i
 
 ## 5. Procurement & Commercial Terms
 
-Still Systems provides flexible procurement paths for enterprise organizations:
+Still Systems (solo-operated LLC) offers honest, deliverable procurement paths for enterprise buyers:
 
-* **Payment Methods**: Invoicing with Net 30 or Net 60 payment terms, ACH transfers, wire transfers, and corporate purchasing cards.
-* **Volume Seat Tiering**: Discounted seat pricing starting at 50 developer seats.
-* **Enterprise Agreements**: Custom Master Services Agreements (MSA), Security Addendums, and Vendor Risk Assessment questionnaires.
-* **Dedicated Support & Custom Grammar Normalizers**: Enterprise tiers include prioritized support SLAs and custom normalizer engineering for internal or proprietary DSLs.
+* **Payment Methods**: Self-serve card checkout via Paddle (Merchant of Record) for standard seats. For qualifying fleet quotes, Still Systems can invoice against a purchase order; Net-30 terms may be offered case-by-case after quote acceptance. ACH / wire instructions are provided on the invoice when applicable. Extended Net-60 (or longer) terms are not a standard offering.
+* **Volume Seat Tiering**: Discounted seat pricing discussed starting around 50 developer seats (see list pricing footnotes in the product README).
+* **Agreements**: Purchases are governed by the TreeResolve EULA plus a short written order / quote for fleet deals. Custom MSA or Security Addendum language can be reviewed case-by-case; it is not a turnkey packaged deliverable.
+* **Support Targets**: Enterprise inquiries aim for **next-business-day acknowledgment** (US Central). Security disclosures follow the 48-hour ack in [SECURITY.md](.github/SECURITY.md). There is no separate uptime SLA for the local extension (merge work runs on the customer's machines). Community / Pro GitHub issues remain best-effort.
+* **Custom Grammar Normalizers**: Available only as scoped, quoted engineering work when capacity allows—not included by default in Enterprise seat pricing.
 
-For enterprise evaluations, custom quotes, or security reviews, submit an inquiry via the [Enterprise Portal](https://stillsystems.github.io/treeresolve-community/#enterprise) or contact the team on the [TreeResolve Community Tracker](https://github.com/stillsystems/treeresolve-community/issues).
+For enterprise evaluations, custom quotes, or security reviews, submit an inquiry via the [Enterprise Portal](https://stillsystems.github.io/treeresolve-community/#enterprise) or open a thread on the [TreeResolve Community Tracker](https://github.com/stillsystems/treeresolve-community/issues).

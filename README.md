@@ -63,7 +63,8 @@ TreeResolve identifies the structural context of conflicting blocks. If two chan
 | **TypeScript / JavaScript** | ✅ AST Disjoint Imports & Structural Declarations | ✅ Supported |
 | **Python** | ✅ AST Disjoint Imports & Functions | ✅ Supported |
 | **JSON / JSONC** | ✅ Deep Non-colliding Keys | ✅ Supported |
-| **Lockfiles (`package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`)** | ✅ 3-Way Semver / Key Union & Integrity Alignment | ✅ Supported |
+| **npm Lockfile (`package-lock.json`)** | ✅ Dedicated 3-way semver / integrity alignment | ✅ Supported |
+| **yarn.lock / pnpm-lock.yaml** | ⚙️ Partial key-union / YAML 3-way (denser cases stay manual) | ✅ Supported |
 | **Go** | ✅ AST Disjoint Imports, Structs & Member Fields | ✅ Supported |
 | **Rust** | ✅ AST Use Trees, Structs & Enum Variants | ✅ Supported |
 | **YAML** | ✅ Indentation-Safe 3-Way Key Union & Comments | ✅ Supported |
@@ -87,7 +88,8 @@ TreeResolve's syntax engine expands language support by shipping dedicated langu
 * [x] **YAML**: Indentation-safe 3-way key-value merging for Kubernetes manifests, Docker Compose, and CI/CD pipelines with comment preservation.
 * [x] **Java**: 3-way package and static import normalization with group ordering and deletion preservation.
 * [x] **C#**: 3-way `global using`, `using static`, alias declarations, and namespace directives with deletion preservation.
-* [x] **Lockfiles (`package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`)**: 3-way semver / key-union reconciliation and integrity alignment.
+* [x] **npm Lockfile (`package-lock.json`)**: Dedicated 3-way semver / integrity alignment.
+* [x] **yarn.lock / pnpm-lock.yaml (partial)**: Entry / key-union and YAML 3-way helpers; coverage is thinner than `package-lock.json` (see [community known limitations](https://github.com/stillsystems/treeresolve-community/issues/6)).
 * [x] **Standalone Git Mergetool CLI (`treeresolve`)**: Zero-dependency command-line interface for terminal Git merges and headless CI pipelines.
 * [x] **Batch Conflict Auto-Resolver**: Headless scanning and 1-step resolution across entire worktrees.
 * [x] **Intra-Line Token Micro-Diffing**: Visual word/token-level diff highlighting in the 3-way merge canvas.
@@ -120,7 +122,7 @@ npx treeresolve --version
 
 ### 2. Resolving a Merge Conflict in VS Code
 
-When a Git merge or rebase encounters a conflict, open the conflicted file. Click the **Resolve with TreeResolve** editor button in the top-right tab bar, or run from the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`):
+When a Git merge or rebase encounters a conflict, open the conflicted file, then open the TreeResolve canvas from the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`), or use **Reopen Editor With… → TreeResolve 3-Way Merge**:
 
 ```plaintext
 TreeResolve: Open 3-Way Merge Editor
@@ -210,7 +212,7 @@ TreeResolve uses a Reverse Trial model: install the extension and enjoy all Pro 
 | **Offline Cryptographic Leases** | ✅ Yes | ✅ Ed25519 offline verification | ✅ Wildcard / Multi-repo domain lease |
 | **Centralized / MDM Deployment** | ❌ | ❌ | ✅ Automated dotfile / container rollout |
 | **Volume Discounts** | ❌ | ❌ | ✅ Tiered discounts at 50+, 200+, 1,000+ seats |
-| **Billing & Payment Options** | ❌ (Free forever) | Self-serve Credit Card | Credit Card, ACH, Wire, or PO / Invoice (Net 30) |
+| **Billing & Payment Options** | ❌ (Free forever) | Self-serve Credit Card (Paddle) | Self-serve card, or invoiced / PO by quote for qualifying fleets |
 
 *\*Enterprise pricing reflects standard base list price. Volume discounting and fleet licensing apply automatically for teams of 50 to 1,000+ developers via custom quote or PO.*
 

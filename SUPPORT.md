@@ -49,8 +49,8 @@ For volume quotes, MDM rollout, air-gapped keys, InfoSec questionnaires, and pri
 
 | Channel | Typical acknowledgment |
 | :--- | :--- |
-| Security advisory | Within 48 hours |
-| Community GitHub issues | Best effort |
-| Enterprise inquiries | As agreed in your commercial terms |
+| Security advisory | Within 48 hours ([SECURITY.md](.github/SECURITY.md)) |
+| Enterprise inquiries | Next business day (US Central), when capacity allows |
+| Community / Pro GitHub issues | Best effort |
 
-Marketplace Q&A is monitored; for actionable bugs, prefer GitHub Issues so we can track repro steps and version details.
+These are acknowledgment targets for a solo-operated product, not contractual uptime or resolution SLAs. Marketplace Q&A is monitored; for actionable bugs, prefer GitHub Issues so we can track repro steps and version details.

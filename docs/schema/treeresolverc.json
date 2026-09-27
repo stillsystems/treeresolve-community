@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://stillsystems.github.io/treeresolve-community/schema/treeresolverc.json",
+  "title": "TreeResolve repository config",
+  "description": "Schema for .treeresolverc, .treeresolverc.json, or treeresolve.json at a repository root. Matches fields honored by RepoConfigService.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "autoMergeImports": {
+      "type": "boolean",
+      "description": "Default auto-merge policy for deterministic import / syntax merges when no glob rule matches."
+    },
+    "autoMergeLockfiles": {
+      "type": "boolean",
+      "description": "Hint for lockfile auto-merge preference (subject to Pro entitlement and resolver coverage)."
+    },
+    "autoMergeYaml": {
+      "type": "boolean",
+      "description": "Hint for YAML auto-merge preference (subject to Pro entitlement)."
+    },
+    "stageOnSave": {
+      "type": "boolean",
+      "description": "Default whether to git-add after a fully resolved save when no glob rule matches."
+    },
+    "rules": {
+      "type": "array",
+      "maxItems": 64,
+      "description": "Ordered glob rules; first match wins for the target file path.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["pattern"],
+        "properties": {
+          "pattern": {
+            "type": "string",
+            "maxLength": 256,
+            "description": "Glob matched against the document path (forward-slash normalized)."
+          },
+          "autoMerge": {
+            "type": "boolean"
+          },
+          "stageOnSave": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}
