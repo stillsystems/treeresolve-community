@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://stillsystems.github.io/treeresolve-community/schema/treeresolverc.json",
   "title": "TreeResolve repository config",
-  "description": "Schema for .treeresolverc, .treeresolverc.json, or treeresolve.json at a repository root. Matches fields honored by RepoConfigService.",
+  "description": "Schema for .treeresolverc, .treeresolverc.json, or treeresolve.json at a repository root. Fields match TreeResolve repository config options.",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -29,7 +29,9 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["pattern"],
+        "required": [
+          "pattern"
+        ],
         "properties": {
           "pattern": {
             "type": "string",

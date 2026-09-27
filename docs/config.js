@@ -2,7 +2,7 @@
 window.__TREERESOLVE_DOCS__ = {
   "paddle": {
     "environment": "sandbox",
-    "clientToken": "test_92f5f88e8288a07319fb4ac32f0",
+    "clientToken": "",
     "prices": {
       "proAnnual": "pri_01m2zxfdbpg00xay389wj2pt1b",
       "proMonthly": "pri_01m2zxb0htcnexpf56mj140y4n",
@@ -11,6 +11,6 @@ window.__TREERESOLVE_DOCS__ = {
   },
   "licensingEndpoint": "https://treeresolve-licensing.still-systems.workers.dev",
   "analytics": {
-    "cloudflareToken": "bcb511aa13df46fc8743b888d9b1c935"
+    "cloudflareToken": ""
   }
 };
