@@ -8,7 +8,7 @@ TreeResolve provides deterministic, syntax-aware 3-way merge conflict resolution
 
 ## Code of Conduct
 
-All contributors and participants are expected to adhere to our [Code of Conduct](CODE_OF_CONDUCT.md). Please report any unacceptable behavior to [contact@stillsystems.com](mailto:contact@stillsystems.com).
+All contributors and participants are expected to adhere to our [Code of Conduct](CODE_OF_CONDUCT.md). Please report any unacceptable behavior to [billy.kidd34@gmail.com](mailto:billy.kidd34@gmail.com).
 
 ---
 
@@ -28,7 +28,7 @@ If you discover an issue, unexpected behavior, or syntax parsing failure during 
 
 ### 2. Requesting Support for New Languages
 
-TreeResolve supports TypeScript, JavaScript, Python, Go, Rust, Java, C#, JSON/JSONC, YAML, and common lockfiles (`package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`). We prioritize adding new Tree-sitter language grammars based on community demand.
+TreeResolve supports TypeScript, JavaScript, Python, Go, Rust, Java, C#, JSON/JSONC, YAML, and lockfiles with uneven depth: dedicated rules for `package-lock.json`, and thinner / partial helpers for `yarn.lock` and `pnpm-lock.yaml` (see [community issue #6](https://github.com/stillsystems/treeresolve-community/issues/6)). We prioritize adding new Tree-sitter language grammars based on community demand.
 
 - To request a new language or grammar normalizer, use our **[Language / AST Feature Request Template](https://github.com/stillsystems/treeresolve-community/issues/new?template=feature_request.yml)**.
 - Include links to the official Tree-sitter grammar repository if available.
@@ -63,6 +63,22 @@ For documentation, examples, and community site improvements:
 6. Fill out the pull request template checklist.
 
 A maintainer will review your pull request promptly.
+
+---
+
+## Local development tests
+
+- **Unit** (mocked `vscode`): `npm run test:unit`
+- **Conflict fixtures** (release-gate corpus): `npm run test:fixtures`
+- **Extension host** (`@vscode/test-cli` + `@vscode/test-electron`): `npm run test:integration`
+
+On headless Linux CI (and most Linux agents without a display), run the host suite under Xvfb:
+
+```bash
+xvfb-run -a npm run test:integration
+```
+
+GitHub Actions ubuntu runners already include `xvfb-run`. macOS and Windows do not need Xvfb.
 
 ---
 

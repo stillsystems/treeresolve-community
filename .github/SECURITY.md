@@ -22,7 +22,8 @@ If you discover a security vulnerability, subresource integrity issue, or token 
 1. **Do NOT disclose publicly**: Please do not open a public GitHub issue or discuss potential vulnerabilities in public forum threads.
 2. **Submit a Private Report**: Use GitHub's native confidential reporting tool:
    👉 **[Report a Vulnerability](https://github.com/stillsystems/treeresolve-community/security/advisories/new)**
-3. **What to Include**:
+3. **Email fallback**: [billy.kidd34@gmail.com](mailto:billy.kidd34@gmail.com) with subject `TreeResolve security`.
+4. **What to Include**:
    * A clear description of the vulnerability and its potential impact.
    * Steps or minimal reproduction files to demonstrate the behavior.
    * The version of TreeResolve and VS Code used during discovery.
