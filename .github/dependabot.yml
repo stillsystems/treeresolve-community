@@ -1,0 +1,8 @@
+version: 2
+updates:
+  # Keep GitHub Actions pinned SHAs current (Scorecard Pinned-Dependencies + Dependency-Update-Tool).
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 5

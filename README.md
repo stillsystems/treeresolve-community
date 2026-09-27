@@ -6,6 +6,7 @@
 [![License](https://img.shields.io/badge/License-Proprietary-blue.svg)](LICENSE)
 [![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.90.0-brightgreen)](https://code.visualstudio.com)
 [![Website](https://img.shields.io/badge/Website-stillsystems.github.io%2Ftreeresolve--community-blueviolet)](https://stillsystems.github.io/treeresolve-community)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/stillsystems/treeresolve-community/badge)](https://scorecard.dev/viewer/?uri=github.com/stillsystems/treeresolve-community)
 
 **Lead with lockfiles. Review what was auto-resolved.**  
 Deterministic, syntax-aware 3-way merge for VS Code—strongest on `package-lock.json`, partial helpers for yarn/pnpm, zero AI, local-first, no source-code egress.
