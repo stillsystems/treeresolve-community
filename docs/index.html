@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TreeResolve — Lockfile Conflicts, Then Review Auto-Resolutions</title>
-  <meta name="description" content="Auto-resolve package-lock.json merge conflicts (yarn/pnpm partial), then review every auto-resolution. Deterministic, local-first, zero AI—no source-code egress.">
+  <meta name="description"
+    content="Auto-resolve package-lock.json merge conflicts (yarn/pnpm partial), then review every auto-resolution. Deterministic, local-first, zero AI—no source-code egress.">
   <link rel="canonical" href="https://stillsystems.github.io/treeresolve-community/">
   <link rel="icon" type="image/png" href="images/icon.png">
-  
+
   <!-- OpenGraph / Facebook / LinkedIn / Discord -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://stillsystems.github.io/treeresolve-community/">
   <meta property="og:title" content="TreeResolve — Lockfile Conflicts, Then Review Auto-Resolutions">
-  <meta property="og:description" content="Auto-resolve package-lock.json merge conflicts (yarn/pnpm partial), then review every auto-resolution. Deterministic, local-first, zero AI—no source-code egress.">
+  <meta property="og:description"
+    content="Auto-resolve package-lock.json merge conflicts (yarn/pnpm partial), then review every auto-resolution. Deterministic, local-first, zero AI—no source-code egress.">
   <meta property="og:image" content="https://stillsystems.github.io/treeresolve-community/images/preview.png">
 
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://stillsystems.github.io/treeresolve-community/">
   <meta name="twitter:title" content="TreeResolve — Lockfile Conflicts, Then Review Auto-Resolutions">
-  <meta name="twitter:description" content="Auto-resolve package-lock.json merge conflicts (yarn/pnpm partial), then review every auto-resolution. Deterministic, local-first, zero AI—no source-code egress.">
+  <meta name="twitter:description"
+    content="Auto-resolve package-lock.json merge conflicts (yarn/pnpm partial), then review every auto-resolution. Deterministic, local-first, zero AI—no source-code egress.">
   <meta name="twitter:image" content="https://stillsystems.github.io/treeresolve-community/images/preview.png">
 
   <script type="application/ld+json">
@@ -105,6 +109,7 @@
   <link rel="stylesheet" href="styles.css?v=1.0.0">
   <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 </head>
+
 <body>
   <div class="ambient-glow-top"></div>
   <div class="ambient-glow-mid"></div>
@@ -116,7 +121,8 @@
         <img class="brand-icon" src="images/icon.png" width="34" height="34" alt="">
         <span>TreeResolve</span>
       </a>
-      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-panel" aria-label="Open menu">
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-panel"
+        aria-label="Open menu">
         <span class="nav-toggle-bar"></span>
         <span class="nav-toggle-bar"></span>
         <span class="nav-toggle-bar"></span>
@@ -132,9 +138,11 @@
           <li><a href="#enterprise">Enterprise</a></li>
         </ul>
         <div class="nav-actions">
-          <a href="https://github.com/stillsystems/treeresolve-community" target="_blank" rel="noopener" class="btn btn-outline btn-sm">
+          <a href="https://github.com/stillsystems/treeresolve-community" target="_blank" rel="noopener"
+            class="btn btn-outline btn-sm">
             <svg height="18" width="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+              <path
+                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
             </svg>
             GitHub
           </a>
@@ -158,12 +166,14 @@
         Review Every Auto-Resolution.
       </h1>
       <p class="hero-subtitle">
-        TreeResolve auto-merges safe <code>package-lock.json</code> hunks (yarn/pnpm coverage stays partial), then makes every auto-resolution easy to review before you save—deterministic, local-first, zero AI, no source-code egress.
+        TreeResolve auto-merges safe <code>package-lock.json</code> hunks (yarn/pnpm coverage stays partial), then makes
+        every auto-resolution easy to review before you save—deterministic, local-first, zero AI, no source-code egress.
       </p>
       <div class="hero-cta">
-        <a href="https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve" class="btn btn-primary btn-lg" target="_blank" rel="noopener">
+        <a href="https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve"
+          class="btn btn-primary btn-lg" target="_blank" rel="noopener">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
           </svg>
           Install from Marketplace
         </a>
@@ -176,17 +186,24 @@
       </p>
 
       <div class="trust-bar" aria-label="Distribution and trust signals">
-        <a class="trust-chip" href="https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve" target="_blank" rel="noopener">
-          <img src="https://img.shields.io/visual-studio-marketplace/v/still-systems.ss-treeresolve?label=VS%20Code%20Marketplace&logo=visualstudiocode&logoColor=white&color=007ACC" alt="VS Code Marketplace still-systems.ss-treeresolve" width="210" height="20" loading="lazy">
+        <a class="trust-chip" href="https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve"
+          target="_blank" rel="noopener">
+          <img
+            src="https://img.shields.io/visual-studio-marketplace/v/still-systems.ss-treeresolve?label=VS%20Code%20Marketplace&logo=visualstudiocode&logoColor=white&color=007ACC"
+            alt="VS Code Marketplace still-systems.ss-treeresolve" width="210" height="20" loading="lazy">
         </a>
         <span class="trust-chip">
-          <img src="https://img.shields.io/badge/Open_VSX-Coming_soon-purple" alt="Open VSX coming soon" width="140" height="20" loading="lazy">
+          <img src="https://img.shields.io/badge/Open_VSX-Coming_soon-purple" alt="Open VSX coming soon" width="140"
+            height="20" loading="lazy">
         </span>
         <a class="trust-chip" href="https://www.npmjs.com/package/treeresolve" target="_blank" rel="noopener">
-          <img src="https://img.shields.io/npm/v/treeresolve?color=cb3837&label=npm" alt="npm treeresolve 1.0.0" width="100" height="20" loading="lazy">
+          <img src="https://img.shields.io/npm/v/treeresolve?color=cb3837&label=npm" alt="npm treeresolve 1.0.0"
+            width="100" height="20" loading="lazy">
         </a>
-        <a class="trust-chip" href="https://github.com/stillsystems/treeresolve-community" target="_blank" rel="noopener">
-          <img src="https://img.shields.io/badge/GitHub-Community-181717?logo=github&logoColor=white" alt="TreeResolve on GitHub" width="128" height="20" loading="lazy">
+        <a class="trust-chip" href="https://github.com/stillsystems/treeresolve-community" target="_blank"
+          rel="noopener">
+          <img src="https://img.shields.io/badge/GitHub-Community-181717?logo=github&logoColor=white"
+            alt="TreeResolve on GitHub" width="128" height="20" loading="lazy">
         </a>
         <span class="trust-note">14-day reverse trial · No credit card · Zero source egress</span>
       </div>
@@ -199,10 +216,12 @@
             <div class="window-dot dot-yellow"></div>
             <div class="window-dot dot-green"></div>
           </div>
-          <span class="window-title">TreeResolve 3-Way Canvas Viewport — Ours (Current) | Merged Result | Theirs (Incoming)</span>
+          <span class="window-title">TreeResolve 3-Way Canvas Viewport — Ours (Current) | Merged Result | Theirs
+            (Incoming)</span>
           <span class="window-spacer"></span>
         </div>
-        <img src="images/preview.png" alt="TreeResolve 3-Way Conflict Canvas with Bézier Ribbons and Intra-Line Token Micro-Diffing">
+        <img src="images/preview.png"
+          alt="TreeResolve 3-Way Conflict Canvas with Bézier Ribbons and Intra-Line Token Micro-Diffing">
       </div>
     </div>
   </header>
@@ -234,23 +253,33 @@
     <div class="section-header">
       <span class="section-tag">Workflow</span>
       <h2 class="section-title">From Conflict to Commit in Three Steps</h2>
-      <p class="section-desc">Install once. Lead with lockfile conflicts—especially <code>package-lock.json</code>—auto-resolve what is safely disjoint, then review before you save.</p>
+      <p class="section-desc">Install once. Lead with lockfile conflicts—especially
+        <code>package-lock.json</code>—auto-resolve what is safely disjoint, then review before you save.</p>
     </div>
     <div class="how-grid">
       <div class="how-step">
         <span class="how-num">1</span>
         <h3 class="how-title">Install</h3>
-        <p class="how-text">Install from the <a href="https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve" target="_blank" rel="noopener">VS Code Marketplace</a> (<code>still-systems.ss-treeresolve</code>) or run <code>npx treeresolve</code>. Enjoy a 14-day reverse trial with full Pro features—no credit card. Open VSX for VSCodium is next.</p>
+        <p class="how-text">Install from the <a
+            href="https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve" target="_blank"
+            rel="noopener">VS Code Marketplace</a> (<code>still-systems.ss-treeresolve</code>) or run
+          <code>npx treeresolve</code>. Enjoy a 14-day reverse trial with full Pro features—no credit card. Open VSX for
+          VSCodium is next.</p>
       </div>
       <div class="how-step">
         <span class="how-num">2</span>
         <h3 class="how-title">Auto-resolve lockfiles</h3>
-        <p class="how-text">When a merge or rebase hits a conflict, open the file and run <strong>TreeResolve: Open 3-Way Merge Editor</strong> (or <strong>Reopen Editor With…</strong>), or <strong>Batch Auto-Resolve Lockfiles &amp; Deterministic Conflicts</strong> for clean cases. Deepest coverage is <code>package-lock.json</code>; yarn/pnpm stay partial.</p>
+        <p class="how-text">When a merge or rebase hits a conflict, open the file and run <strong>TreeResolve: Open
+            3-Way Merge Editor</strong> (or <strong>Reopen Editor With…</strong>), or <strong>Batch Auto-Resolve
+            Lockfiles &amp; Deterministic Conflicts</strong> for clean cases. Deepest coverage is
+          <code>package-lock.json</code>; yarn/pnpm stay partial.</p>
       </div>
       <div class="how-step">
         <span class="how-num">3</span>
         <h3 class="how-title">Review &amp; save</h3>
-        <p class="how-text">Run <strong>Review Auto-Resolved Conflicts</strong> or scan Tier-1 cards in the canvas (policy labels like Lockfile). True collisions stay visible. Save with normal undo—then continue your rebase.</p>
+        <p class="how-text">Run <strong>Review Auto-Resolved Conflicts</strong> or scan Tier-1 cards in the canvas
+          (policy labels like Lockfile). True collisions stay visible. Save with normal undo—then continue your rebase.
+        </p>
       </div>
     </div>
   </section>
@@ -261,7 +290,8 @@
       <div class="section-header">
         <span class="section-tag">Interactive Simulator</span>
         <h2 class="section-title">See Deterministic Merging in Action</h2>
-        <p class="section-desc">Experience how TreeResolve safely reconciles non-colliding syntax changes that cause standard Git to fail.</p>
+        <p class="section-desc">Experience how TreeResolve safely reconciles non-colliding syntax changes that cause
+          standard Git to fail.</p>
       </div>
 
       <div class="simulator-box">
@@ -304,44 +334,52 @@
     <div class="section-header">
       <span class="section-tag">Core Capabilities</span>
       <h2 class="section-title">Built for Performance and Precision</h2>
-      <p class="section-desc">Traditional merge tools rely on line-based guessing. TreeResolve brings full compiler-grade understanding directly to your editor.</p>
+      <p class="section-desc">Traditional merge tools rely on line-based guessing. TreeResolve brings full
+        compiler-grade understanding directly to your editor.</p>
     </div>
 
     <div class="features-grid">
       <div class="feature-card">
         <div class="feature-icon icon-blue">⚡</div>
         <h3 class="feature-title">Concrete Syntax Tree Engine</h3>
-        <p class="feature-text">Pre-compiled WebAssembly parsers parse AST nodes in background workers, performing mathematical set-difference reconciliations with 3-way deletion tracking.</p>
+        <p class="feature-text">Pre-compiled WebAssembly parsers parse AST nodes in background workers, performing
+          mathematical set-difference reconciliations with 3-way deletion tracking.</p>
       </div>
 
       <div class="feature-card">
         <div class="feature-icon icon-purple">🎨</div>
         <h3 class="feature-title">Dynamic Bézier Ribbons</h3>
-        <p class="feature-text">Hardware-accelerated HTML5 canvas ribbons link corresponding code blocks across Ours, Merged Result, and Theirs with proportional alignment scrolling.</p>
+        <p class="feature-text">Hardware-accelerated HTML5 canvas ribbons link corresponding code blocks across Ours,
+          Merged Result, and Theirs with proportional alignment scrolling.</p>
       </div>
 
       <div class="feature-card">
         <div class="feature-icon icon-green">🔒</div>
         <h3 class="feature-title">Air-Gapped & Zero Data Egress</h3>
-        <p class="feature-text">Your source code never leaves your local machine. No LLMs, no remote API calls, no token leakage. Complies with the strictest InfoSec policies.</p>
+        <p class="feature-text">Your source code never leaves your local machine. No LLMs, no remote API calls, no token
+          leakage. Complies with the strictest InfoSec policies.</p>
       </div>
 
       <div class="feature-card">
         <div class="feature-icon icon-amber">🔍</div>
         <h3 class="feature-title">Intra-Line Token Micro-Diffing</h3>
-        <p class="feature-text">Off-thread LCS diffing visually distinguishes exact character and word substitutions within conflicting lines, highlighting additions and deletions in color.</p>
+        <p class="feature-text">Off-thread LCS diffing visually distinguishes exact character and word substitutions
+          within conflicting lines, highlighting additions and deletions in color.</p>
       </div>
 
       <div class="feature-card">
         <div class="feature-icon icon-cyan">📦</div>
         <h3 class="feature-title">Lockfile-First Resolution</h3>
-        <p class="feature-text">Dedicated 3-way semver / integrity alignment for <code>package-lock.json</code>. <code>yarn.lock</code> and <code>pnpm-lock.yaml</code> stay partial (key-union / YAML helpers). Every auto-resolution is reviewable before save.</p>
+        <p class="feature-text">Dedicated 3-way semver / integrity alignment for <code>package-lock.json</code>.
+          <code>yarn.lock</code> and <code>pnpm-lock.yaml</code> stay partial (key-union / YAML helpers). Every
+          auto-resolution is reviewable before save.</p>
       </div>
 
       <div class="feature-card">
         <div class="feature-icon icon-red">⚙️</div>
         <h3 class="feature-title">Repo Policy Engine (.treeresolverc)</h3>
-        <p class="feature-text">Check project-level glob policies directly into your Git repository to govern auto-merge rules and automatic staging across large engineering teams.</p>
+        <p class="feature-text">Check project-level glob policies directly into your Git repository to govern auto-merge
+          rules and automatic staging across large engineering teams.</p>
       </div>
     </div>
   </section>
@@ -351,7 +389,8 @@
     <div class="section-header">
       <span class="section-tag">Language Support</span>
       <h2 class="section-title">Compiler-Grade Where It Matters</h2>
-      <p class="section-desc">Dedicated AST normalizers for popular stacks. Every other text file still opens in the 3-way visual canvas.</p>
+      <p class="section-desc">Dedicated AST normalizers for popular stacks. Every other text file still opens in the
+        3-way visual canvas.</p>
     </div>
 
     <div class="lang-table-wrap">
@@ -428,7 +467,8 @@
     <div class="section-header">
       <span class="section-tag">Positioning</span>
       <h2 class="section-title">Not Line Guesswork. Not an LLM.</h2>
-      <p class="section-desc">TreeResolve sits between classic Git merge UIs and AI merge assistants—with deterministic local AST math and zero source egress.</p>
+      <p class="section-desc">TreeResolve sits between classic Git merge UIs and AI merge assistants—with deterministic
+        local AST math and zero source egress.</p>
     </div>
     <div class="compare-grid">
       <div class="compare-card">
@@ -457,10 +497,12 @@
         <span class="section-tag">Terminal Workflows</span>
         <h2 class="cli-title">Standalone Git Mergetool Companion</h2>
         <p class="cli-desc">
-          Prefer working in the terminal or running headless auto-resolution in CI/CD pipelines? TreeResolve includes a standalone CLI executable with zero dependencies.
+          Prefer working in the terminal or running headless auto-resolution in CI/CD pipelines? TreeResolve includes a
+          standalone CLI executable with zero dependencies.
         </p>
         <div class="cli-actions">
-          <a href="https://github.com/stillsystems/treeresolve-community#4-git-mergetool--cli-companion" target="_blank" rel="noopener" class="btn btn-outline btn-sm">
+          <a href="https://github.com/stillsystems/treeresolve-community#4-git-mergetool--cli-companion" target="_blank"
+            rel="noopener" class="btn btn-outline btn-sm">
             CLI Documentation →
           </a>
         </div>
@@ -483,7 +525,8 @@
         <span class="section-tag">Plans & Licensing</span>
         <h2 class="pricing-title">Simple, Predictable Pricing</h2>
         <p class="pricing-subtitle">
-          Enjoy a 14-day unrestricted Reverse Trial on install. No credit card required. Upgrade anytime for permanent AST auto-merge superpowers.
+          Enjoy a 14-day unrestricted Reverse Trial on install. No credit card required. Upgrade anytime for permanent
+          AST auto-merge superpowers.
         </p>
       </div>
 
@@ -491,7 +534,8 @@
         <!-- Community Tier -->
         <div class="pricing-card">
           <h3 class="pricing-tier-name">Community</h3>
-          <p class="pricing-desc">For open-source contributors and individual developers needing a rock-solid 3-pane merge canvas.</p>
+          <p class="pricing-desc">For open-source contributors and individual developers needing a rock-solid 3-pane
+            merge canvas.</p>
           <div class="pricing-price-wrap">
             <span class="pricing-amount">$0</span>
             <span class="pricing-period">/ forever</span>
@@ -505,7 +549,8 @@
             <li><span class="check-icon">✓</span> 100% Local Execution & Zero Source Code Egress</li>
           </ul>
           <div class="pricing-cta">
-            <a href="https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve" class="btn btn-outline" target="_blank" rel="noopener">
+            <a href="https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve"
+              class="btn btn-outline" target="_blank" rel="noopener">
               Install from Marketplace
             </a>
             <span class="pricing-sublink">
@@ -518,7 +563,8 @@
         <div class="pricing-card popular">
           <span class="pricing-badge">Most Popular</span>
           <h3 class="pricing-tier-name">Pro</h3>
-          <p class="pricing-desc">For professional software engineers who rebase frequently — one person license, any repo, a few machines.</p>
+          <p class="pricing-desc">For professional software engineers who rebase frequently — one person license, any
+            repo, a few machines.</p>
           <div class="pricing-price-wrap">
             <span class="pricing-amount">$99</span>
             <span class="pricing-period">/ year (or $10/mo)</span>
@@ -545,7 +591,8 @@
         <!-- Enterprise Tier -->
         <div class="pricing-card">
           <h3 class="pricing-tier-name">Enterprise</h3>
-          <p class="pricing-desc">For engineering organizations, compliance-driven teams, and multi-developer fleet rollouts.</p>
+          <p class="pricing-desc">For engineering organizations, compliance-driven teams, and multi-developer fleet
+            rollouts.</p>
           <div class="pricing-price-wrap">
             <span class="pricing-amount">$199</span>
             <span class="pricing-period">/ seat / year (or $20/mo)</span>
@@ -594,7 +641,8 @@
         <p>
           No. Parsing, AST analysis, and conflict resolution run locally. TreeResolve does not send
           source code, conflict hunks, or repository contents to LLMs or cloud merge services.
-          See the <a href="https://github.com/stillsystems/treeresolve-community/blob/main/PRIVACY.md" target="_blank" rel="noopener">Privacy Policy</a>.
+          See the <a href="https://github.com/stillsystems/treeresolve-community/blob/main/PRIVACY.md" target="_blank"
+            rel="noopener">Privacy Policy</a>.
         </p>
       </details>
 
@@ -616,7 +664,8 @@
           Dedicated AST normalizers cover TypeScript/JavaScript, Python, Go, Rust, Java, C#, JSON/JSONC,
           and YAML. Lockfile auto-merge is deepest for <code>package-lock.json</code>; <code>yarn.lock</code> and
           <code>pnpm-lock.yaml</code> are partial (see
-          <a href="https://github.com/stillsystems/treeresolve-community/issues/6" target="_blank" rel="noopener">known limitations #6</a>).
+          <a href="https://github.com/stillsystems/treeresolve-community/issues/6" target="_blank" rel="noopener">known
+            limitations #6</a>).
           All other languages still open in the 3-way visual canvas with a graceful line-based fallback.
         </p>
       </details>
@@ -643,7 +692,9 @@
       <details class="faq-item">
         <summary>Where can I install if I use VSCodium or Open VSX?</summary>
         <p>
-          VS Code users: install <a href="https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve" target="_blank" rel="noopener"><code>still-systems.ss-treeresolve</code></a> from the Marketplace.
+          VS Code users: install <a
+            href="https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve" target="_blank"
+            rel="noopener"><code>still-systems.ss-treeresolve</code></a> from the Marketplace.
           Open VSX realign for VSCodium is next—until then use the standalone CLI via
           <code>npx treeresolve</code> (npm package <code>treeresolve@1.0.0</code>).
         </p>
@@ -659,31 +710,37 @@
           <span class="section-tag">Enterprise & Security</span>
           <h3>Procurement, MDM & Custom Inquiries</h3>
           <p>
-            Deploy TreeResolve across engineering seats with MDM-friendly rollout docs, air-gapped cryptographic licensing, and support targets a solo vendor can meet.
+            Deploy TreeResolve across engineering seats with MDM-friendly rollout docs, air-gapped cryptographic
+            licensing, and support targets a solo vendor can meet.
           </p>
 
           <ul class="enterprise-points">
             <li>
               <span class="check-icon">✓</span>
-              <span><strong>Air-Gapped Cryptographic Leases:</strong> Ed25519-signed offline licenses verified without external network calls.</span>
+              <span><strong>Air-Gapped Cryptographic Leases:</strong> Ed25519-signed offline licenses verified without
+                external network calls.</span>
             </li>
             <li>
               <span class="check-icon">✓</span>
-              <span><strong>Fleet Rollout:</strong> Silent automated distribution via Microsoft Intune, Jamf Pro, and Ansible.</span>
+              <span><strong>Fleet Rollout:</strong> Silent automated distribution via Microsoft Intune, Jamf Pro, and
+                Ansible.</span>
             </li>
             <li>
               <span class="check-icon">✓</span>
-              <span><strong>Commercial Invoicing:</strong> Self-serve card via Paddle; invoiced / PO (Net-30 case-by-case) for qualifying fleets. Extended Net-60 is not standard.</span>
+              <span><strong>Commercial Invoicing:</strong> Self-serve card via Paddle; invoiced / PO (Net-30
+                case-by-case) for qualifying fleets. Extended Net-60 is not standard.</span>
             </li>
             <li>
               <span class="check-icon">✓</span>
-              <span><strong>Zero Data Egress:</strong> Fully verified local execution with zero source code or credential transmission.</span>
+              <span><strong>Zero Data Egress:</strong> Fully verified local execution with zero source code or
+                credential transmission.</span>
             </li>
           </ul>
 
           <div class="enterprise-contact-box">
             <p class="enterprise-contact-label">Community & Discussions:</p>
-            <a href="https://github.com/stillsystems/treeresolve-community/discussions" target="_blank" rel="noopener" class="enterprise-contact-link">
+            <a href="https://github.com/stillsystems/treeresolve-community/discussions" target="_blank" rel="noopener"
+              class="enterprise-contact-link">
               TreeResolve Community Portal →
             </a>
           </div>
@@ -701,14 +758,16 @@
               </div>
               <div class="form-group">
                 <label for="email">Work Email *</label>
-                <input type="email" id="email" name="email" class="form-control" placeholder="jane@company.com" required>
+                <input type="email" id="email" name="email" class="form-control" placeholder="jane@company.com"
+                  required>
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-group">
                 <label for="company">Company / Organization *</label>
-                <input type="text" id="company" name="company" class="form-control" placeholder="Acme Technologies" required>
+                <input type="text" id="company" name="company" class="form-control" placeholder="Acme Technologies"
+                  required>
               </div>
               <div class="form-group">
                 <label for="seats">Estimated Seats</label>
@@ -733,7 +792,8 @@
 
             <div class="form-group">
               <label for="message">Project Requirements or Questions</label>
-              <textarea id="message" name="message" class="form-control" placeholder="Tell us about your team's workflow, security requirements, or custom languages..."></textarea>
+              <textarea id="message" name="message" class="form-control"
+                placeholder="Tell us about your team's workflow, security requirements, or custom languages..."></textarea>
             </div>
 
             <button type="submit" id="submit-inquiry-btn" class="btn btn-glow btn-lg btn-block-submit">
@@ -752,14 +812,22 @@
         © 2026 Still Systems, LLC. TreeResolve. Distributed under commercial proprietary and community terms.
       </div>
       <ul class="footer-links">
-        <li><a href="https://github.com/stillsystems/treeresolve-community/blob/main/PRIVACY.md" target="_blank" rel="noopener">Privacy</a></li>
-        <li><a href="https://github.com/stillsystems/treeresolve-community/blob/main/LICENSE" target="_blank" rel="noopener">Terms</a></li>
-        <li><a href="https://github.com/stillsystems/treeresolve-community/blob/main/SUPPORT.md" target="_blank" rel="noopener">Support</a></li>
-        <li><a href="https://github.com/stillsystems/treeresolve-community/blob/main/ENTERPRISE.md" target="_blank" rel="noopener">Enterprise Guide</a></li>
-        <li><a href="https://github.com/stillsystems/treeresolve-community/blob/main/ARCHITECTURE.md" target="_blank" rel="noopener">Architecture</a></li>
-        <li><a href="https://github.com/stillsystems/treeresolve-community/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Changelog</a></li>
-        <li><a href="https://github.com/stillsystems/treeresolve-community/issues" target="_blank" rel="noopener">Community Tracker</a></li>
-        <li><a href="https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve" target="_blank" rel="noopener">VS Code Marketplace</a></li>
+        <li><a href="https://github.com/stillsystems/treeresolve-community/blob/main/PRIVACY.md" target="_blank"
+            rel="noopener">Privacy</a></li>
+        <li><a href="https://github.com/stillsystems/treeresolve-community/blob/main/LICENSE" target="_blank"
+            rel="noopener">Terms</a></li>
+        <li><a href="https://github.com/stillsystems/treeresolve-community/blob/main/SUPPORT.md" target="_blank"
+            rel="noopener">Support</a></li>
+        <li><a href="https://github.com/stillsystems/treeresolve-community/blob/main/ENTERPRISE.md" target="_blank"
+            rel="noopener">Enterprise Guide</a></li>
+        <li><a href="https://github.com/stillsystems/treeresolve-community/blob/main/ARCHITECTURE.md" target="_blank"
+            rel="noopener">Architecture</a></li>
+        <li><a href="https://github.com/stillsystems/treeresolve-community/blob/main/CHANGELOG.md" target="_blank"
+            rel="noopener">Changelog</a></li>
+        <li><a href="https://github.com/stillsystems/treeresolve-community/issues" target="_blank"
+            rel="noopener">Community Tracker</a></li>
+        <li><a href="https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve" target="_blank"
+            rel="noopener">VS Code Marketplace</a></li>
         <li><span>Open VSX (coming soon)</span></li>
       </ul>
     </div>
@@ -768,4 +836,5 @@
   <script src="config.js"></script>
   <script src="app.js"></script>
 </body>
+
 </html>
