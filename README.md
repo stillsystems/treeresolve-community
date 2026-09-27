@@ -238,6 +238,8 @@ For organizational procurement, volume quotes, InfoSec assessments, and MDM roll
 
 TreeResolve supports **limited** operation in untrusted workspaces (`capabilities.untrustedWorkspaces.supported = "limited"`). You can view and analyze 3-way AST diffs in Restricted Mode; automatic staging and disk write-backs remain disabled until the workspace is trusted. Full merge write-back and Git plumbing require a Trusted Workspace because Tree-sitter parsers and local Git operations run against repository contents.
 
+Enterprise buyers: see the [Trust Pack](docs/trust/README.md) (data-flow, CAIQ lite, offline VSIX / allow-list, SBOM + Sigstore) and [SECURITY.md](.github/SECURITY.md) (VDP).
+
 ### Security Hardening & Defense-in-Depth (v1.0.0)
 
 * **Atomic Save Architecture**: User resolutions (`Accept Ours`, `Accept Theirs`, `Accept Both`) are accumulated safely in memory without intermediate buffer rewrites. All decisions commit atomically upon save via a single `WorkspaceEdit` with conflict marker integrity validation, completely eliminating state desynchronization races.

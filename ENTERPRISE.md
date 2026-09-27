@@ -132,7 +132,7 @@ To eliminate repository name leakage under network inspection, TreeResolve deriv
 
 ### 4.1. Silent Installation via MDM
 
-TreeResolve can be packaged and distributed silently across your developer fleet once the VS Code Marketplace listing is live (`stillsystems.treeresolve`). Until then, provision the CLI via npm (`treeresolve@1.0.0`) for headless / mergetool workflows.
+TreeResolve can be packaged and distributed silently across your developer fleet once the VS Code Marketplace listing is live (`stillsystems.treeresolve`). Until then, distribute a **verified offline VSIX** (SHA-256 + Sigstore) from a GitHub Release, or provision the CLI via npm (`treeresolve@1.0.0`) for headless / mergetool workflows. Full steps and `AllowedExtensions` allow-list examples: [docs/trust/offline-vsix.md](docs/trust/offline-vsix.md).
 
 #### Microsoft Intune / Windows MDM
 
@@ -232,13 +232,33 @@ The standalone TreeResolve CLI executable (`bin/treeresolve.js`) runs natively i
 
 ---
 
-## 5. Procurement & Commercial Terms
+## 5. Trust Pack (vendor risk, zero-cost)
+
+TreeResolve does **not** ship a paid SOC 2 report. For InfoSec review, use the Trust Pack:
+
+| Artifact | Link |
+| :--- | :--- |
+| Index | [docs/trust/README.md](docs/trust/README.md) |
+| Data-flow (local merge; honest licensing/telemetry egress) | [docs/trust/data-flow.md](docs/trust/data-flow.md) |
+| CSA CAIQ (lite, solo-honest) | [docs/trust/caiq-lite.md](docs/trust/caiq-lite.md) |
+| Offline VSIX + `AllowedExtensions` | [docs/trust/offline-vsix.md](docs/trust/offline-vsix.md) |
+| VDP / security.txt | [SECURITY.md](.github/SECURITY.md), [docs/security.txt](docs/security.txt) |
+| SBOM + SHA-256 + Sigstore per release | GitHub Actions workflow `Release artifacts` (tag `v*` or `workflow_dispatch`) |
+| OpenSSF Scorecard | Public repo [`stillsystems/treeresolve-community`](https://github.com/stillsystems/treeresolve-community) |
+
+Quick claims buyers usually need:
+
+* **Source code never leaves the machine** for merge resolution (see data-flow).
+* **Air-gapped path**: offline VSIX + offline wildcard JWT + telemetry off.
+* **Supply chain**: CycloneDX SBOM and Sigstore-signed VSIX on tagged releases.
+
+## 6. Procurement & Commercial Terms
 
 Still Systems (solo-operated LLC) offers honest, deliverable procurement paths for enterprise buyers:
 
 * **Payment Methods**: Self-serve card checkout via Paddle (Merchant of Record) for standard seats. For qualifying fleet quotes, Still Systems can invoice against a purchase order; Net-30 terms may be offered case-by-case after quote acceptance. ACH / wire instructions are provided on the invoice when applicable. Extended Net-60 (or longer) terms are not a standard offering.
 * **Volume Seat Tiering**: Discounted seat pricing discussed starting around 50 developer seats (see list pricing footnotes in the product README).
-* **Agreements**: Purchases are governed by the TreeResolve EULA plus a short written order / quote for fleet deals. Custom MSA or Security Addendum language can be reviewed case-by-case; it is not a turnkey packaged deliverable.
+* **Agreements**: Purchases are governed by the TreeResolve EULA plus a short written order / quote for fleet deals. Custom MSA or Security Addendum language can be reviewed case-by-case; it is not a turnkey packaged deliverable. Vendor risk questionnaires can start from the [CAIQ lite](docs/trust/caiq-lite.md) above.
 * **Support Targets**: Enterprise inquiries aim for **next-business-day acknowledgment** (US Central). Security disclosures follow the 48-hour ack in [SECURITY.md](.github/SECURITY.md). There is no separate uptime SLA for the local extension (merge work runs on the customer's machines). Community / Pro GitHub issues remain best-effort.
 * **Custom Grammar Normalizers**: Available only as scoped, quoted engineering work when capacity allows—not included by default in Enterprise seat pricing.
 
