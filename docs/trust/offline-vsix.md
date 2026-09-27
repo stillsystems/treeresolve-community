@@ -26,8 +26,9 @@ cosign verify-blob "treeresolve-<version>.vsix" \
   '^https://github.com/stillsystems/treeresolve/\.github/workflows/release-artifacts\.yml@refs/tags/v'
 ```
 
-Until Marketplace go-live, treat signed GitHub Release assets (or an internal
-mirror of those assets) as the install source of truth.
+Marketplace install (`still-systems.ss-treeresolve`) is preferred when online.
+For air-gapped or allow-listed fleets, treat signed GitHub Release assets (or an
+internal mirror of those assets) as the offline install source of truth.
 
 ## 2. Install without Marketplace
 

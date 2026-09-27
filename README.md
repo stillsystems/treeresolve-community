@@ -1,7 +1,7 @@
 # TreeResolve
 
 [![npm](https://img.shields.io/npm/v/treeresolve?color=cb3837&label=npm)](https://www.npmjs.com/package/treeresolve)
-[![VS Code Marketplace](https://img.shields.io/badge/VS_Code_Marketplace-Coming_soon-007ACC?logo=visualstudiocode&logoColor=white)](#getting-started)
+[![VS Code Marketplace](https://img.shields.io/visual-studio-marketplace/v/still-systems.ss-treeresolve?label=VS%20Code%20Marketplace&logo=visualstudiocode&logoColor=white&color=007ACC)](https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve)
 [![Open VSX](https://img.shields.io/badge/Open_VSX-Coming_soon-purple)](#getting-started)
 [![License](https://img.shields.io/badge/License-Proprietary-blue.svg)](LICENSE)
 [![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.90.0-brightgreen)](https://code.visualstudio.com)
@@ -125,7 +125,7 @@ npx treeresolve --version
 # or: npm install -g treeresolve
 ```
 
-**VS Code / VSCodium extension:** Marketplace listing uses package `still-systems.ss-treeresolve` (Open VSX coming shortly). Until Marketplace is live, use the CLI above for mergetool and headless workflows.
+**VS Code extension:** Install [`still-systems.ss-treeresolve`](https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve) from the Marketplace (or Extensions view → search *TreeResolve*). Open VSX realign for VSCodium is next; until then use the CLI above for mergetool / headless workflows.
 
 ### 2. Resolving a Merge Conflict in VS Code
 
@@ -210,7 +210,7 @@ TreeResolve uses a Reverse Trial model: install the extension and enjoy all Pro 
 
 | Feature | Community Tier (Free Forever) | Pro Tier ($10/mo or $99/yr) | Enterprise Tier ($20/seat/mo or $199/seat/yr)* |
 | :--- | :---: | :---: | :---: |
-| **Direct Checkout** | Free forever · Extension listing shortly · [CLI on npm](https://www.npmjs.com/package/treeresolve) | [**Get Pro ($99/yr)**](https://stillsystems.github.io/treeresolve-community/?checkout=pro) · [($10/mo)](https://stillsystems.github.io/treeresolve-community/?checkout=monthly) | [**Buy Fleet Seats**](https://stillsystems.github.io/treeresolve-community/?checkout=enterprise) · [Inquire](https://stillsystems.github.io/treeresolve-community/#enterprise) |
+| **Direct Checkout** | Free forever · [Install extension](https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve) · [CLI on npm](https://www.npmjs.com/package/treeresolve) | [**Get Pro ($99/yr)**](https://stillsystems.github.io/treeresolve-community/?checkout=pro) · [($10/mo)](https://stillsystems.github.io/treeresolve-community/?checkout=monthly) | [**Buy Fleet Seats**](https://stillsystems.github.io/treeresolve-community/?checkout=enterprise) · [Inquire](https://stillsystems.github.io/treeresolve-community/#enterprise) |
 | **Target User** | Open Source / Hobbyists | Individual Professionals | Engineering Teams & Enterprise Fleets |
 | **License Binding** | N/A | **Per person** — any repo, up to 3 machines | **Seats + org wildcards** (fleet / MDM) |
 | **3-Pane Visual Diffing** | ✅ Included | ✅ Included | ✅ Included |

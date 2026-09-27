@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Documentation
 
-- **Listing status (pre-launch)**: VS Code Marketplace and Open VSX are **not** live for `1.0.0` yet (CLI/`npx` and community docs are). Earlier changelog lines about auto-publish / Open VSX “officially published” describe prior pipeline intent or historical listings—not the current hold before gates #8–#9.
+- **Listing status**: VS Code Marketplace is **live** for `1.0.0` as [`still-systems.ss-treeresolve`](https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve). Open VSX realign under the same id is still pending (prior `stillsystems.treeresolve` listing was historical).
 - **Licensing FAQ**: Docs now state the live gateway is `workers.dev`, with `licensing.stillsystems.com` as the parked custom-domain cutover.
 - **Lockfile roadmap**: README / TASKLIST now list Yarn (`yarn.lock`) / pnpm (`pnpm-lock.yaml`) parity with npm as the next lockfile priority, with other ecosystems (Cargo, Poetry/uv, Gem, Composer, …) later by demand—not a ship-all promise. Pricing copy clarified so Yarn/PNPM stay labeled partial until that work lands.
 - **Doc accuracy (Grok #11)**: Removed the undocumented editor tab-bar button claim; clarified lockfile coverage (`package-lock.json` dedicated, yarn/pnpm partial); moved `.treeresolverc` `$schema` off third-party `still.systems` onto Still Systems GitHub Pages; dialed Net-60 / MSA / SLA copy to solo-capable commitments.

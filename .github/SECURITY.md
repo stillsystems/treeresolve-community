@@ -38,5 +38,5 @@ We do **not** operate a paid bug bounty. Good-faith reporters will be credited i
 
 * **Acknowledgment**: We aim to acknowledge receipt of vulnerability reports within **48 hours** (solo maintainer; best effort).
 * **Triage & Patching**: Validated issues are triaged off-channel; we may ask clarifying questions privately.
-* **Release & Advisory**: Once a fix is packaged (and published to the VS Code Marketplace when that channel is live), a coordinated GitHub Security Advisory will be published, crediting the reporter when appropriate.
+* **Release & Advisory**: Once a fix is packaged and published to the VS Code Marketplace (`still-systems.ss-treeresolve`), a coordinated GitHub Security Advisory will be published, crediting the reporter when appropriate.
 * **No retaliation**: We will not pursue legal action against reporters who make a good-faith, private disclosure and give us a reasonable window to fix before public discussion.
