@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/treeresolve?color=cb3837&label=npm)](https://www.npmjs.com/package/treeresolve)
 [![VS Code Marketplace](https://badgen.net/vs-marketplace/v/still-systems.ss-treeresolve?label=VS%20Code%20Marketplace&color=007acc)](https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve)
-[![Open VSX](https://img.shields.io/badge/Open_VSX-Coming_soon-purple)](#getting-started)
+[![Open VSX](https://img.shields.io/open-vsx/v/stillsystems/treeresolve?label=Open%20VSX&color=purple)](https://open-vsx.org/extension/stillsystems/treeresolve)
 [![License](https://img.shields.io/badge/License-Proprietary-blue.svg)](LICENSE)
 [![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.90.0-brightgreen)](https://code.visualstudio.com)
 [![Website](https://img.shields.io/badge/Website-stillsystems.github.io%2Ftreeresolve--community-blueviolet)](https://stillsystems.github.io/treeresolve-community)
@@ -125,7 +125,7 @@ npx treeresolve --version
 # or: npm install -g treeresolve
 ```
 
-**VS Code extension:** Install [`still-systems.ss-treeresolve`](https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve) from the Marketplace (or Extensions view → search *TreeResolve*). Open VSX realign for VSCodium is next; until then use the CLI above for mergetool / headless workflows.
+**VS Code extension:** Install [`still-systems.ss-treeresolve`](https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve) from the Marketplace (or Extensions view → search *TreeResolve*). **VSCodium / Open VSX:** [`stillsystems.treeresolve`](https://open-vsx.org/extension/stillsystems/treeresolve). CLI above covers mergetool / headless workflows.
 
 ### 2. Resolving a Merge Conflict in VS Code
 
