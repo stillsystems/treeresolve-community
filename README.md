@@ -4,7 +4,7 @@
 [![VS Code Marketplace](https://img.shields.io/badge/VS_Code_Marketplace-Coming_soon-007ACC?logo=visualstudiocode&logoColor=white)](#getting-started)
 [![Open VSX](https://img.shields.io/badge/Open_VSX-Coming_soon-purple)](#getting-started)
 [![License](https://img.shields.io/badge/License-Proprietary-blue.svg)](LICENSE)
-[![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.138.0-brightgreen)](https://code.visualstudio.com)
+[![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.90.0-brightgreen)](https://code.visualstudio.com)
 [![Website](https://img.shields.io/badge/Website-stillsystems.github.io%2Ftreeresolve--community-blueviolet)](https://stillsystems.github.io/treeresolve-community)
 
 **Deterministic, syntax-aware 3-way merge conflict resolution for VS Code.**  

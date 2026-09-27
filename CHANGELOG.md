@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Compatibility
+
+- **Lowered `engines.vscode` to `^1.90.0`**: Honest floor for API usage plus Node 20 extension-host runtime (native `fetch`, esbuild `--target=node20`). Widens Marketplace / Open VSX / Cursor / VSCodium install reach vs `^1.138.0`. CI smoke-tests activation on `1.90.0` and `stable`.
+
 ### Ready for launch cutover
 
 - **Licensing custom domain (ready-to-flip)**: Canonical launch host is `https://licensing.stillsystems.com`. Client defaults remain on `https://treeresolve-licensing.still-systems.workers.dev` until `USE_CUSTOM_LICENSING_DOMAIN` is flipped after Cloudflare Custom Domain + DNS cutover. Wrangler Custom Domain route block is prepared (commented) for the licensing Worker deploy config.
