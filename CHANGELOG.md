@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Community Pro-unlock hunk tip**: When free-tier users hit a Pro-gated conflict in the merge canvas (lockfiles, other languages, full syntax), each manual hunk shows a short tip such as “Pro unlocks lockfile auto-merge” / “Pro unlocks this language” (yarn/pnpm tips stay partial) plus an Upgrade link — not only the generic header chrome.
 - **Free / paid line (Grok #9)**: Community keeps a taste of syntax auto-merge — TS/JS/Python import resolution in the IDE. Pro sells lockfiles, full-language AST, batch/CLI/CI, and `.treeresolverc` governance.
 - **Pro per-person licenses (Grok #10)**: Pro binds to the purchaser (`binding: person`, any repo, up to 3 machines via fingerprint seats). Enterprise keeps seats + org wildcards. `installLicense` no longer requires per-repo activation.
 
