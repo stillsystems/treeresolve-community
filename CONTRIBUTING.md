@@ -8,7 +8,7 @@ TreeResolve provides deterministic, syntax-aware 3-way merge conflict resolution
 
 ## Code of Conduct
 
-All contributors and participants are expected to adhere to our [Code of Conduct](CODE_OF_CONDUCT.md). Please report any unacceptable behavior to [contact@stillsystems.com](mailto:contact@stillsystems.com).
+All contributors and participants are expected to adhere to our [Code of Conduct](CODE_OF_CONDUCT.md). Please report any unacceptable behavior to [billy.kidd34@gmail.com](mailto:billy.kidd34@gmail.com).
 
 ---
 
