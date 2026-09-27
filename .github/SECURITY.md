@@ -2,7 +2,7 @@
 
 Still Systems and the TreeResolve team take security and privacy seriously. TreeResolve is designed with an offline-first architecture, air-gapped cryptographic licensing, and a strict Content Security Policy to protect your source code. See [PRIVACY.md](../PRIVACY.md) for data-handling practices and the [Trust Pack](../docs/trust/README.md) for enterprise vendor-risk materials (data-flow, SBOM, Sigstore, CAIQ lite).
 
-This document is the **Vulnerability Disclosure Policy (VDP)**. Machine-readable contact info: [security.txt](../docs/security.txt) (also served at `/.well-known/security.txt` on the docs site).
+This document is the **Vulnerability Disclosure Policy (VDP)**. Machine-readable contact info: [security.txt](../docs/security.txt), also published at [https://stillsystems.github.io/treeresolve-community/security.txt](https://stillsystems.github.io/treeresolve-community/security.txt).
 
 ---
 
