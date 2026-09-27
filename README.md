@@ -100,6 +100,9 @@ TreeResolve's syntax engine expands language support by shipping dedicated langu
 
 ### Next
 
+* [ ] **Yarn (`yarn.lock`) / pnpm (`pnpm-lock.yaml`) parity with npm**: Deepen the existing partial helpers to match dedicated `package-lock.json` coverage—first priority before we can honestly claim Yarn/pnpm are fully covered.
+* [ ] **Other lockfile ecosystems (by demand)**: Formats such as `Cargo.lock`, Poetry/uv, `Gemfile.lock`, and `composer.lock` may follow when community demand justifies them—not a commitment to ship every ecosystem now.
+
 Roadmap items and language requests are tracked in the [TreeResolve Community Tracker](https://github.com/stillsystems/treeresolve-community/issues).
 
 > 💡 **Have a feature idea, language request, or bug report?**  
@@ -205,7 +208,7 @@ TreeResolve uses a Reverse Trial model: install the extension and enjoy all Pro 
 | **Native Undo/Redo & Save Hooks** | ✅ Included | ✅ Included | ✅ Included |
 | **Import Auto-Merge (TS / JS / Python)** | ✅ Free taste | ✅ Included | ✅ Included |
 | **Full Syntax Auto-Merge (all languages + declarations)** | ❌ | ✅ Unlimited Deterministic Merges | ✅ Unlimited Deterministic Merges |
-| **Lockfile Auto-Merge (npm / Yarn / PNPM)** | ❌ | ✅ Included | ✅ Included |
+| **Lockfile Auto-Merge (npm dedicated; Yarn/PNPM partial)** | ❌ | ✅ Included | ✅ Included |
 | **Batch / CLI / CI Merge Driver** | ❌ | ✅ Included | ✅ Included |
 | **Repo Governance (`.treeresolverc`)** | ❌ | ✅ Included | ✅ Included |
 | **Intra-Line Token Alignment** | ❌ Line-based only | ✅ Token-level syntax highlighting | ✅ Token-level syntax highlighting |

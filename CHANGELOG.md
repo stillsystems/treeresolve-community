@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Documentation
 
+- **Lockfile roadmap**: README / TASKLIST now list Yarn (`yarn.lock`) / pnpm (`pnpm-lock.yaml`) parity with npm as the next lockfile priority, with other ecosystems (Cargo, Poetry/uv, Gem, Composer, …) later by demand—not a ship-all promise. Pricing copy clarified so Yarn/PNPM stay labeled partial until that work lands.
 - **Doc accuracy (Grok #11)**: Removed the undocumented editor tab-bar button claim; clarified lockfile coverage (`package-lock.json` dedicated, yarn/pnpm partial); moved `.treeresolverc` `$schema` off third-party `still.systems` onto Still Systems GitHub Pages; dialed Net-60 / MSA / SLA copy to solo-capable commitments.
 
 ### Compatibility
