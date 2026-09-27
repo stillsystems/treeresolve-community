@@ -15,6 +15,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Licensing custom domain (ready-to-flip)**: Canonical launch host is `https://licensing.stillsystems.com`. Client defaults remain on `https://treeresolve-licensing.still-systems.workers.dev` until `USE_CUSTOM_LICENSING_DOMAIN` is flipped after Cloudflare Custom Domain + DNS cutover. Wrangler Custom Domain route block is prepared (commented) for the licensing Worker deploy config.
 
+### Changed
+
+- **Free / paid line (Grok #9)**: Community keeps a taste of syntax auto-merge — TS/JS/Python import resolution in the IDE. Pro sells lockfiles, full-language AST, batch/CLI/CI, and `.treeresolverc` governance.
+- **Pro per-person licenses (Grok #10)**: Pro binds to the purchaser (`binding: person`, any repo, up to 3 machines via fingerprint seats). Enterprise keeps seats + org wildcards. `installLicense` no longer requires per-repo activation.
+
 ## [1.0.0] - 2026-09-25
 
 ### Launch

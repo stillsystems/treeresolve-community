@@ -49,8 +49,8 @@ Entitlement capabilities and syntactic degradation are isolated per **Repository
 
 | Capability Tier | Scope & Activation Rules | UI Indicator | Resolution Semantics |
 | :--- | :--- | :--- | :--- |
-| **Tier 1: Deterministic Syntax Auto-Merge** | Active Pro/Trial lease locked to `DomainID`; ancestor present (`:1` stage or `\|\|\|\|\|\|\|` block); verified pure grammar queries; **Zero syntax errors inside Scope Unit**. | Blue ribbon badge: `Deterministic Syntax Merge` | Declarative LSCR policies (`SetUnion`, `KeyDeduplicatedMap`) auto-resolve safe leaf additions off-thread before render. |
-| **Tier 2: Visual 3-Way Merge** | Community Tier; un-registered language; or syntax error inside the local Scope Unit. Valid ancestor present. | Gray ribbon badge: `Manual 3-Way Diff` | Auto-resolution bypassed for that unit. Left (Ours), Center (Result), and Right (Theirs) render with manual 1-click accept controls. Clean sibling units retain Tier 1. |
+| **Tier 1: Deterministic Syntax Auto-Merge** | Pro/Trial/Enterprise lease, **or** Community import taste (TS/JS/Python); ancestor present; verified pure grammar queries; **Zero syntax errors inside Scope Unit**. | Blue ribbon badge: `Deterministic Syntax Merge` | Declarative LSCR policies (`SetUnion`, `KeyDeduplicatedMap`) auto-resolve safe leaf additions off-thread before render. |
+| **Tier 2: Visual 3-Way Merge** | Community outside taste languages; un-registered language; or syntax error inside the local Scope Unit. Valid ancestor present. | Gray ribbon badge: `Manual 3-Way Diff` | Auto-resolution bypassed for that unit. Left (Ours), Center (Result), and Right (Theirs) render with manual 1-click accept controls. Clean sibling units retain Tier 1. |
 | **Tier 3: Degraded 2-Way View** | Missing Base ancestor (`:1` stage unreadable AND file marker lacks `\|\|\|\|\|\|\|` block). | Amber warning banner: `Degraded 2-Way Mode: Ancestor Missing` | Result pane locked. Ours and Theirs diffed directly. AST auto-merging disabled across this specific hunk. |
 
 ### 2.1. Environment-Safe Repository Root Resolution
@@ -80,12 +80,13 @@ Upstream merge operations and cherry-picks frequently produce non-uniform confli
 
 To eliminate trial tampering while preserving the zero-latency, offline-first operating doctrine, TreeResolve decouples immediate file-open verification from network availability:
 
-1. **Zero-Latency Local Verification**: The extension inspects cached secrets (`treeresolve.license.<domainId>` or `treeresolve.trial_ticket`) offline. Editor rendering is never blocked waiting on remote network calls.
+1. **Zero-Latency Local Verification**: The extension inspects cached secrets (`treeresolve.license.*` for person/org licenses, or `treeresolve.license.<domainId>` for legacy domain-locked keys, plus `treeresolve.trial_ticket`) offline. Editor rendering is never blocked waiting on remote network calls.
 2. **Server-Issued Trial Tickets**: On startup, the licensing client contacts the TreeResolve licensing service with an anonymous, privacy-preserving SHA-256 machine fingerprint (`platform:arch:machineId` derived from `vscode.env.machineId` or an anonymous persistent UUID in standalone CLI; zero PII). The licensing gateway returns a signed 14-day Ed25519 JWT ticket stored securely in local extension storage.
-3. **Monotonic Offline Fallback**: If the network is unreachable during initial install, `DomainLeaseCoordinator` evaluates local `globalState` timestamps with monotonic clock-rollback detection as an air-gapped fallback.
-4. **30-Day Floating Leases**: Commercial licenses automatically renew 30-day floating leases in the background when online.
-5. **Wildcard Hard-Caps & Revocation Manifests**: Tokens with wildcard domain scope (`domainId: '*'`) are constrained to a strict 90-day maximum TTL. `LicenseManager` enforces token revocation via `jti` checks synchronized with edge-cached revocation manifests.
-6. **Automated Seat Reclaiming**: The control plane provides automated seat reclaiming to reconcile seats during developer workstation migration, OS re-imaging, or salt regeneration without administrative overhead.
+3. **Pro = per person; Community taste**: Pro tokens use `binding: person`, `domainId: '*'`, and `maxMachines` (default 3) — any repo on a few machines. Community keeps TS/JS/Python import auto-merge in the IDE; Pro sells lockfiles, full-language AST, batch/CLI/CI, and governance. Legacy domain-locked tokens still verify per `DomainID`.
+4. **Monotonic Offline Fallback**: If the network is unreachable during initial install, `DomainLeaseCoordinator` evaluates local `globalState` timestamps with monotonic clock-rollback detection as an air-gapped fallback.
+5. **30-Day Floating Leases**: Commercial licenses automatically renew 30-day floating leases in the background when online (Pro/Enterprise seat by machine fingerprint; legacy domain-locked by repo domain).
+6. **Wildcard Hard-Caps & Revocation Manifests**: Person/org/wildcard tokens (`domainId: '*'`) are constrained to a strict 90-day maximum offline TTL. `LicenseManager` enforces token revocation via `jti` checks synchronized with edge-cached revocation manifests.
+7. **Automated Seat Reclaiming**: The control plane provides automated seat reclaiming to reconcile machine seats during developer workstation migration, OS re-imaging, or salt regeneration without administrative overhead.
 
 ---
 
@@ -254,7 +255,7 @@ TreeResolve enforces defense-in-depth within the 3-way merge canvas:
 
 ### 7.3. Submodule Domain Licensing Lifecycle
 
-* **Atomic Domain Lock**: Leases bind to `DomainID` (evaluated at submodule root). Active merge editor sessions maintain their granted capability tier until the buffer is committed or closed.
+* **Capability Lock**: Person/org Pro leases apply across repos on the machine; legacy domain-locked leases still bind to `DomainID` (submodule root). Active merge editor sessions maintain their granted entitlement set until the buffer is committed or closed.
 * **Air-Gapped Offline Validation**: Ed25519 token signatures verify entirely offline using the bundled public key, ensuring zero outbound code transmission.
 * **Monotonic Anti-Tamper Clock Guard**: The trial coordinator tracks a monotonic `treeresolve.lastSeenTimestamp` in persistent `globalState`. If local system clock manipulation is detected (`Date.now() < lastSeen`), the engine clamps elapsed time to `lastSeen`, preventing negative durations or indefinite trial prolongation.
 
@@ -325,8 +326,8 @@ Headless CLI execution strictly enforces TreeResolve Pro paywall boundaries with
   2. `~/.treeresolve/license.json` (or `$TREERESOLVE_CONFIG_DIR/license.json`): Persistent local credential store managed via `treeresolve license <token>`.
 * **Air-Gapped Offline Verification**: Candidate tokens are verified locally via `LicenseManager.verifyToken` against the bundled Ed25519 public key, domain hash, monotonic expiration, and token revocation lists.
 * **Gated Execution**:
-  * **Community Tier (`isPro: false`)**: Unauthenticated runs degrade safely to manual review mode (`isPro: false`). AST auto-resolution and whole-file lockfile/YAML mergers are bypassed, preserving conflict markers and returning exit code `1`.
-  * **Pro Tier (`isPro: true`)**: Valid domain-locked or wildcard commercial tokens unlock headless AST auto-resolution and whole-file lockfile merges.
+  * **Community Tier (`isPro: false`)**: Headless CLI/CI stays manual (no batch auto-merge). The IDE Community tier still offers TS/JS/Python import taste. Lockfile/YAML and full-language AST remain Pro.
+  * **Pro Tier (`isPro: true`)**: Valid person-scoped (any-repo) or legacy domain-locked commercial tokens unlock headless AST auto-resolution and whole-file lockfile merges.
 * **Subcommands**:
   * `treeresolve status [dir]`: Inspects working directory repo root, remote origin URL, canonical domain hash, and current licensing tier (`PRO` or `COMMUNITY`).
   * `treeresolve license <token>`: Installs or updates headless license token in user configuration.

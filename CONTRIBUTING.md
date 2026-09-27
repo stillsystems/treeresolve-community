@@ -66,6 +66,22 @@ A maintainer will review your pull request promptly.
 
 ---
 
+## Local development tests
+
+- **Unit** (mocked `vscode`): `npm run test:unit`
+- **Conflict fixtures** (release-gate corpus): `npm run test:fixtures`
+- **Extension host** (`@vscode/test-cli` + `@vscode/test-electron`): `npm run test:integration`
+
+On headless Linux CI (and most Linux agents without a display), run the host suite under Xvfb:
+
+```bash
+xvfb-run -a npm run test:integration
+```
+
+GitHub Actions ubuntu runners already include `xvfb-run`. macOS and Windows do not need Xvfb.
+
+---
+
 ## Licensing of Contributions
 
 By contributing to TreeResolve Community repositories, you agree that your contributions will be licensed under the repository's [MIT License](LICENSE).

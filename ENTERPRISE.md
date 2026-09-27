@@ -64,11 +64,12 @@ TreeResolve uses an **offline-first cryptographic licensing model** that elimina
 * The VS Code extension verifies signatures locally using the bundled Ed25519 public key.
 * **Air-Gapped Operation**: Developer machines never need to connect to Still Systems servers to validate an enterprise license.
 
-### 3.2. License Tiers & Domain Hard-Caps
+### 3.2. License Tiers & Binding Model
 
-* **Organization Wildcard Licenses (`domainId: '*'`)**: Authorized for enterprise-wide rollout across all internal repositories.
-* **90-Day Offline Hard-Cap**: In compliance with enterprise security hygiene, wildcard leases carry a maximum offline validity window of 90 days.
-* **Revocation Manifests**: The extension periodically checks edge-cached revocation manifests when network connectivity is available, immediately disabling revoked tokens (`jti`).
+* **Pro (per person):** One purchaser license usable in **any repository** on up to **3 machines** (`binding: person`, `domainId: '*'`, `maxMachines: 3`). No per-repo activation after purchase.
+* **Enterprise (seats + org wildcards):** Seat budget for concurrent machines/people (`binding: org`) with optional organization wildcard (`domainId: '*'`) or legacy domain lock.
+* **90-Day Offline Hard-Cap:** Person/org wildcard leases carry a maximum offline validity window of 90 days (renew via floating lease when online).
+* **Revocation Manifests:** The extension periodically checks edge-cached revocation manifests when network connectivity is available, immediately disabling revoked tokens (`jti`).
 
 ### 3.3. Internal Gateway / Proxy Deployment & Air-Gapped Environments
 

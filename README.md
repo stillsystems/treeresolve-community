@@ -197,10 +197,15 @@ TreeResolve uses a Reverse Trial model: install the extension and enjoy all Pro 
 | :--- | :---: | :---: | :---: |
 | **Direct Checkout** | Free forever · Extension listing shortly · [CLI on npm](https://www.npmjs.com/package/treeresolve) | [**Get Pro ($99/yr)**](https://stillsystems.github.io/treeresolve-community/?checkout=pro) · [($10/mo)](https://stillsystems.github.io/treeresolve-community/?checkout=monthly) | [**Buy Fleet Seats**](https://stillsystems.github.io/treeresolve-community/?checkout=enterprise) · [Inquire](https://stillsystems.github.io/treeresolve-community/#enterprise) |
 | **Target User** | Open Source / Hobbyists | Individual Professionals | Engineering Teams & Enterprise Fleets |
+| **License Binding** | N/A | **Per person** — any repo, up to 3 machines | **Seats + org wildcards** (fleet / MDM) |
 | **3-Pane Visual Diffing** | ✅ Included | ✅ Included | ✅ Included |
 | **Dynamic Ribbon Alignment** | ✅ Included | ✅ Included | ✅ Included |
 | **Native Undo/Redo & Save Hooks** | ✅ Included | ✅ Included | ✅ Included |
-| **Deterministic Syntax Auto-Merge** | ❌ (Manual Hunk Clicks) | ✅ Unlimited Deterministic Merges | ✅ Unlimited Deterministic Merges |
+| **Import Auto-Merge (TS / JS / Python)** | ✅ Free taste | ✅ Included | ✅ Included |
+| **Full Syntax Auto-Merge (all languages + declarations)** | ❌ | ✅ Unlimited Deterministic Merges | ✅ Unlimited Deterministic Merges |
+| **Lockfile Auto-Merge (npm / Yarn / PNPM)** | ❌ | ✅ Included | ✅ Included |
+| **Batch / CLI / CI Merge Driver** | ❌ | ✅ Included | ✅ Included |
+| **Repo Governance (`.treeresolverc`)** | ❌ | ✅ Included | ✅ Included |
 | **Intra-Line Token Alignment** | ❌ Line-based only | ✅ Token-level syntax highlighting | ✅ Token-level syntax highlighting |
 | **Offline Cryptographic Leases** | ✅ Yes | ✅ Ed25519 offline verification | ✅ Wildcard / Multi-repo domain lease |
 | **Centralized / MDM Deployment** | ❌ | ❌ | ✅ Automated dotfile / container rollout |
@@ -209,7 +214,7 @@ TreeResolve uses a Reverse Trial model: install the extension and enjoy all Pro 
 
 *\*Enterprise pricing reflects standard base list price. Volume discounting and fleet licensing apply automatically for teams of 50 to 1,000+ developers via custom quote or PO.*
 
-When your 14-day trial ends, TreeResolve automatically degrades to the Community tier. Your editor will never be locked or blocked from resolving conflicts manually. Commercial licenses utilize 30-day offline-first floating leases, and wildcard licenses carry a maximum 90-day validity window.
+When your 14-day trial ends, TreeResolve automatically degrades to the Community tier (you keep the 3-pane canvas **and** TS/JS/Python import auto-merge). Your editor will never be locked or blocked from resolving conflicts manually. **Pro is a per-person license** — install once, use in any repository on up to three machines. Commercial licenses utilize 30-day offline-first floating leases; person/org wildcard tokens carry a maximum 90-day offline validity window.
 
 For organizational procurement, volume quotes, InfoSec assessments, and MDM rollout instructions, refer to the [Enterprise Deployment & Security Guide](ENTERPRISE.md) or submit an inquiry on the [Enterprise Portal](https://stillsystems.github.io/treeresolve-community/#enterprise).
 
