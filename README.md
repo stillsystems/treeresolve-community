@@ -7,21 +7,22 @@
 [![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.90.0-brightgreen)](https://code.visualstudio.com)
 [![Website](https://img.shields.io/badge/Website-stillsystems.github.io%2Ftreeresolve--community-blueviolet)](https://stillsystems.github.io/treeresolve-community)
 
-**Deterministic, syntax-aware 3-way merge conflict resolution for VS Code.**  
-Turn tedious manual rebase slogs into effortless operations with zero hallucinations, local-first execution, and no source-code egress to LLMs or cloud merge services.
+**Lead with lockfiles. Review what was auto-resolved.**  
+Deterministic, syntax-aware 3-way merge for VS Code—strongest on `package-lock.json`, partial helpers for yarn/pnpm, zero AI, local-first, no source-code egress.
 
 ---
 
 ## Why TreeResolve?
 
-Standard Git and native merge tools operate strictly on raw text lines. When two branches both insert an import, add an enum flag, or update adjacent JSON properties, line-based diff engines flag false conflicts and force you to manually click through hundreds of trivial hunks.
+The highest-signal merge pain is lockfile conflicts: concurrent dependency bumps turn `package-lock.json` into a wall of false conflicts. TreeResolve auto-resolves what is safely disjoint, then makes every auto-resolution easy to review before you save.
 
 **TreeResolve replaces line-based guesswork with local syntax comprehension:**
 
-* **Deterministic Syntax Auto-Resolution**: Analyzes code structurally to safely auto-resolve non-colliding syntax elements (disjoint imports and JSON keys).
-* **Zero AI / Zero Hallucinations**: 100% programmatic and rule-driven. Your code is never transmitted to an LLM or third-party cloud merge service—merges are provably correct, reproducible, and work offline once licensed (or during local editing).
-* **Synchronized 3-Way Canvas**: A smooth visual editor with dynamic Bézier ribbons linking your branches (`Ours`, `Merged Result`, and `Theirs`).
-* **Responsive Local Performance**: Efficient diff alignment and canvas rendering without sending source code to external services.
+* **Lockfile-first auto-merge**: Dedicated 3-way semver / integrity alignment for `package-lock.json`. `yarn.lock` / `pnpm-lock.yaml` stay **partial** (thinner key-union / YAML helpers; denser cases stay manual—see [community #6](https://github.com/stillsystems/treeresolve-community/issues/6)).
+* **Review auto-resolutions**: After batch or single-file auto-resolve, use **TreeResolve: Review Auto-Resolved Conflicts**. In the 3-way canvas, Tier-1 cards show policy labels (e.g. Lockfile) and remind you to review before save.
+* **Deterministic Syntax Auto-Resolution**: Disjoint imports, JSON keys, and other structural hunks merge only when provably safe—never LLM rewriting.
+* **Zero AI / Zero Hallucinations**: 100% programmatic and rule-driven. Your code is never transmitted to an LLM or third-party cloud merge service.
+* **Synchronized 3-Way Canvas**: Dynamic Bézier ribbons linking `Ours`, `Merged Result`, and `Theirs`.
 
 ---
 
@@ -31,13 +32,15 @@ Standard Git and native merge tools operate strictly on raw text lines. When two
 
 ## Features
 
-### ⚡ Deterministic Syntax Auto-Merge
+### ⚡ Lockfiles & Deterministic Syntax Auto-Merge
 
-TreeResolve identifies the structural context of conflicting blocks. If two changes are syntactically disjoint, they are resolved automatically before the merge editor even opens:
+TreeResolve identifies the structural context of conflicting blocks. If two changes are syntactically disjoint, they are resolved automatically—and surfaced for review:
 
+* **npm Lockfile (`package-lock.json`)**: Dedicated 3-way semver range comparison and integrity hash alignment for non-breaking package additions and bumps.
+* **yarn.lock / pnpm-lock.yaml (partial)**: Thinner entry / key-union and YAML 3-way helpers; complex or format-edge conflicts stay for human review.
 * **ES / TypeScript / Python Imports**: Deterministic 3-way set difference against Base, honoring deletions and deduplicating imports.
 * **JSON / JSONC Configuration**: Deep recursive 3-way merge combining non-colliding keys while safely detecting delete-modify conflicts.
-* **Lockfiles (`package-lock.json`)**: 3-way semver range comparison and integrity hash alignment for non-breaking package additions and bumps.
+* **Review affordance**: Command Palette → **TreeResolve: Review Auto-Resolved Conflicts**; merge-editor status shows “N auto — review before save.”
 
 ### 🎨 Visual 3-Pane Viewport
 
@@ -131,24 +134,30 @@ When a Git merge or rebase encounters a conflict, open the conflicted file, then
 TreeResolve: Open 3-Way Merge Editor
 ```
 
-Non-colliding structural changes will auto-resolve instantly. Review any remaining logical conflicts in the center pane and click **Save & Stage**.
+Non-colliding structural changes (especially `package-lock.json` hunks) auto-resolve instantly. Tier-1 cards show a policy label—**review auto-resolutions before Save & Stage**. Remaining logical conflicts stay in the center pane.
 
-### 3. Batch Auto-Resolving Conflicts
+### 3. Batch Auto-Resolve, Then Review
 
-To scan your entire workspace and auto-resolve all 100% deterministic syntax conflicts in one click:
+To scan your workspace for lockfile and other deterministic conflicts:
 
 ```plaintext
-TreeResolve: Batch Auto-Resolve All Deterministic Conflicts
+TreeResolve: Batch Auto-Resolve Lockfiles & Deterministic Conflicts
 ```
 
-* **Graceful Cancellation**: Easily cancel long-running monorepo scans at any point using the progress notification cancel button.
-* **Live Observability**: Live file-by-file processing details, resolved hunk counts, and diagnostic errors stream in real-time to the **TreeResolve Batch** OutputChannel (`View` → `Output` → `TreeResolve Batch`).
-* **Safe Exclusions**: Automatically skips build outputs, package managers, and binary formats (`node_modules`, `dist`, `.git`, `*.wasm`, `*.zip`, etc.).
-
-Or quickly resolve disjoint imports in the active file:
+After a successful run, choose **Review Auto-Resolved** on the notification (or run the command below) to reopen touched files and eye-check the Batch log:
 
 ```plaintext
-TreeResolve: Auto-Resolve Disjoint Imports
+TreeResolve: Review Auto-Resolved Conflicts
+```
+
+* **Graceful Cancellation**: Cancel long-running monorepo scans from the progress notification.
+* **Live Observability**: Per-hunk policies (e.g. lockfile) stream to **TreeResolve Batch** (`View` → `Output` → `TreeResolve Batch`).
+* **Safe Exclusions**: Skips build outputs and binaries (`node_modules`, `dist`, `.git`, `*.wasm`, `*.zip`, etc.).
+
+Or resolve the active conflicted file:
+
+```plaintext
+TreeResolve: Auto-Resolve Lockfiles & Deterministic Conflicts
 ```
 
 ### 4. Git Mergetool & CLI Companion

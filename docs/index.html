@@ -3,23 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TreeResolve — Deterministic, Syntax-Aware 3-Way Merge Conflicts</title>
-  <meta name="description" content="Deterministic, syntax-aware 3-way merge conflict resolution for VS Code and Git. Zero hallucinations, local-first execution, and no source-code egress to LLMs.">
+  <title>TreeResolve — Lockfile Conflicts, Then Review Auto-Resolutions</title>
+  <meta name="description" content="Auto-resolve package-lock.json merge conflicts (yarn/pnpm partial), then review every auto-resolution. Deterministic, local-first, zero AI—no source-code egress.">
   <link rel="canonical" href="https://stillsystems.github.io/treeresolve-community/">
   <link rel="icon" type="image/png" href="images/icon.png">
   
   <!-- OpenGraph / Facebook / LinkedIn / Discord -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://stillsystems.github.io/treeresolve-community/">
-  <meta property="og:title" content="TreeResolve — Deterministic, Syntax-Aware 3-Way Merge Conflicts">
-  <meta property="og:description" content="Deterministic, syntax-aware 3-way merge conflict resolution for VS Code and Git. Zero hallucinations, local-first execution, and no source-code egress to LLMs.">
+  <meta property="og:title" content="TreeResolve — Lockfile Conflicts, Then Review Auto-Resolutions">
+  <meta property="og:description" content="Auto-resolve package-lock.json merge conflicts (yarn/pnpm partial), then review every auto-resolution. Deterministic, local-first, zero AI—no source-code egress.">
   <meta property="og:image" content="https://stillsystems.github.io/treeresolve-community/images/preview.png">
 
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://stillsystems.github.io/treeresolve-community/">
-  <meta name="twitter:title" content="TreeResolve — Deterministic, Syntax-Aware 3-Way Merge Conflicts">
-  <meta name="twitter:description" content="Deterministic, syntax-aware 3-way merge conflict resolution for VS Code and Git. Zero hallucinations, local-first execution, and no source-code egress to LLMs.">
+  <meta name="twitter:title" content="TreeResolve — Lockfile Conflicts, Then Review Auto-Resolutions">
+  <meta name="twitter:description" content="Auto-resolve package-lock.json merge conflicts (yarn/pnpm partial), then review every auto-resolution. Deterministic, local-first, zero AI—no source-code egress.">
   <meta name="twitter:image" content="https://stillsystems.github.io/treeresolve-community/images/preview.png">
 
   <script type="application/ld+json">
@@ -31,7 +31,7 @@
         "name": "TreeResolve",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Windows, macOS, Linux",
-        "description": "Deterministic, syntax-aware 3-way merge conflict resolution for VS Code and Git. Zero hallucinations, local-first execution, and no source-code egress to LLMs.",
+        "description": "Auto-resolve package-lock.json merge conflicts (yarn/pnpm partial), then review every auto-resolution. Deterministic, local-first, zero AI—no source-code egress.",
         "url": "https://stillsystems.github.io/treeresolve-community/",
         "image": "https://stillsystems.github.io/treeresolve-community/images/preview.png",
         "softwareVersion": "1.0.0",
@@ -154,11 +154,11 @@
         </div>
       </div>
       <h1 class="hero-title">
-        Deterministic, Syntax-Aware<br>
-        3-Way Merge Conflicts
+        Lockfile Conflicts First.<br>
+        Review Every Auto-Resolution.
       </h1>
       <p class="hero-subtitle">
-        Turn tedious manual rebase slogs into effortless operations. TreeResolve replaces line-based guesswork with local concrete syntax tree comprehension—zero hallucinations, local-first execution, and no source-code egress to LLMs or cloud merge services.
+        TreeResolve auto-merges safe <code>package-lock.json</code> hunks (yarn/pnpm coverage stays partial), then makes every auto-resolution easy to review before you save—deterministic, local-first, zero AI, no source-code egress.
       </p>
       <div class="hero-cta">
         <a href="#cli" class="btn btn-primary btn-lg">
@@ -234,7 +234,7 @@
     <div class="section-header">
       <span class="section-tag">Workflow</span>
       <h2 class="section-title">From Conflict to Commit in Three Steps</h2>
-      <p class="section-desc">Install once. When Git flags a merge or rebase conflict, TreeResolve opens a syntax-aware canvas—or auto-resolves what is safely disjoint.</p>
+      <p class="section-desc">Install once. Lead with lockfile conflicts—especially <code>package-lock.json</code>—auto-resolve what is safely disjoint, then review before you save.</p>
     </div>
     <div class="how-grid">
       <div class="how-step">
@@ -244,13 +244,13 @@
       </div>
       <div class="how-step">
         <span class="how-num">2</span>
-        <h3 class="how-title">Open the conflict</h3>
-        <p class="how-text">When a merge or rebase hits a conflict, open the file and run <strong>TreeResolve: Open 3-Way Merge Editor</strong> from the Command Palette (or <strong>Reopen Editor With…</strong>), or run batch auto-resolve for clean syntax cases.</p>
+        <h3 class="how-title">Auto-resolve lockfiles</h3>
+        <p class="how-text">When a merge or rebase hits a conflict, open the file and run <strong>TreeResolve: Open 3-Way Merge Editor</strong> (or <strong>Reopen Editor With…</strong>), or <strong>Batch Auto-Resolve Lockfiles &amp; Deterministic Conflicts</strong> for clean cases. Deepest coverage is <code>package-lock.json</code>; yarn/pnpm stay partial.</p>
       </div>
       <div class="how-step">
         <span class="how-num">3</span>
-        <h3 class="how-title">Resolve &amp; save</h3>
-        <p class="how-text">Disjoint AST changes merge automatically. True conflicts stay visible in the 3-pane canvas. Save with normal editor undo—then continue your rebase.</p>
+        <h3 class="how-title">Review &amp; save</h3>
+        <p class="how-text">Run <strong>Review Auto-Resolved Conflicts</strong> or scan Tier-1 cards in the canvas (policy labels like Lockfile). True collisions stay visible. Save with normal undo—then continue your rebase.</p>
       </div>
     </div>
   </section>
@@ -334,8 +334,8 @@
 
       <div class="feature-card">
         <div class="feature-icon icon-cyan">📦</div>
-        <h3 class="feature-title">Semantic Lockfile Resolution</h3>
-        <p class="feature-text">Automatically auto-merges non-breaking semver bumps and concurrent package additions in <code>package-lock.json</code> while aligning SHA-512 integrity hashes.</p>
+        <h3 class="feature-title">Lockfile-First Resolution</h3>
+        <p class="feature-text">Dedicated 3-way semver / integrity alignment for <code>package-lock.json</code>. <code>yarn.lock</code> and <code>pnpm-lock.yaml</code> stay partial (key-union / YAML helpers). Every auto-resolution is reviewable before save.</p>
       </div>
 
       <div class="feature-card">

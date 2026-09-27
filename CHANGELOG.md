@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Product
+
+- **Lockfiles-first positioning (Grok #8)**: Marketplace description, README, and landing hero lead with `package-lock.json` auto-merge plus **Review Auto-Resolved Conflicts**. yarn/pnpm stay explicitly partial (aligned with [community #6](https://github.com/stillsystems/treeresolve-community/issues/6)). New post-resolve Review action, first-run tip, Tier-1 policy labels in the merge canvas, and Batch log per-hunk policies.
+
 ### Documentation
 
 - **Lockfile roadmap**: README / TASKLIST now list Yarn (`yarn.lock`) / pnpm (`pnpm-lock.yaml`) parity with npm as the next lockfile priority, with other ecosystems (Cargo, Poetry/uv, Gem, Composer, …) later by demand—not a ship-all promise. Pricing copy clarified so Yarn/PNPM stay labeled partial until that work lands.
