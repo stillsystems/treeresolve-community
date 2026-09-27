@@ -1,7 +1,7 @@
 # TreeResolve
 
 [![npm](https://img.shields.io/npm/v/treeresolve?color=cb3837&label=npm)](https://www.npmjs.com/package/treeresolve)
-[![VS Code Marketplace](https://badgen.net/vs-marketplace/v/still-systems.ss-treeresolve?label=VS%20Code%20Marketplace&color=007acc)](https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve)
+[![VS Code Marketplace](https://badgen.net/vs-marketplace/v/still-systems.ss-treeresolve)](https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve)
 [![Open VSX](https://img.shields.io/open-vsx/v/stillsystems/treeresolve?label=Open%20VSX&color=purple)](https://open-vsx.org/extension/stillsystems/treeresolve)
 [![License](https://img.shields.io/badge/License-Proprietary-blue.svg)](LICENSE)
 [![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.90.0-brightgreen)](https://code.visualstudio.com)

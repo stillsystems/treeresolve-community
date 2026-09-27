@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-09-27
+
+### Fixed
+
+- **Marketplace badge cache**: Dropped the labeled badgen query string that was stuck on `v1.0.0` (`max-age=3600`); badge now uses the fresh `vs-marketplace/v/…` endpoint.
+
 ## [1.0.1] - 2026-09-27
 
 ### Fixed

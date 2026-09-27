@@ -77,7 +77,7 @@ Or allow only listed versions:
 ```json
 {
   "extensions.allowed": {
-    "still-systems.ss-treeresolve": ["1.0.1"]
+    "still-systems.ss-treeresolve": ["1.0.2"]
   }
 }
 ```
