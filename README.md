@@ -118,7 +118,7 @@ Roadmap items and language requests are tracked in the [TreeResolve Community Tr
 
 ### 1. Installation
 
-**CLI (live on npm @ 1.0.0):**
+**CLI (live on npm @ 1.0.2):**
 
 ```bash
 npx treeresolve --version

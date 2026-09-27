@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Marketplace badge cache**: Dropped the labeled badgen query string that was stuck on `v1.0.0` (`max-age=3600`); badge now uses the fresh `vs-marketplace/v/…` endpoint.
 
+### Changed
+
+- **npm CLI**: Published [`treeresolve@1.0.2`](https://www.npmjs.com/package/treeresolve) to match the extension release line.
+
 ## [1.0.1] - 2026-09-27
 
 ### Fixed

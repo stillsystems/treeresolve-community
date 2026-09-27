@@ -132,7 +132,7 @@ To eliminate repository name leakage under network inspection, TreeResolve deriv
 
 ### 4.1. Silent Installation via MDM
 
-TreeResolve is on the VS Code Marketplace as [`still-systems.ss-treeresolve`](https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve). For air-gapped fleets, distribute a **verified offline VSIX** (SHA-256 + Sigstore) from a GitHub Release, or provision the CLI via npm (`treeresolve@1.0.0`) for headless / mergetool workflows. Full steps and `AllowedExtensions` allow-list examples: [docs/trust/offline-vsix.md](docs/trust/offline-vsix.md).
+TreeResolve is on the VS Code Marketplace as [`still-systems.ss-treeresolve`](https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve). For air-gapped fleets, distribute a **verified offline VSIX** (SHA-256 + Sigstore) from a GitHub Release, or provision the CLI via npm (`treeresolve@1.0.2`) for headless / mergetool workflows. Full steps and `AllowedExtensions` allow-list examples: [docs/trust/offline-vsix.md](docs/trust/offline-vsix.md).
 
 #### Microsoft Intune / Windows MDM
 
