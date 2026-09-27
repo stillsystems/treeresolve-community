@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-09-27
+
+### Fixed
+
+- **Listing README badges**: Marketplace and Open VSX Overview badges now show live version links (badgen Marketplace + Open VSX), replacing the pre-launch “Coming soon” badges baked into the `1.0.0` VSIX README.
+
+### Changed
+
+- **Open VSX id**: Published as [`still-systems.ss-treeresolve`](https://open-vsx.org/extension/still-systems/ss-treeresolve) to match Marketplace (prior `stillsystems.treeresolve` listing remains historical).
+
+## [1.0.0] - 2026-09-27
+
 ### Changed
 
 - **VS Code Marketplace identity**: Manifest `publisher` is `still-systems`, extension `name` is `ss-treeresolve` (id `still-systems.ss-treeresolve`), and `displayName` is `TreeResolve by Still Systems, LLC`. CLI/npm bin stays `treeresolve`. GitHub org remains `stillsystems`.
@@ -17,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Documentation
 
-- **Listing status**: VS Code Marketplace is **live** for `1.0.0` as [`still-systems.ss-treeresolve`](https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve). Open VSX is **live** as [`stillsystems.treeresolve`](https://open-vsx.org/extension/stillsystems/treeresolve) (namespace differs from Marketplace until an optional realign).
+- **Listing status**: VS Code Marketplace and Open VSX go-live for `1.0.0`.
 - **Licensing FAQ**: Docs now state the live gateway is `workers.dev`, with `licensing.stillsystems.com` as the parked custom-domain cutover.
 - **Lockfile roadmap**: README / TASKLIST now list Yarn (`yarn.lock`) / pnpm (`pnpm-lock.yaml`) parity with npm as the next lockfile priority, with other ecosystems (Cargo, Poetry/uv, Gem, Composer, …) later by demand—not a ship-all promise. Pricing copy clarified so Yarn/PNPM stay labeled partial until that work lands.
 - **Doc accuracy (Grok #11)**: Removed the undocumented editor tab-bar button claim; clarified lockfile coverage (`package-lock.json` dedicated, yarn/pnpm partial); moved `.treeresolverc` `$schema` off third-party `still.systems` onto Still Systems GitHub Pages; dialed Net-60 / MSA / SLA copy to solo-capable commitments.
