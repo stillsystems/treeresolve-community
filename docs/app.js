@@ -220,21 +220,36 @@ import (
   const paddleToken = paddleCfg.clientToken;
   const paddleEnvironment = paddleCfg.environment || 'sandbox';
   const prices = paddleCfg.prices || {};
+  // Retain: Paddle customer id (ctm_...), never an internal user id / email alone.
+  const pwCustomerId = paddleCfg.pwCustomerId || paddleCfg.customerId || null;
 
   if (window.Paddle && paddleToken) {
+    // Live is the Paddle.js default — only force sandbox when configured.
     if (paddleEnvironment === 'sandbox') {
       Paddle.Environment.set('sandbox');
     }
-    Paddle.Initialize({
-      token: paddleToken
-    });
+    const initOpts = { token: paddleToken };
+    if (pwCustomerId && String(pwCustomerId).startsWith('ctm_')) {
+      initOpts.pwCustomer = { id: String(pwCustomerId) };
+    }
+    Paddle.Initialize(initOpts);
   } else if (!paddleToken) {
     console.warn('Paddle client token not configured. Copy docs/config.example.js to docs/config.js for local preview.');
+  }
+
+  function resolvePriceId(planOrPriceId) {
+    if (!planOrPriceId) return null;
+    if (planOrPriceId.startsWith('pri_')) return planOrPriceId;
+    return prices[planOrPriceId] || null;
   }
 
   function openCheckout(priceId) {
     if (!paddleToken) {
       console.warn('Checkout unavailable: Paddle client token not configured');
+      return;
+    }
+    if (!priceId) {
+      console.warn('Checkout unavailable: price id not configured');
       return;
     }
     if (window.Paddle) {
@@ -246,10 +261,11 @@ import (
     }
   }
 
-  document.querySelectorAll('[data-paddle-price]').forEach((el) => {
+  document.querySelectorAll('[data-paddle-price], [data-paddle-plan]').forEach((el) => {
     el.addEventListener('click', (e) => {
       e.preventDefault();
-      const priceId = el.getAttribute('data-paddle-price');
+      const plan = el.getAttribute('data-paddle-plan');
+      const priceId = resolvePriceId(plan) || el.getAttribute('data-paddle-price');
       if (priceId) {
         openCheckout(priceId);
       }
@@ -261,13 +277,13 @@ import (
   const directPrice = urlParams.get('price');
   const directCheckout = urlParams.get('checkout');
   if (directPrice) {
-    setTimeout(() => openCheckout(directPrice), 500);
+    setTimeout(() => openCheckout(resolvePriceId(directPrice) || directPrice), 500);
   } else if (directCheckout === 'pro' || directCheckout === 'yearly') {
-    setTimeout(() => openCheckout(prices.proAnnual || 'pri_01m2zxfdbpg00xay389wj2pt1b'), 500);
+    setTimeout(() => openCheckout(prices.proAnnual || null), 500);
   } else if (directCheckout === 'monthly') {
-    setTimeout(() => openCheckout(prices.proMonthly || 'pri_01m2zxb0htcnexpf56mj140y4n'), 500);
+    setTimeout(() => openCheckout(prices.proMonthly || null), 500);
   } else if (directCheckout === 'enterprise') {
-    setTimeout(() => openCheckout(prices.enterprise || 'pri_01m2zxykkb4yp3qdz3bftd9wxq'), 500);
+    setTimeout(() => openCheckout(prices.enterprise || null), 500);
   }
 });
 
