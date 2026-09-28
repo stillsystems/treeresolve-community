@@ -123,12 +123,13 @@ TreeResolve is not directed to children under 16. We do not knowingly collect pe
 
 ## 9. Contact
 
+* **Email (support / billing / privacy):** [billy.kidd34@gmail.com](mailto:billy.kidd34@gmail.com)
 * **Security:** see [SECURITY.md](.github/SECURITY.md)
-* **Support:** see [SUPPORT.md](SUPPORT.md)
+* **Support channels:** see [SUPPORT.md](SUPPORT.md)
 * **Publisher / product site:** [https://stillsystems.github.io/treeresolve-community/](https://stillsystems.github.io/treeresolve-community/)
 * **Community issues:** [https://github.com/stillsystems/treeresolve-community/issues](https://github.com/stillsystems/treeresolve-community/issues)
 
-For privacy requests, open a private security advisory or enterprise inquiry and mark the subject “Privacy Request”.
+For privacy requests, email the address above with subject “Privacy Request”, or open a private security advisory / enterprise inquiry marked “Privacy Request”.
 
 ---
 

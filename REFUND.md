@@ -18,7 +18,7 @@ Our order process is conducted by our online reseller Paddle.com. Paddle.com is 
 
 For Pro and Enterprise paid charges (first purchase and each renewal payment), you may request a full refund within **30 days** of the payment date.
 
-- Request a refund via [paddle.net](https://paddle.net), the “Manage subscription” / receipt links in your Paddle order email, or by contacting Still Systems through the channels in [SUPPORT.md](SUPPORT.md) so we can initiate the refund in the Paddle seller dashboard.
+- Request a refund via [paddle.net](https://paddle.net), the “Manage subscription” / receipt links in your Paddle order email, or by emailing [billy.kidd34@gmail.com](mailto:billy.kidd34@gmail.com) so we can initiate the refund in the Paddle seller dashboard.
 - If a refund is approved, access to paid Pro/Enterprise entitlements for that charge ends when the refund is processed; the Software continues under the Community Tier as described in the [LICENSE](LICENSE).
 - Statutory consumer withdrawal or refund rights in your country may provide a longer or stronger remedy; where they do, those rights apply.
 

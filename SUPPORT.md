@@ -2,13 +2,15 @@
 
 Thank you for using TreeResolve by Still Systems, LLC.
 
+**Direct contact (billing / support):** [billy.kidd34@gmail.com](mailto:billy.kidd34@gmail.com)
+
 ---
 
 ## Community (Free / Trial / Pro)
 
 * **Bug reports & feature requests:** [GitHub Issues](https://github.com/stillsystems/treeresolve-community/issues)
 * **Security vulnerabilities:** private disclosure via [SECURITY.md](.github/SECURITY.md) — do not file public issues for security bugs
-* **Documentation:** [README.md](README.md), [ENTERPRISE.md](ENTERPRISE.md), [PRIVACY.md](PRIVACY.md)
+* **Documentation:** [README.md](README.md), [ENTERPRISE.md](ENTERPRISE.md), [PRIVACY.md](PRIVACY.md), [REFUND.md](REFUND.md)
 
 Before opening an issue, include:
 

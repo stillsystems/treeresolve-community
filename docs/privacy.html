@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — TreeResolve</title>
+  <link rel="canonical" href="https://stillsystems.github.io/treeresolve-community/privacy.html">
+  <link rel="icon" type="image/png" href="images/icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="legal-top">
+    <div class="container legal-top-inner">
+      <a class="legal-brand" href="./">TreeResolve</a>
+      <nav class="legal-nav">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="refund.html">Refund Policy</a>
+        <a href="./#pricing">Pricing</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container legal-doc">
+    <p class="legal-entity">Still Systems, LLC — TreeResolve product site (stillsystems.github.io/treeresolve-community)</p>
+    <h1>Privacy Policy</h1>
+    <div class="legal-body">
+<p><strong>Effective date:</strong> 2026-09-24 <strong>Controller:</strong> Still Systems, LLC (“Still Systems”, “we”, “us”)</p>
+<p>This Privacy Policy describes how TreeResolve (the VS Code extension, standalone CLI, and related licensing services) handles information when you install or use the Software. It supplements the <a href="LICENSE" rel="noopener">Commercial End-User License Agreement</a>.</p>
+<hr>
+<h2>1. Summary</h2>
+<ul>
+<li><strong>Source code never leaves your machine.</strong> Merge parsing, AST analysis, and conflict resolution run locally.</li>
+<li><strong>Optional anonymous product telemetry</strong> may be sent when enabled.</li>
+<li><strong>Licensing / trial requests</strong> may send an anonymized machine fingerprint to our licensing gateway.</li>
+<li><strong>Payments</strong> are processed by our Merchant of Record (Paddle); we do not store full payment card numbers.</li>
+<li><strong>Marketing site analytics</strong> (optional) may measure aggregate pageviews on the public documentation site only — never inside the extension or CLI.</li>
+</ul>
+<hr>
+<h2>2. Information We Process</h2>
+<h3>2.1. Not collected</h3>
+<p>We do <strong>not</strong> collect or transmit:</p>
+<ul>
+<li>Source code, ASTs, conflict hunks, or file contents</li>
+<li>Repository URLs, branch names, commit hashes, or file paths</li>
+<li>VS Code account identity, emails, or usernames (except where you voluntarily submit them via support or checkout)</li>
+</ul>
+<h3>2.2. Licensing and reverse-trial fingerprint</h3>
+<p>To issue 14-day reverse trials and renew floating leases without requiring an account, TreeResolve may send an anonymized SHA-256 fingerprint derived from <code>platform:arch:machineId</code> (VS Code machine ID, or a persistent anonymous UUID in the CLI), truncated to 32 hex characters, plus a salted domain identifier for seat binding.</p>
+<p>This request goes only to the configured licensing endpoint (default today: <code>https://treeresolve-licensing.still-systems.workers.dev</code>; launch target: <code>https://licensing.stillsystems.com</code>, or your enterprise gateway). Offline wildcard / air-gapped licenses do not contact the network for validation.</p>
+<h3>2.3. Anonymous product telemetry (optional)</h3>
+<p>When <code>treeresolve.enableTelemetry</code> is <code>true</code> <strong>and</strong> VS Code’s global telemetry is not disabled (<code>telemetry.telemetryLevel</code> / <code>vscode.env.isTelemetryEnabled</code>), TreeResolve may send aggregate events such as:</p>
+<ul>
+<li>Auto-merge acceptance rate and session duration</li>
+<li>Coarse language ID</li>
+<li>Structured error codes (never raw error text, paths, or snippets)</li>
+</ul>
+<p>Telemetry is posted to the same licensing gateway under <code>/api/v1/telemetry</code>.</p>
+<p><strong>Opt out:</strong></p>
+<pre><code>
+&quot;treeresolve.enableTelemetry&quot;: false
+
+</code></pre>
+<p>Or disable VS Code telemetry globally. Either setting stops telemetry transmission.</p>
+<h3>2.4. Checkout and billing</h3>
+<p>Pro and Enterprise purchases are processed by <strong>Paddle</strong> as Merchant of Record. Paddle may collect name, email, billing address, and payment details under <a href="https://www.paddle.com/legal/privacy" rel="noopener">Paddle’s privacy policy</a>. Still Systems receives license entitlement metadata (e.g. email for license delivery, subscription status) as needed to issue and revoke licenses.</p>
+<h3>2.5. Support and enterprise inquiries</h3>
+<p>If you contact us (GitHub issues, enterprise inquiry forms, email), we process the information you voluntarily provide to respond.</p>
+<h3>2.6. Public documentation site analytics (optional)</h3>
+<p>The marketing / documentation site at <a href="https://stillsystems.github.io/treeresolve-community/" rel="noopener">stillsystems.github.io/treeresolve-community</a> may load <strong>Cloudflare Web Analytics</strong> when configured by Still Systems — cookie-free aggregate pageviews and performance (no advertising profile).</p>
+<p>This script runs only on the public site. It is <strong>not</strong> bundled into the VS Code extension or CLI, and it does not receive source code or repository contents. If the analytics token is unset, no third-party analytics script is loaded.</p>
+<hr>
+<h2>3. Purpose and legal bases</h2>
+<p>We process the data above to:</p>
+<ul>
+<li>Provide trials, floating leases, and paid entitlements</li>
+<li>Prevent trial abuse and enforce seat limits</li>
+<li>Improve product reliability (optional telemetry)</li>
+<li>Fulfill purchases and customer support</li>
+<li>Meet legal and tax obligations via our payment processor</li>
+</ul>
+<p>Where GDPR or similar laws apply, bases include contract performance, legitimate interests (abuse prevention, product improvement), and consent or contractual necessity for billing.</p>
+<hr>
+<h2>4. Retention</h2>
+<ul>
+<li>Trial fingerprints and lease records: retained only as long as needed for abuse prevention and active entitlements (typically aligned with trial/subscription lifetime plus a short operational buffer).</li>
+<li>Telemetry: aggregate operational metrics; not used to identify individuals.</li>
+<li>Billing records: retained by Paddle / Still Systems as required for accounting and tax.</li>
+</ul>
+<hr>
+<h2>5. Processors and subprocessors</h2>
+<p> Role | Provider | Purpose </p>
+<p> Licensing / telemetry gateway | Still Systems (Cloudflare Workers / edge hosting) | Trials, leases, telemetry ingestion </p>
+<p> Payments | Paddle | Checkout, tax, subscription billing </p>
+<p> Issue tracking (optional) | GitHub | Public community support </p>
+<p> Documentation site analytics (optional) | Cloudflare Web Analytics | Aggregate pageviews on the public docs site only </p>
+<hr>
+<h2>6. International transfers</h2>
+<p>Licensing and payment infrastructure may process data in the United States and other regions where our providers operate. Where required, appropriate transfer safeguards are applied by those providers.</p>
+<hr>
+<h2>7. Your choices</h2>
+<ul>
+<li>Disable telemetry as described in §2.3</li>
+<li>Use offline enterprise license keys to avoid licensing network calls</li>
+<li>Configure <code>treeresolve.licensingEndpoint</code> (machine scope) for an approved internal gateway</li>
+<li>Request access, correction, or deletion of personal data you provided via support or checkout by contacting us (see §9)</li>
+</ul>
+<hr>
+<h2>8. Children</h2>
+<p>TreeResolve is not directed to children under 16. We do not knowingly collect personal information from children.</p>
+<hr>
+<h2>9. Contact</h2>
+<ul>
+<li><strong>Email (support / billing / privacy):</strong> <a href="mailto:billy.kidd34@gmail.com" rel="noopener">billy.kidd34@gmail.com</a></li>
+<li><strong>Security:</strong> see <a href=".github/SECURITY.md" rel="noopener">SECURITY.md</a></li>
+<li><strong>Support channels:</strong> see <a href="SUPPORT.md" rel="noopener">SUPPORT.md</a></li>
+<li><strong>Publisher / product site:</strong> <a href="https://stillsystems.github.io/treeresolve-community/" rel="noopener">https://stillsystems.github.io/treeresolve-community/</a></li>
+<li><strong>Community issues:</strong> <a href="https://github.com/stillsystems/treeresolve-community/issues" rel="noopener">https://github.com/stillsystems/treeresolve-community/issues</a></li>
+</ul>
+<p>For privacy requests, email the address above with subject “Privacy Request”, or open a private security advisory / enterprise inquiry marked “Privacy Request”.</p>
+<hr>
+<h2>10. Changes</h2>
+<p>We may update this policy when product behavior or processors change. Material changes will be reflected in this file and noted in <a href="CHANGELOG.md" rel="noopener">CHANGELOG.md</a>. Continued use after an update constitutes acceptance of the revised policy where permitted by law.</p>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-copy">
+        © 2026 Still Systems, LLC.
+        Support: <a href="mailto:billy.kidd34@gmail.com">billy.kidd34@gmail.com</a>
+      </div>
+      <ul class="footer-links">
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="refund.html">Refund Policy</a></li>
+        <li><a href="./">Home</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>
