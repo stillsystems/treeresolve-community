@@ -44,7 +44,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## 5. SUBSCRIPTIONS, RENEWAL & CANCELLATION
 
-Commercial / Pro and Enterprise subscriptions are billed through Still Systems’ Merchant of Record (currently Paddle). Auto-renewal, invoices, refunds, and cancellation are governed by the checkout terms presented at purchase and by the payment provider’s customer portal. Upon cancellation or failed payment, paid entitlements may be revoked; the Software then continues under the Community Tier.
+Commercial / Pro and Enterprise subscriptions are billed through Still Systems’ Merchant of Record (currently Paddle). Our order process is conducted by our online reseller Paddle.com. Paddle.com is the Merchant of Record for all our orders. Paddle provides all customer service inquiries and handles returns.
+
+Auto-renewal and invoices are governed by the checkout terms presented at purchase and by the Paddle customer portal. The detailed refund and cancellation policy is set out in REFUND.md (including a 30-day money-back guarantee and cancel-anytime via the Paddle portal). Upon cancellation, failed payment, or an approved refund, paid entitlements may be revoked; the Software then continues under the Community Tier.
 
 ---
 

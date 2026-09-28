@@ -26,6 +26,7 @@ Self-serve billing, invoices, and cancellations are handled through **Paddle** (
 * VS Code: Command Palette → `TreeResolve: Open Billing Portal`
 * CLI: `npx treeresolve portal [licenseKey]` (prints `GET /api/v1/portal?licenseKey=` URL)
 * Product site checkout: [pricing](https://stillsystems.github.io/treeresolve-community/#pricing)
+* Refunds and cancellation details: [REFUND.md](REFUND.md)
 
 License activation:
 
