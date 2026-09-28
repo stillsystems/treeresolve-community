@@ -938,6 +938,121 @@ textarea.form-control {
   color: var(--accent-cyan);
 }
 
+.footer-copy a {
+  color: var(--accent-cyan);
+  text-decoration: none;
+}
+
+.footer-copy a:hover {
+  text-decoration: underline;
+}
+
+.pricing-mor {
+  max-width: 720px;
+  margin: 28px auto 0;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.pricing-mor a {
+  color: var(--accent-cyan);
+}
+
+/* Same-origin legal policy pages */
+.legal-top {
+  border-bottom: 1px solid var(--border);
+  background: #05070c;
+  padding: 18px 0;
+}
+
+.legal-top-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.legal-brand {
+  color: var(--text-main);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.legal-nav {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.legal-nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.legal-nav a:hover {
+  color: var(--accent-cyan);
+}
+
+.legal-doc {
+  padding: 48px 0 80px;
+  max-width: 800px;
+}
+
+.legal-entity {
+  color: var(--text-subtle);
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+}
+
+.legal-doc h1 {
+  margin-bottom: 24px;
+}
+
+.legal-body h1,
+.legal-body h2,
+.legal-body h3 {
+  margin-top: 1.6em;
+  margin-bottom: 0.6em;
+}
+
+.legal-body p,
+.legal-body li {
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+.legal-body ul {
+  padding-left: 1.25rem;
+  margin: 0.75rem 0 1rem;
+}
+
+.legal-body a {
+  color: var(--accent-cyan);
+}
+
+.legal-body hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 1.5rem 0;
+}
+
+.legal-body pre {
+  background: #0b1018;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  overflow-x: auto;
+}
+
+.legal-body code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+}
+
 /* Pricing Section & Cards */
 .pricing-section {
   padding: 80px 0 60px;
