@@ -127,6 +127,25 @@ body {
   position: relative;
 }
 
+.nav-id {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.nav-company {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.nav-company:hover {
+  color: var(--accent-cyan);
+}
+
 .nav-brand {
   display: flex;
   align-items: center;
@@ -975,6 +994,23 @@ textarea.form-control {
   flex-wrap: wrap;
 }
 
+.legal-id {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.legal-company {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.legal-company:hover {
+  color: var(--accent-cyan);
+}
+
 .legal-brand {
   color: var(--text-main);
   font-weight: 700;
@@ -985,11 +1021,19 @@ textarea.form-control {
   display: flex;
   gap: 18px;
   flex-wrap: wrap;
+  align-items: center;
 }
 
-.legal-nav a {
+.legal-nav a,
+.legal-nav [aria-current="page"] {
   color: var(--text-muted);
   text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.legal-nav [aria-current="page"],
+.footer-links [aria-current="page"] {
+  color: var(--text-main);
   font-size: 0.9rem;
 }
 
@@ -1000,6 +1044,15 @@ textarea.form-control {
 .legal-doc {
   padding: 48px 0 80px;
   max-width: 800px;
+}
+
+.legal-entity a {
+  color: var(--accent-cyan);
+  text-decoration: none;
+}
+
+.legal-entity a:hover {
+  text-decoration: underline;
 }
 
 .legal-entity {
