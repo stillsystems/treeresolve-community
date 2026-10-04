@@ -33,7 +33,7 @@
 <h2>1. Summary</h2>
 <ul>
 <li><strong>Source code never leaves your machine.</strong> Merge parsing, AST analysis, and conflict resolution run locally.</li>
-<li><strong>Optional anonymous product telemetry</strong> may be sent when enabled.</li>
+<li><strong>Product telemetry defaults to on.</strong> <code>treeresolve.enableTelemetry</code> is <code>true</code> unless you change it. Aggregate events are sent only when that setting is on and VS Code telemetry is enabled. You can turn it off. Telemetry does not include source code.</li>
 <li><strong>Licensing / trial requests</strong> may send an anonymized machine fingerprint to our licensing gateway.</li>
 <li><strong>Payments</strong> are processed by our Merchant of Record (Paddle); we do not store full payment card numbers.</li>
 <li><strong>Marketing site analytics</strong> (optional) may measure aggregate pageviews on the public documentation site only — never inside the extension or CLI.</li>
@@ -51,7 +51,7 @@
 <p>To issue 14-day reverse trials and renew floating leases without requiring an account, TreeResolve may send an anonymized SHA-256 fingerprint derived from <code>platform:arch:machineId</code> (VS Code machine ID, or a persistent anonymous UUID in the CLI), truncated to 32 hex characters, plus a salted domain identifier for seat binding.</p>
 <p>This request goes only to the configured licensing endpoint (default today: <code>https://treeresolve-licensing.still-systems.workers.dev</code>; launch target: <code>https://licensing.stillsystems.com</code>, or your enterprise gateway). Offline wildcard / air-gapped licenses do not contact the network for validation.</p>
 <h3>2.3. Anonymous product telemetry (optional)</h3>
-<p>When <code>treeresolve.enableTelemetry</code> is <code>true</code> <strong>and</strong> VS Code’s global telemetry is not disabled (<code>telemetry.telemetryLevel</code> / <code>vscode.env.isTelemetryEnabled</code>), TreeResolve may send aggregate events such as:</p>
+<p>The extension setting <code>treeresolve.enableTelemetry</code> defaults to <code>true</code>. When that setting is <code>true</code> <strong>and</strong> VS Code’s global telemetry is not disabled (<code>telemetry.telemetryLevel</code> / <code>vscode.env.isTelemetryEnabled</code>), TreeResolve may send aggregate events such as:</p>
 <ul>
 <li>Auto-merge acceptance rate and session duration</li>
 <li>Coarse language ID</li>

@@ -10,16 +10,16 @@ TreeResolve is an **offline-first, deterministic 3-way merge conflict resolution
 
 ### Core Value Proposition for Enterprises
 
-* **Zero Data Egress**: 100% of parsing, AST analysis, micro-diffing, and resolution executes locally on developer workstations or internal CI runners.
-* **Deterministic Guarantees**: Merges are provably correct. Only disjoint, non-colliding syntax elements are auto-resolved; logical collisions are presented clearly to the developer.
-* **Air-Gapped & Offline Ready**: Complies with air-gapped security policies in defense, financial services, healthcare, and critical infrastructure.
+* **Source code stays local**: Parsing, AST analysis, micro-diffing, and resolution run on developer workstations or internal CI runners. Source code is not transmitted. The table in §2.1 lists what else can leave the machine.
+* **Deterministic merges**: Only disjoint, non-colliding syntax is auto-resolved. Collisions stay for review.
+* **Offline license keys**: An already-issued offline key validates on the machine with no network call.
 * **Seamless Fleet Rollout**: Deployable silently via Microsoft Intune, Jamf Pro, Munki, or Ansible, with repository-level governance via `.treeresolverc`.
 
 ---
 
 ## 2. Security & Compliance Architecture
 
-### 2.1. Zero Data Egress Guarantee
+### 2.1. What is transmitted
 
 | Data Category | Transmitted Over Network? | Destination |
 | :--- | :---: | :--- |
@@ -256,7 +256,7 @@ Quick claims buyers usually need:
 
 Still Systems (solo-operated LLC) offers honest, deliverable procurement paths for enterprise buyers:
 
-* **Payment Methods**: Self-serve card checkout via Paddle (Merchant of Record) for standard seats. For qualifying fleet quotes, Still Systems can invoice against a purchase order; Net-30 terms may be offered case-by-case after quote acceptance. ACH / wire instructions are provided on the invoice when applicable. Extended Net-60 (or longer) terms are not a standard offering.
+* **Payment Methods**: Self-serve card checkout via Paddle (Merchant of Record). For qualifying fleet quotes, Paddle invoices the buyer. Net-30 may be offered case-by-case after quote acceptance. Extended Net-60 (or longer) terms are not a standard offering. Still Systems does not invoice buyers or collect payment directly.
 * **Volume Seat Tiering**: Discounted seat pricing discussed starting around 50 developer seats (see list pricing footnotes in the product README).
 * **Agreements**: Purchases are governed by the TreeResolve EULA plus a short written order / quote for fleet deals. Custom MSA or Security Addendum language can be reviewed case-by-case; it is not a turnkey packaged deliverable. Vendor risk questionnaires can start from the [CAIQ lite](docs/trust/caiq-lite.md) above.
 * **Support Targets**: Enterprise inquiries aim for **next-business-day acknowledgment** (US Central). Security disclosures follow the 48-hour ack in [SECURITY.md](.github/SECURITY.md). There is no separate uptime SLA for the local extension (merge work runs on the customer's machines). Community / Pro GitHub issues remain best-effort.

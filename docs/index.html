@@ -161,7 +161,7 @@
       <div class="hero-badge-wrap">
         <div class="badge">
           <span class="badge-dot"></span>
-          TreeResolve v1.0.0 · Live on VS Code Marketplace
+          TreeResolve v1.0.2 · Live on VS Code Marketplace
         </div>
       </div>
       <h1 class="hero-title">
@@ -185,7 +185,7 @@
         </a>
       </div>
       <p class="hero-secondary-link">
-        Fleet rollout or invoiced quote? <a href="#enterprise">Contact Enterprise →</a>
+        Fleet rollout? <a href="#enterprise">Contact Enterprise →</a>
       </p>
 
       <div class="trust-bar" aria-label="Distribution and trust signals">
@@ -232,14 +232,6 @@
   <!-- Key Statistics Ribbon -->
   <section class="container">
     <div class="stats-strip">
-      <div class="stat-item">
-        <div class="stat-num">100%</div>
-        <div class="stat-label">Deterministic (Zero AI / Zero Hallucinations)</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">0ms</div>
-        <div class="stat-label">Network Latency (Local AST Execution)</div>
-      </div>
       <div class="stat-item">
         <div class="stat-num">7</div>
         <div class="stat-label">Sandboxed WASM Grammars Bundled</div>
@@ -362,9 +354,9 @@
 
       <div class="feature-card">
         <div class="feature-icon icon-green">🔒</div>
-        <h3 class="feature-title">Air-Gapped & Zero Data Egress</h3>
-        <p class="feature-text">Your source code never leaves your local machine. No LLMs, no remote API calls, no token
-          leakage. Complies with the strictest InfoSec policies.</p>
+        <h3 class="feature-title">Source code stays local</h3>
+        <p class="feature-text">Merge parsing and conflict resolution run on your machine. Source code is not sent.
+          Trials and leases send a device fingerprint to the licensing endpoint. Offline license keys do not.</p>
       </div>
 
       <div class="feature-card">
@@ -492,7 +484,7 @@
         <ul class="compare-list">
           <li>Zero AI — same inputs always produce the same result</li>
           <li>No hallucinations, prompts, or model drift</li>
-          <li>Source never leaves your machine; works air-gapped</li>
+          <li>Source code stays on your machine</li>
         </ul>
       </div>
     </div>
@@ -552,7 +544,7 @@
             <li><span class="check-icon">✓</span> 3-Pane Visual Merge Canvas</li>
             <li><span class="check-icon">✓</span> Dynamic Bézier Ribbon Diffing</li>
             <li><span class="check-icon">✓</span> Synchronized Viewport Scrolling</li>
-            <li><span class="check-icon">✓</span> <strong>TS/JS/Python import auto-merge taste</strong></li>
+            <li><span class="check-icon">✓</span> <strong>TS/JS/Python import auto-merge</strong></li>
             <li><span class="check-icon">✓</span> Native Git Mergetool Companion</li>
             <li><span class="check-icon">✓</span> 100% Local Execution & Zero Source Code Egress</li>
           </ul>
@@ -613,9 +605,9 @@
             <li><span class="check-icon">✓</span> <strong>Everything in Pro</strong></li>
             <li><span class="check-icon">✓</span> Seat-based fleet licensing + org wildcards</li>
             <li><span class="check-icon">✓</span> Centralized MDM, Intune & Jamf Distribution</li>
-            <li><span class="check-icon">✓</span> Air-Gapped & SCIF Network Compliance</li>
+            <li><span class="check-icon">✓</span> Offline license keys for machines with no network</li>
             <li><span class="check-icon">✓</span> Volume Discounts (50+, 200+, 1,000+ seats)</li>
-            <li><span class="check-icon">✓</span> Invoicing / PO by quote for qualifying fleets</li>
+            <li><span class="check-icon">✓</span> Paddle invoicing for qualifying fleets (Net-30 when offered)</li>
           </ul>
           <div class="pricing-cta">
             <a href="#pricing" data-paddle-plan="enterprise" data-paddle-price="pri_01m2zxykkb4yp3qdz3bftd9wxq"
@@ -650,7 +642,7 @@
         <summary>What happens after the 14-day reverse trial?</summary>
         <p>
           TreeResolve automatically degrades to the free Community tier. Your editor is never locked —
-          you keep the 3-pane merge canvas and can resolve conflicts manually. Upgrade to Pro anytime
+          you keep the 3-pane merge canvas and TS/JS/Python import auto-merge. Upgrade to Pro anytime
           for unlimited deterministic AST auto-merge. No credit card is required to start the trial.
         </p>
       </details>
@@ -666,12 +658,23 @@
       </details>
 
       <details class="faq-item">
+        <summary>Is product telemetry on by default?</summary>
+        <p>
+          Yes. <code>treeresolve.enableTelemetry</code> defaults to on. TreeResolve sends aggregate product
+          events only when that setting is on and VS Code telemetry is enabled. Set
+          <code>treeresolve.enableTelemetry</code> to <code>false</code>, or turn off VS Code telemetry, to stop
+          it. Events do not include source code. See the
+          <a href="privacy.html">Privacy Policy</a>.
+        </p>
+      </details>
+
+      <details class="faq-item">
         <summary>What is the anonymous device fingerprint used for?</summary>
         <p>
           To issue reverse trials and renew floating leases without accounts or passwords, TreeResolve
           may send an anonymized SHA-256 hash of <code>platform:arch:machineId</code> (truncated to 32 hex
-          characters). No usernames, hostnames, or MAC addresses are included. Offline / air-gapped
-          enterprise keys never contact the licensing endpoint for validation. Licensing traffic
+          characters). No usernames, hostnames, or MAC addresses are included. Offline license keys never
+          contact the licensing endpoint for validation. Licensing traffic
           currently uses <code>https://treeresolve-licensing.still-systems.workers.dev</code>;
           <code>https://licensing.stillsystems.com</code> is the planned custom-domain cutover (not live yet).
         </p>
@@ -747,13 +750,13 @@
             </li>
             <li>
               <span class="check-icon">✓</span>
-              <span><strong>Commercial Invoicing:</strong> Self-serve card via Paddle; invoiced / PO (Net-30
-                case-by-case) for qualifying fleets. Extended Net-60 is not standard.</span>
+              <span><strong>Commercial invoicing:</strong> Self-serve card via Paddle. Qualifying fleets are invoiced
+                by Paddle, on Net-30 when offered.</span>
             </li>
             <li>
               <span class="check-icon">✓</span>
-              <span><strong>Zero Data Egress:</strong> Fully verified local execution with zero source code or
-                credential transmission.</span>
+              <span><strong>Source code stays local:</strong> Merge work runs on the machine. Trials and leases send a
+                device fingerprint to the licensing endpoint. Offline license keys do not.</span>
             </li>
           </ul>
 
@@ -804,7 +807,7 @@
               <label for="security">Deployment Environment</label>
               <select id="security" name="security" class="form-control">
                 <option value="Standard Workstations">Standard Laptops (macOS / Linux / Windows)</option>
-                <option value="Air-Gapped VPC">Air-Gapped / SCIF Network</option>
+                <option value="Air-Gapped VPC">Air-gapped network</option>
                 <option value="Self-Hosted Worker">Internal Cloudflare Worker / Proxy</option>
                 <option value="Virtual Desktops">VDI / Remote SSH / Dev Containers</option>
               </select>
