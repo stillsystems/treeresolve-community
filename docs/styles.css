@@ -1025,7 +1025,8 @@ textarea.form-control {
   line-height: 1.65;
 }
 
-.legal-body ul {
+.legal-body ul,
+.legal-body ol {
   padding-left: 1.25rem;
   margin: 0.75rem 0 1rem;
 }

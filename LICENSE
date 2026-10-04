@@ -5,7 +5,7 @@ Copyright (c) 2026 Still Systems, LLC. All rights reserved.
 
 IMPORTANT: PLEASE READ CAREFULLY BEFORE INSTALLING, DOWNLOADING, OR USING THIS SOFTWARE.
 
-This software and associated documentation files (the "Software") are the proprietary property of Still Systems, LLC. Use, distribution, or reproduction of this software is strictly governed by this End-User License Agreement (EULA) and Terms of Service. Unauthorized copying, modification, reverse engineering, redistribution, or publishing of this software, via any medium, is strictly prohibited. Third-party language grammars and libraries are utilized under their respective open-source licenses as set forth in THIRD_PARTY_LICENSES.md.
+This software and associated documentation files (the "Software") are the proprietary property of Still Systems, LLC. Use, distribution, or reproduction of this software is strictly governed by this End-User License Agreement (EULA) and Terms of Service. Unauthorized copying, modification, reverse engineering, redistribution, or publishing of this software, via any medium, is strictly prohibited. Third-party language grammars and libraries are utilized under their respective open-source licenses as set forth in [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
 
 ---
 
@@ -32,7 +32,7 @@ Except as explicitly authorized in this Agreement, you agree NOT to:
 
 ## 3. INTELLECTUAL PROPERTY RIGHTS
 
-The Software, including its architecture, layout, code, deterministic syntax auto-merging engines, documentation, and graphical assets, is and remains the sole proprietary intellectual property of Still Systems, LLC. Language grammars and third-party libraries packaged within the Software are the property of their respective maintainers and are bundled under applicable upstream licenses as enumerated in THIRD_PARTY_LICENSES.md.
+The Software, including its architecture, layout, code, deterministic syntax auto-merging engines, documentation, and graphical assets, is and remains the sole proprietary intellectual property of Still Systems, LLC. Language grammars and third-party libraries packaged within the Software are the property of their respective maintainers and are bundled under applicable upstream licenses as enumerated in [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
 
 ---
 
@@ -46,19 +46,19 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 Commercial / Pro and Enterprise subscriptions are billed through Still Systems’ Merchant of Record (currently Paddle). Our order process is conducted by our online reseller Paddle.com. Paddle.com is the Merchant of Record for all our orders. Paddle provides all customer service inquiries and handles returns.
 
-Auto-renewal and invoices are governed by the checkout terms presented at purchase and by the Paddle customer portal. The detailed refund and cancellation policy is set out in REFUND.md (including a 30-day money-back guarantee and cancel-anytime via the Paddle portal). Upon cancellation, failed payment, or an approved refund, paid entitlements may be revoked; the Software then continues under the Community Tier.
+Auto-renewal and invoices are governed by the checkout terms presented at purchase and by the Paddle customer portal. The detailed refund and cancellation policy is set out in [REFUND.md](REFUND.md) (including a 30-day money-back guarantee and cancel-anytime via the Paddle portal). Upon cancellation, failed payment, or an approved refund, paid entitlements may be revoked; the Software then continues under the Community Tier.
 
 ---
 
 ## 6. PRIVACY
 
-Processing of licensing fingerprints, optional telemetry, and billing-related personal data is described in PRIVACY.md. By using the Software you acknowledge that policy.
+Processing of licensing fingerprints, optional telemetry, and billing-related personal data is described in [PRIVACY.md](PRIVACY.md). By using the Software you acknowledge that policy.
 
 ---
 
 ## 7. SUPPORT
 
-Support channels and response expectations are described in SUPPORT.md.
+Support channels and response expectations are described in [SUPPORT.md](SUPPORT.md).
 
 ---
 
