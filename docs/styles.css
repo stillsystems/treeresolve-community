@@ -474,7 +474,7 @@ body {
 /* Statistics Ribbon */
 .stats-strip {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   padding: 40px 0;
   margin: 40px 0 80px;

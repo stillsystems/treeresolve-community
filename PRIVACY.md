@@ -10,7 +10,7 @@ This Privacy Policy describes how TreeResolve (the VS Code extension, standalone
 ## 1. Summary
 
 * **Source code never leaves your machine.** Merge parsing, AST analysis, and conflict resolution run locally.
-* **Optional anonymous product telemetry** may be sent when enabled.
+* **Product telemetry defaults to on.** `treeresolve.enableTelemetry` is `true` unless you change it. Aggregate events are sent only when that setting is on and VS Code telemetry is enabled. You can turn it off. Telemetry does not include source code.
 * **Licensing / trial requests** may send an anonymized machine fingerprint to our licensing gateway.
 * **Payments** are processed by our Merchant of Record (Paddle); we do not store full payment card numbers.
 * **Marketing site analytics** (optional) may measure aggregate pageviews on the public documentation site only — never inside the extension or CLI.
@@ -35,7 +35,7 @@ This request goes only to the configured licensing endpoint (default today: `htt
 
 ### 2.3. Anonymous product telemetry (optional)
 
-When `treeresolve.enableTelemetry` is `true` **and** VS Code’s global telemetry is not disabled (`telemetry.telemetryLevel` / `vscode.env.isTelemetryEnabled`), TreeResolve may send aggregate events such as:
+The extension setting `treeresolve.enableTelemetry` defaults to `true`. When that setting is `true` **and** VS Code’s global telemetry is not disabled (`telemetry.telemetryLevel` / `vscode.env.isTelemetryEnabled`), TreeResolve may send aggregate events such as:
 
 * Auto-merge acceptance rate and session duration
 * Coarse language ID

@@ -82,7 +82,7 @@ TreeResolve identifies the structural context of conflicting blocks. If two chan
 
 TreeResolve's syntax engine expands language support by shipping dedicated language-specific normalizers.
 
-### Currently Supported (v1.0.0)
+### Currently Supported (v1.0.2)
 
 * [x] **TypeScript / JavaScript**: Disjoint imports (named, aliased, side-effect, and type-only) with true 3-way deletion handling and AST declaration merging.
 * [x] **JSON / JSONC**: Nested recursive 3-way key deduplication and conflict detection.
@@ -216,7 +216,7 @@ TreeResolve uses a Reverse Trial model: install the extension and enjoy all Pro 
 | **3-Pane Visual Diffing** | ✅ Included | ✅ Included | ✅ Included |
 | **Dynamic Ribbon Alignment** | ✅ Included | ✅ Included | ✅ Included |
 | **Native Undo/Redo & Save Hooks** | ✅ Included | ✅ Included | ✅ Included |
-| **Import Auto-Merge (TS / JS / Python)** | ✅ Free taste | ✅ Included | ✅ Included |
+| **Import Auto-Merge (TS / JS / Python)** | ✅ Included | ✅ Included | ✅ Included |
 | **Full Syntax Auto-Merge (all languages + declarations)** | ❌ | ✅ Unlimited Deterministic Merges | ✅ Unlimited Deterministic Merges |
 | **Lockfile Auto-Merge (npm dedicated; Yarn/PNPM partial)** | ❌ | ✅ Included | ✅ Included |
 | **Batch / CLI / CI Merge Driver** | ❌ | ✅ Included | ✅ Included |
@@ -225,9 +225,9 @@ TreeResolve uses a Reverse Trial model: install the extension and enjoy all Pro 
 | **Offline Cryptographic Leases** | ✅ Yes | ✅ Ed25519 offline verification | ✅ Wildcard / Multi-repo domain lease |
 | **Centralized / MDM Deployment** | ❌ | ❌ | ✅ Automated dotfile / container rollout |
 | **Volume Discounts** | ❌ | ❌ | ✅ Tiered discounts at 50+, 200+, 1,000+ seats |
-| **Billing & Payment Options** | ❌ (Free forever) | Self-serve Credit Card (Paddle) | Self-serve card, or invoiced / PO by quote for qualifying fleets |
+| **Billing & Payment Options** | ❌ (Free forever) | Self-serve card (Paddle) | Self-serve card, or a Paddle invoice for qualifying fleets (Net-30 when offered) |
 
-*\*Enterprise pricing reflects standard base list price. Volume discounting and fleet licensing apply automatically for teams of 50 to 1,000+ developers via custom quote or PO.*
+*\*Enterprise pricing reflects standard base list price. Volume pricing for teams of 50 or more is quoted, then invoiced by Paddle.*
 
 When your 14-day trial ends, TreeResolve automatically degrades to the Community tier (you keep the 3-pane canvas **and** TS/JS/Python import auto-merge). Your editor will never be locked or blocked from resolving conflicts manually. **Pro is a per-person license** — install once, use in any repository on up to three machines. Commercial licenses utilize 30-day offline-first floating leases; person/org wildcard tokens carry a maximum 90-day offline validity window.
 
