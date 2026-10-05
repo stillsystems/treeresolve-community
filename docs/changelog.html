@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Changelog — TreeResolve</title>
+  <link rel="canonical" href="https://stillsystems.github.io/treeresolve-community/changelog.html">
+  <link rel="icon" type="image/png" href="images/icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="legal-top">
+    <div class="container legal-top-inner">
+      <div class="legal-id">
+        <a class="legal-company" href="https://stillsystems.github.io/">Still Systems</a>
+        <a class="legal-brand" href="./">TreeResolve</a>
+      </div>
+      <nav class="legal-nav">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="refund.html">Refund Policy</a>
+        <a href="./#pricing">Pricing</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container legal-doc">
+    <p class="legal-entity"><a href="https://stillsystems.github.io/">Still Systems, LLC</a> — TreeResolve product site (stillsystems.github.io/treeresolve-community)</p>
+    <h1>Changelog</h1>
+    <div class="legal-body">
+<p>All notable changes to the &quot;TreeResolve&quot; extension will be documented in this file.</p>
+<p>The format is based on <a href="https://keepachangelog.com/en/1.0.0/" rel="noopener">Keep a Changelog</a>, and this project adheres to <a href="https://semver.org/spec/v2.0.0.html" rel="noopener">Semantic Versioning</a>.</p>
+<h2>[Unreleased]</h2>
+<h2>[1.0.2] - 2026-09-27</h2>
+<h3>Fixed</h3>
+<ul>
+<li><strong>Marketplace badge cache</strong>: Dropped the labeled badgen query string that was stuck on <code>v1.0.0</code> (<code>max-age=3600</code>); badge now uses the fresh <code>vs-marketplace/v/…</code> endpoint.</li>
+</ul>
+<h3>Changed</h3>
+<ul>
+<li><strong>npm CLI</strong>: Published <a href="https://www.npmjs.com/package/treeresolve" rel="noopener"><code>treeresolve@1.0.2</code></a> to match the extension release line.</li>
+</ul>
+<h2>[1.0.1] - 2026-09-27</h2>
+<h3>Fixed</h3>
+<ul>
+<li><strong>Listing README badges</strong>: Marketplace and Open VSX Overview badges now show live version links (badgen Marketplace + Open VSX), replacing the pre-launch “Coming soon” badges baked into the <code>1.0.0</code> VSIX README.</li>
+</ul>
+<h3>Changed</h3>
+<ul>
+<li><strong>Open VSX</strong>: Public listing remains <a href="https://open-vsx.org/extension/stillsystems/treeresolve" rel="noopener"><code>stillsystems.treeresolve</code></a>; <code>still-systems</code> namespace created for parity (verify on Open VSX before public).</li>
+</ul>
+<h2>[1.0.0] - 2026-09-27</h2>
+<h3>Changed</h3>
+<ul>
+<li><strong>VS Code Marketplace identity</strong>: Manifest <code>publisher</code> is <code>still-systems</code>, extension <code>name</code> is <code>ss-treeresolve</code> (id <code>still-systems.ss-treeresolve</code>), and <code>displayName</code> is <code>TreeResolve by Still Systems, LLC</code>. CLI/npm bin stays <code>treeresolve</code>. GitHub org remains <code>stillsystems</code>.</li>
+<li><strong>Community Pro-unlock hunk tip</strong>: When free-tier users hit a Pro-gated conflict in the merge canvas (lockfiles, other languages, full syntax), each manual hunk shows a short tip such as “Pro unlocks lockfile auto-merge” / “Pro unlocks this language” (yarn/pnpm tips stay partial) plus an Upgrade link — not only the generic header chrome.</li>
+<li><strong>Free / paid line (Grok #9)</strong>: Community keeps a taste of syntax auto-merge — TS/JS/Python import resolution in the IDE. Pro sells lockfiles, full-language AST, batch/CLI/CI, and <code>.treeresolverc</code> governance.</li>
+<li><strong>Pro per-person licenses (Grok #10)</strong>: Pro binds to the purchaser (<code>binding: person</code>, any repo, up to 3 machines via fingerprint seats). Enterprise keeps seats + org wildcards. <code>installLicense</code> no longer requires per-repo activation.</li>
+</ul>
+<h3>Product</h3>
+<ul>
+<li><strong>Lockfiles-first positioning (Grok #8)</strong>: Marketplace description, README, and landing hero lead with <code>package-lock.json</code> auto-merge plus <strong>Review Auto-Resolved Conflicts</strong>. yarn/pnpm stay explicitly partial (aligned with <a href="https://github.com/stillsystems/treeresolve-community/issues/6" rel="noopener">community #6</a>). New post-resolve Review action, first-run tip, Tier-1 policy labels in the merge canvas, and Batch log per-hunk policies.</li>
+</ul>
+<h3>Documentation</h3>
+<ul>
+<li><strong>Listing status</strong>: VS Code Marketplace and Open VSX go-live for <code>1.0.0</code>.</li>
+<li><strong>Licensing FAQ</strong>: Docs now state the live gateway is <code>workers.dev</code>, with <code>licensing.stillsystems.com</code> as the parked custom-domain cutover.</li>
+<li><strong>Lockfile roadmap</strong>: README / TASKLIST now list Yarn (<code>yarn.lock</code>) / pnpm (<code>pnpm-lock.yaml</code>) parity with npm as the next lockfile priority, with other ecosystems (Cargo, Poetry/uv, Gem, Composer, …) later by demand—not a ship-all promise. Pricing copy clarified so Yarn/PNPM stay labeled partial until that work lands.</li>
+<li><strong>Doc accuracy (Grok #11)</strong>: Removed the undocumented editor tab-bar button claim; clarified lockfile coverage (<code>package-lock.json</code> dedicated, yarn/pnpm partial); moved <code>.treeresolverc</code> <code>$schema</code> off third-party <code>still.systems</code> onto Still Systems GitHub Pages; dialed Net-60 / MSA / SLA copy to solo-capable commitments.</li>
+</ul>
+<h3>Compatibility</h3>
+<ul>
+<li><strong>Lowered <code>engines.vscode</code> to <code>^1.90.0</code></strong>: Honest floor for API usage plus Node 20 extension-host runtime (native <code>fetch</code>, esbuild <code>--target=node20</code>). Widens Marketplace / Open VSX / Cursor / VSCodium install reach vs <code>^1.138.0</code>. CI smoke-tests activation on <code>1.90.0</code> and <code>stable</code>.</li>
+</ul>
+<h3>Ready for launch cutover</h3>
+<ul>
+<li><strong>Licensing custom domain (ready-to-flip)</strong>: Canonical launch host is <code>https://licensing.stillsystems.com</code>. Client defaults remain on <code>https://treeresolve-licensing.still-systems.workers.dev</code> until <code>USE_CUSTOM_LICENSING_DOMAIN</code> is flipped after Cloudflare Custom Domain + DNS cutover. Wrangler Custom Domain route block is prepared (commented) for the licensing Worker deploy config.</li>
+</ul>
+<h2>[1.0.0] - 2026-09-25</h2>
+<h3>Launch</h3>
+<ul>
+<li><strong>1.0.0 launch posture</strong>: Version badges, CLI, landing page, and marketplace-facing docs aligned to <code>1.0.0</code> for first public release.</li>
+<li><strong>Pricing language matrix</strong>: Pro tier copy now lists the full shipped AST/normalizer set (TS/JS, Python, Go, Rust, Java, C#, JSON/JSONC, YAML, and npm/Yarn/PNPM lockfiles)—matching README reality.</li>
+<li><strong>Landing trust strip</strong>: Replaced the small absolute <code>49/49</code> unit-test count with qualitative CI-gated verification copy.</li>
+</ul>
+<h3>Product (folded from prior 0.5.0 lane)</h3>
+<ul>
+<li><strong>Intra-Line Interactive Token Acceptance</strong>: Sub-line segment picking with 3-way token reconciliation.</li>
+<li><strong>Semantic Intra-Line Token Highlighting</strong>: Syntax badges for renames, argument changes, type annotations, and literal values.</li>
+</ul>
+<h3>Gateway</h3>
+<ul>
+<li><strong>Licensing gateway default</strong>: Default <code>treeresolve.licensingEndpoint</code> is now <code>https://treeresolve-licensing.still-systems.workers.dev</code> (workers.dev). Custom domain deferred until Still Systems registers a domain it owns.</li>
+</ul>
+<h2>[0.4.5] - 2026-09-22</h2>
+<h3>Licensing &amp; Billing</h3>
+<ul>
+<li><strong>Paddle Billing Integration</strong>: Migrated checkout and license delivery from Stripe to Paddle Billing, including automated license issuance on purchase and automated revocation on cancellation or failed payment.</li>
+<li><strong>In-Page Checkout</strong>: The community page now opens checkout in an in-page overlay instead of redirecting to an external page, with support for deep-linked checkout via URL parameters.</li>
+</ul>
+<h3>Marketplace Compliance</h3>
+<ul>
+<li><strong>Trial Pricing Label</strong>: Declared <code>&quot;pricing&quot;: &quot;Trial&quot;</code> in the extension manifest for accurate Visual Studio Marketplace labeling of the reverse-trial model.</li>
+<li><strong>Privacy &amp; Support Policies</strong>: Added <code>PRIVACY.md</code> and <code>SUPPORT.md</code>, linked from the README and community sync set.</li>
+<li><strong>Manifest Hygiene</strong>: Set publisher author metadata, gallery banner, Q&amp;A URL, and corrected Marketplace categories to <code>Other</code>.</li>
+<li><strong>Documentation Alignment</strong>: Synchronized version badges, VS Code engine requirement (<code>^1.138.0</code>), workspace-trust (<code>limited</code>), and default licensing endpoint copy with runtime behavior.</li>
+<li><strong>Packaging Guardrails</strong>: Prepublish checkout-link scan (<code>tools/check-no-test-checkout-links.js</code>) blocks Paddle sandbox URLs from release packages.</li>
+<li><strong>Licensing Default</strong>: Standardized the default licensing gateway to <code>https://treeresolve-licensing.still-systems.workers.dev</code>.</li>
+</ul>
+<h2>[0.4.4] - 2026-09-11</h2>
+<h3>Security &amp; Hardening</h3>
+<ul>
+<li><strong>WebAssembly Integrity Checks</strong>: Hardened verification of bundled WebAssembly grammar files before load.</li>
+<li><strong>Release Hygiene</strong>: Cut a clean <code>v0.4.4</code> release with freshly packaged binaries.</li>
+<li><strong>CLI Reliability</strong>: Added a fail-fast check that gives a clear error on unsupported Node.js versions instead of failing deep in module loading.</li>
+<li><strong>Manifest Cleanup</strong>: Standardized marketplace metadata categories and keyword tags.</li>
+<li><strong>Adversarial VSIX Review &amp; Compliance Remediation</strong>:</li>
+<li>Removed the bundled <code>undici</code> dependency in favor of Node 20's native <code>fetch</code>, shrinking the extension bundle by ~70%.</li>
+<li>Added <code>THIRD_PARTY_LICENSES.md</code> with complete open-source attributions for bundled dependencies.</li>
+<li>Corrected marketplace copy to accurately describe our privacy posture instead of unsubstantiated compliance claims.</li>
+<li>Optimized the marketplace icon asset, reducing its size by over 90%.</li>
+<li>Excluded the standalone CLI binary from the <code>.vsix</code> package, reducing packaged extension size by ~60%.</li>
+<li>Added a user-visible notice when batch conflict scanning falls back to a bounded workspace search.</li>
+<li>Documented in <code>ARCHITECTURE.md</code>/<code>README.md</code> why the custom editor is registered broadly rather than for specific file types.</li>
+</ul>
+<h2>[0.4.3] - 2026-09-10</h2>
+<h3>Security &amp; Hardening</h3>
+<ul>
+<li><strong>Save Reliability</strong>: Reworked how hunk resolutions and document saves are sequenced to eliminate race conditions between rapid keyboard-driven resolutions and commit actions, ensuring no user decisions are ever dropped.</li>
+<li><strong>Parser Safety Limits</strong>: Added execution time and line-length limits to the syntax parser to prevent the editor from hanging on minified bundles, lockfiles, or other unusually large single lines.</li>
+<li><strong>WebAssembly Integrity Checks</strong>: Verified grammar binaries against known-good checksums before use.</li>
+<li><strong>Canvas Rendering Performance</strong>: Restructured diff-ribbon rendering to batch layout work separately from drawing, and throttled updates, eliminating frame drops and input stutter on conflicts with 150+ hunks.</li>
+<li><strong>Manifest Cleanup</strong>: Tightened marketplace category listing.</li>
+</ul>
+<h2>[0.4.2] - 2026-09-10</h2>
+<h3>Security &amp; Hardening</h3>
+<ul>
+<li><strong>Save Reliability</strong>: Serialized document mutations and switched to atomic full-document snapshot edits, eliminating race conditions and truncation during rapid sequential operations.</li>
+<li><strong>Parser Safety Limits</strong>: Added execution timeouts and recursion/size guards to the syntax parser to prevent hangs on pathological input.</li>
+<li><strong>Packaging Hygiene</strong>: Release packaging now strips internal scripts and development-only files from the shipped package.</li>
+<li><strong>Rendering Performance</strong>: Large diffs now stream into view progressively instead of rendering all at once, eliminating UI stutter on very large files.</li>
+<li><strong>Memory Management</strong>: Fixed a memory leak in the syntax parser affecting large batch operations.</li>
+<li><strong>CLI Packaging</strong>: Ensured the bundled CLI binary has correct executable permissions when installed.</li>
+<li><strong>Canvas Rendering</strong>: Fixed a rendering edge case when merge panes are collapsed to zero size.</li>
+<li><strong>Air-Gapped &amp; Corporate Proxy Support</strong>: Documented configuration for corporate proxy environments and fully offline license activation.</li>
+<li><strong>Large Repository Performance</strong>: Replaced unbounded workspace file scans with targeted Git queries, improving performance and responsiveness on large repositories.</li>
+<li><strong>Save-Time Safety Check</strong>: The extension now refuses to stage a file to Git if it still contains unresolved conflict markers.</li>
+<li><strong>Privacy</strong>: Removed local hostnames and usernames from anonymous usage identifiers.</li>
+<li><strong>Large File Safety</strong>: Files over 10MB, containing binary data, or recognized as Git LFS pointers are now safely skipped by both the interactive editor and batch auto-resolve.</li>
+<li><strong>Workspace Trust</strong>: The extension now supports VS Code's restricted/untrusted workspace mode, allowing read-only diffing while blocking writes until trust is granted.</li>
+</ul>
+<h2>[0.4.1] - 2026-09-10</h2>
+<h3>Added</h3>
+<ul>
+<li><strong>Commercial Licensing for the CLI</strong>: Advanced auto-merge and whole-file resolution features in the standalone CLI now require a Pro license, matching the extension. Added commands to check license status and install a license token, plus CI/CD-friendly credential support.</li>
+<li><strong>Improved Repository Detection</strong>: Unified and improved how the CLI resolves the repository root, remote URL, and submodule status, including better handling of repos without an <code>origin</code> remote.</li>
+<li><strong>Standalone CLI Bundling</strong>: The CLI is now bundled as a self-contained executable and shipped inside the <code>.vsix</code> package.</li>
+<li><strong>Batch Auto-Resolve Cancellation</strong>: Batch conflict resolution can now be cancelled mid-run, and streams live progress to a dedicated output channel.</li>
+<li><strong>Security Hardening</strong>:</li>
+<li>Locked down the licensing endpoint setting so untrusted repositories can't redirect it.</li>
+<li>Disabled the extension in untrusted workspaces pending trust.</li>
+<li>Usage telemetry now sends only structured error categories — never raw error text, file paths, or code snippets.</li>
+<li>Removed <code>innerHTML</code> usage in the merge editor in favor of safe DOM construction.</li>
+<li>Hardened internal Git command execution against path-argument injection.</li>
+</ul>
+<h3>Changed</h3>
+<ul>
+<li><strong>Production Payment Links</strong>: Switched all checkout links from test mode to live production links.</li>
+<li><strong>Marketplace Badges</strong>: Updated to current, branded marketplace badges.</li>
+</ul>
+<h2>[0.4.0] - 2026-09-08</h2>
+<h3>Added</h3>
+<ul>
+<li><strong>Automated Release Pipeline</strong>: Tag-driven CI/CD now publishes automatically to Open VSX, VS Code Marketplace, and GitHub Releases.</li>
+<li><strong>Native Git Merge Driver</strong>: TreeResolve can now be configured as a Git merge driver for preemptive AST-level conflict resolution, with one-command setup.</li>
+<li><strong>Yarn &amp; PNPM Lockfile Support</strong>: Added deterministic 3-way resolution for <code>yarn.lock</code> and <code>pnpm-lock.yaml</code>.</li>
+<li><strong>Merge Editor Ergonomics</strong>: Added keyboard navigation, a focused-hunk highlight, a live completion progress bar, and an in-editor shortcut reference.</li>
+</ul>
+<h2>[0.3.1] - 2026-09-08</h2>
+<h3>Changed</h3>
+<ul>
+<li><strong>Open VSX Publication</strong>: TreeResolve is now officially published on the Open VSX Registry.</li>
+<li><strong>Publisher Identifier</strong>: Standardized the extension's publisher identifier across manifest and documentation.</li>
+</ul>
+<h2>[0.3.0] - 2026-09-08</h2>
+<h3>Added</h3>
+<h4>Intra-Line Token Micro-Diffing</h4>
+<ul>
+<li><strong>Visual Token Highlighting</strong>: Word/token-level diff highlighting within conflicting lines in the merge view.</li>
+</ul>
+<h4>Java &amp; C# Deterministic Normalizers</h4>
+<ul>
+<li><strong>Java 3-Way Import Resolver</strong>: Deterministic resolution for Java imports, including static and third-party imports.</li>
+<li><strong>C# 3-Way Using Directive Resolver</strong>: Deterministic resolution for C# <code>using</code> directives, aliases, and namespaces.</li>
+</ul>
+<h4>Repository-Level Configuration</h4>
+<ul>
+<li><strong>Project Policy Engine</strong>: Support for a <code>.treeresolverc</code> (or <code>treeresolve.json</code>) config file with glob-based rules for auto-merge and auto-staging behavior.</li>
+</ul>
+<h4>Standalone Git Mergetool CLI Companion &amp; Batch Resolver</h4>
+<ul>
+<li><strong>CLI Companion</strong>: A <code>npx treeresolve</code> command-line tool for terminal-based Git merge workflows.</li>
+<li><strong>Git Mergetool Backend</strong>: Implements Git's mergetool protocol for use as an external merge tool.</li>
+<li><strong>One-Step Git Configuration</strong>: <code>treeresolve setup-git</code> configures Git to use TreeResolve automatically.</li>
+<li><strong>Headless Batch Auto-Resolver</strong>: <code>treeresolve auto</code> scans a repo for conflicts and auto-resolves the deterministic ones.</li>
+</ul>
+<h4>Workspace Batch Conflict Auto-Resolver</h4>
+<ul>
+<li><strong>Batch Command</strong>: Auto-resolve deterministic syntax conflicts across an entire workspace in one step, with progress notification.</li>
+</ul>
+<h4>Anonymous Merge Telemetry &amp; Privacy Opt-Out</h4>
+<ul>
+<li><strong>Usage Metrics</strong>: Anonymous, aggregate metrics on auto-merge acceptance rate and resolution time, with zero collection of source code or identifying data.</li>
+<li><strong>Opt-Out</strong>: Configurable independently and automatically respects VS Code's global telemetry setting.</li>
+</ul>
+<h2>[0.2.0] - 2026-09-08</h2>
+<h3>Added</h3>
+<h4>Concrete Syntax Tree (CST) Engine</h4>
+<ul>
+<li><strong>Cross-Platform WASM Parsing</strong>: Adopted Microsoft's official Tree-sitter WASM build across TypeScript, TSX, JavaScript, Python, Go, and Rust, with no native compilation required.</li>
+<li><strong>Improved Import Merging</strong>: Upgraded import normalization to a full syntax-tree basis, supporting multi-line imports, inline comments, and aliases.</li>
+<li><strong>Structural Merging</strong>: Deterministic auto-merging of independently added functions, classes, and methods.</li>
+<li><strong>Go &amp; Rust Support</strong>: Added deterministic import and structural-declaration merging for Go and Rust.</li>
+</ul>
+<h4>YAML 3-Way Auto-Resolver</h4>
+<ul>
+<li><strong>YAML Merging</strong>: Deterministic 3-way conflict resolution for YAML files (Kubernetes manifests, Docker Compose, CI/CD workflows) with indentation- and comment-preserving merges.</li>
+</ul>
+<h4>Lockfile Semantic Auto-Resolver</h4>
+<ul>
+<li><strong>npm Lockfile Merging</strong>: Deterministic 3-way semantic merging for <code>package-lock.json</code>, resolving non-conflicting additions/upgrades and flagging real breaking conflicts for review.</li>
+</ul>
+<h4>Licensing &amp; Trial Architecture</h4>
+<ul>
+<li><strong>14-Day Pro Trial</strong>: Automatic trial activation with offline-first verification.</li>
+<li><strong>Fail-Open Design</strong>: The extension never blocks or stalls on license checks — it falls back gracefully if network verification is unavailable.</li>
+</ul>
+<h4>Production Build</h4>
+<ul>
+<li>Bundled and minified the extension for a smaller, faster install.</li>
+</ul>
+<h3>Removed</h3>
+<ul>
+<li>Cleaned up obsolete prototype UI code no longer used by the production merge editor.</li>
+</ul>
+<h2>[0.1.0] - 2026-09-07</h2>
+<h3>Added</h3>
+<h4>Core Merge Experience &amp; Visual UI</h4>
+<ul>
+<li><strong>3-Way Merge Editor</strong>: A native 3-column merge view (Ours | Result | Theirs) with a collapsible base/ancestor view and synchronized scrolling.</li>
+<li><strong>Smooth Large-File Performance</strong>: Virtualized rendering and hardware-accelerated canvas connectors for smooth performance on large files and high-DPI/high-refresh displays.</li>
+<li><strong>Reliable Undo/Redo</strong>: Robust action sequencing so rapid hunk decisions are never lost or applied out of order, with full undo/redo support.</li>
+</ul>
+<h4>Deterministic Syntax Auto-Resolution (Zero AI)</h4>
+<ul>
+<li><strong>Rule-Based Auto-Resolution</strong>: Safe, deterministic auto-resolution of non-conflicting changes — no LLM involved.</li>
+<li><strong>Import Normalization</strong>: 3-way-aware import merging for TypeScript/JavaScript and Python that respects intentional deletions.</li>
+<li><strong>JSON Merging</strong>: Deep recursive 3-way merging for JSON configuration files.</li>
+<li><strong>Git LFS Awareness</strong>: Automatically skips structural parsing on Git LFS pointer files.</li>
+</ul>
+<h4>Git Plumbing &amp; Submodule Isolation</h4>
+<ul>
+<li><strong>Robust Conflict Extraction</strong>: Reliable extraction of base/ours/theirs content via the Git API, with plumbing-command fallback.</li>
+<li><strong>Submodule &amp; Multi-Root Support</strong>: Correctly isolates conflict state across multi-root workspaces and nested submodules.</li>
+</ul>
+<h4>Security &amp; Privacy</h4>
+<ul>
+<li><strong>Zero-Cloud Architecture</strong>: Fully local execution — no telemetry, no analytics, and a strict content-security policy blocking external network calls from the editor UI.</li>
+<li><strong>Offline Trial Licensing</strong>: A 14-day Pro trial that works fully offline.</li>
+</ul>
+<h4>Community &amp; Ecosystem</h4>
+<ul>
+<li><strong>Public Companion Tracker</strong>: A public <a href="https://github.com/stillsystems/treeresolve-community" rel="noopener">issue tracker</a> for bug reports, feature requests, and discussion.</li>
+<li><strong>Public Roadmap</strong>: Community voting on upcoming language support (Go, Rust, YAML, Java/C#).</li>
+</ul>
+<h3>Fixed</h3>
+<ul>
+<li><strong>Save Safety</strong>: Fixed an issue where unreviewed hunks could be lost or partially resolved files could be staged prematurely.</li>
+<li><strong>Deletion Handling</strong>: Fixed import merging to correctly honor intentional deletions instead of resurrecting removed imports.</li>
+<li><strong>Nested Conflict Parsing</strong>: Fixed parsing of nested/recursive Git conflict markers.</li>
+<li><strong>Auto-Resolve Safety</strong>: Fixed a case where the import auto-resolve command could truncate unrelated, non-import conflicts.</li>
+</ul>
+<h3>Changed</h3>
+<ul>
+<li><strong>Accurate Documentation</strong>: Corrected documentation to match actual behavior.</li>
+<li><strong>Repository Cleanup</strong>: General housekeeping of unused files and build artifacts.</li>
+</ul>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-copy">
+        © 2026 Still Systems, LLC.
+        Support: <a href="mailto:billy.kidd34@gmail.com">billy.kidd34@gmail.com</a>
+      </div>
+      <ul class="footer-links">
+        <li><a href="https://stillsystems.github.io/">Still Systems</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="refund.html">Refund Policy</a></li>
+        <li><a href="./">TreeResolve</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>

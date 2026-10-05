@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enterprise Guide — TreeResolve</title>
+  <link rel="canonical" href="https://stillsystems.github.io/treeresolve-community/enterprise.html">
+  <link rel="icon" type="image/png" href="images/icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="legal-top">
+    <div class="container legal-top-inner">
+      <div class="legal-id">
+        <a class="legal-company" href="https://stillsystems.github.io/">Still Systems</a>
+        <a class="legal-brand" href="./">TreeResolve</a>
+      </div>
+      <nav class="legal-nav">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="refund.html">Refund Policy</a>
+        <a href="./#pricing">Pricing</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container legal-doc">
+    <p class="legal-entity"><a href="https://stillsystems.github.io/">Still Systems, LLC</a> — TreeResolve product site (stillsystems.github.io/treeresolve-community)</p>
+    <h1>Enterprise Guide</h1>
+    <div class="legal-body">
+<p>This document provides technical, architectural, and security details for enterprise engineering organizations, InfoSec assessment teams, and IT administrators evaluating or deploying TreeResolve.</p>
+<hr>
+<h2>1. Executive Summary</h2>
+<p>TreeResolve is an <strong>offline-first, deterministic 3-way merge conflict resolution engine</strong> for VS Code and Git workflows. Unlike generative AI coding assistants, TreeResolve uses mathematical syntax-tree reconciliation to eliminate merge conflicts without code hallucination or data egress.</p>
+<h3>Core Value Proposition for Enterprises</h3>
+<ul>
+<li><strong>Source code stays local</strong>: Parsing, AST analysis, micro-diffing, and resolution run on developer workstations or internal CI runners. Source code is not transmitted. The table in §2.1 lists what else can leave the machine.</li>
+<li><strong>Deterministic merges</strong>: Only disjoint, non-colliding syntax is auto-resolved. Collisions stay for review.</li>
+<li><strong>Offline license keys</strong>: An already-issued offline key validates on the machine with no network call.</li>
+<li><strong>Seamless Fleet Rollout</strong>: Deployable silently via Microsoft Intune, Jamf Pro, Munki, or Ansible, with repository-level governance via <code>.treeresolverc</code>.</li>
+</ul>
+<hr>
+<h2>2. Security &amp; Compliance Architecture</h2>
+<h3>2.1. What is transmitted</h3>
+<ul>
+<li><strong>Data Category</strong>: <strong>Source Code</strong> — <strong>Transmitted Over Network?</strong>: <strong>NO</strong> — <strong>Destination</strong>: Never leaves local workstation memory.</li>
+<li><strong>Data Category</strong>: <strong>Concrete Syntax Trees (CST / AST)</strong> — <strong>Transmitted Over Network?</strong>: <strong>NO</strong> — <strong>Destination</strong>: Kept in local worker threads; never stored or sent.</li>
+<li><strong>Data Category</strong>: <strong>File Names &amp; File Paths</strong> — <strong>Transmitted Over Network?</strong>: <strong>NO</strong> — <strong>Destination</strong>: Never transmitted or logged.</li>
+<li><strong>Data Category</strong>: <strong>Git Repositories, Branches &amp; Commits</strong> — <strong>Transmitted Over Network?</strong>: <strong>NO</strong> — <strong>Destination</strong>: Handled purely through local Git plumbing.</li>
+<li><strong>Data Category</strong>: <strong>Device Fingerprint (Trial/Floating Leases)</strong> — <strong>Transmitted Over Network?</strong>: Conditional — <strong>Destination</strong>: SHA-256 hash (<code>platform:arch:machineId</code>, 32 hex chars derived from VS Code machine ID or anonymous UUID; zero PII, no usernames/hostnames) sent only on reverse trial issuance or floating lease renewals. Offline wildcard enterprise keys bypass network requests entirely.</li>
+<li><strong>Data Category</strong>: <strong>Anonymous Aggregate Metrics</strong> — <strong>Transmitted Over Network?</strong>: Optional — <strong>Destination</strong>: Only if telemetry is explicitly enabled (can be disabled).</li>
+</ul>
+<h3>2.2. Deterministic AST Analysis vs. Generative AI</h3>
+<p>Traditional line-based merge tools frequently fail on trivial disjoint changes, while generative AI merge tools carry substantial risks:</p>
+<ul>
+<li><strong>Hallucination Risk</strong>: LLMs can invent arguments, omit security guards, or subtly alter logic during conflict reconciliation.</li>
+<li><strong>Intellectual Property Leakage</strong>: Cloud LLM prompts expose proprietary source code to external servers and third-party models.</li>
+<li><strong>Non-Deterministic Merges</strong>: The same conflict resolved twice by an LLM can yield different code.</li>
+</ul>
+<p><strong>TreeResolve's Approach</strong>: TreeResolve parses source files into concrete syntax trees using pre-compiled, sandboxed WebAssembly grammars (<code>@vscode/tree-sitter-wasm</code>). Changes are merged using formal set-difference logic against the common ancestor (<code>Base</code>). If an operation cannot be proven syntactically disjoint, TreeResolve preserves the conflict for human review.</p>
+<h3>2.3. WebAssembly Sandboxing &amp; CSP Enforcement</h3>
+<ul>
+<li><strong>Sandboxed Execution</strong>: Language grammars execute within isolated WebAssembly virtual environments with strict memory boundaries.</li>
+<li><strong>Webview Security</strong>: The 3-way visual merge canvas enforces a strict Content Security Policy (CSP):</li>
+</ul>
+<p>``<code>text default-src 'none'; connect-src 'none'; object-src 'none'; frame-ancestors 'none'; </code>``</p>
+<p>The editor webview cannot initiate outbound network requests, run arbitrary remote scripts, or leak buffer contents.</p>
+<hr>
+<h2>3. Enterprise Licensing Architecture</h2>
+<p>TreeResolve uses an <strong>offline-first cryptographic licensing model</strong> that eliminates the requirement for continuous internet connectivity.</p>
+<h3>3.1. Ed25519 Asymmetric Verification</h3>
+<ul>
+<li>Licenses and trial tokens are issued as JSON Web Tokens (JWT) signed by Still Systems using an <strong>Ed25519 private key</strong>.</li>
+<li>The VS Code extension verifies signatures locally using the bundled Ed25519 public key.</li>
+<li><strong>Air-Gapped Operation</strong>: Developer machines never need to connect to Still Systems servers to validate an enterprise license.</li>
+</ul>
+<h3>3.2. License Tiers &amp; Binding Model</h3>
+<ul>
+<li><strong>Pro (per person):</strong> One purchaser license usable in <strong>any repository</strong> on up to <strong>3 machines</strong> (<code>binding: person</code>, <code>domainId: '*'</code>, <code>maxMachines: 3</code>). No per-repo activation after purchase.</li>
+<li><strong>Enterprise (seats + org wildcards):</strong> Seat budget for concurrent machines/people (<code>binding: org</code>) with optional organization wildcard (<code>domainId: '*'</code>) or legacy domain lock.</li>
+<li><strong>90-Day Offline Hard-Cap:</strong> Person/org wildcard leases carry a maximum offline validity window of 90 days (renew via floating lease when online).</li>
+<li><strong>Revocation Manifests:</strong> The extension periodically checks edge-cached revocation manifests when network connectivity is available, immediately disabling revoked tokens (<code>jti</code>).</li>
+</ul>
+<h3>3.3. Internal Gateway / Proxy Deployment &amp; Air-Gapped Environments</h3>
+<p>For enterprises operating within strict egress-restricted VPCs, corporate TLS-intercepting forward proxies, or air-gapped enclaves:</p>
+<ol>
+<li><strong>Air-Gapped Workstations &amp; Offline Keys</strong>:</li>
+</ol>
+<ul>
+<li>Organizations running completely disconnected networks can bypass all outbound telemetry and ticket requests by installing an offline enterprise wildcard license key.</li>
+<li>In VS Code, run <code>TreeResolve: Install License Key</code> (<code>treeresolve.installLicense</code>) or provision via CLI:</li>
+</ul>
+<p>``<code>bash npx treeresolve license &lt;JWT_TOKEN&gt; </code>``</p>
+<ul>
+<li>The Ed25519 asymmetric signature is verified purely in-process; zero outbound network calls are attempted once an offline license is activated.</li>
+</ul>
+<ol>
+<li><strong>Corporate Forward Proxies (<code>HTTPS_PROXY</code> / TLS Interception)</strong>:</li>
+</ol>
+<ul>
+<li>If floating trial leases or telemetry are enabled in an enterprise environment using TLS-inspecting forward proxies, ensure developers or MDM profiles define standard proxy environment variables (<code>HTTPS_PROXY</code> / <code>HTTP_PROXY</code>).</li>
+<li>When using corporate private Certificate Authorities (CAs), launch VS Code with standard corporate root trust or configure <code>NODE_EXTRA_CA_CERTS</code> / <code>--use-openssl-ca</code> so outbound license verification cleanly traverses the proxy without TLS negotiation failures.</li>
+<li>Network requests feature strict 3–4 second bounded timeouts via <code>AbortController</code> to guarantee no editor hanging or command degradation in restrictive network topologies.</li>
+</ul>
+<ol>
+<li><strong>Internal Licensing Mirror</strong>:</li>
+</ol>
+<ul>
+<li>Deploy an internal instance of the TreeResolve enterprise licensing service or an HTTP reverse proxy within your corporate intranet.</li>
+<li>Configure the enterprise endpoint via MDM or VS Code configuration:</li>
+</ul>
+<p>``<code>json { &quot;treeresolve.licensingEndpoint&quot;: &quot;https://treeresolve-licensing.internal.company.com&quot; } </code>``</p>
+<h3>3.4. Workstation Migration, Salt Invalidation &amp; Floating Seat Reconciliation</h3>
+<p>To eliminate repository name leakage under network inspection, TreeResolve derives domain identifiers using a local 32-byte installation salt stored in VS Code <code>secretsStorage</code> (or <code>~/.treeresolve/installation_salt</code>).</p>
+<ul>
+<li><strong>Workstation Migration &amp; Salt Regeneration</strong>: If an engineer migrates laptops, re-images an operating system, or clears local application storage, a new random installation salt is generated. This alters the locally derived repository <code>domainId</code>.</li>
+<li><strong>Enterprise Mitigation</strong>:</li>
+<li>**Organization Wildcard Licenses (<code>domainId: '*'</code>)**: Enterprise accounts are authenticated at the organization tier and are completely unaffected by local salt rotation across developer laptops.</li>
+<li><strong>Floating Lease Reclaiming</strong>: After a machine migration or salt reset, reclaim a 30-day floating lease for the new <code>domainId</code>:</li>
+</ul>
+<p>```bash # CLI npx treeresolve reclaim &lt;licenseKey&gt;</p>
+<p># VS Code Command Palette TreeResolve: Reclaim Floating Lease (Machine Migration) ```</p>
+<p>This calls <code>POST /api/v1/lease/reclaim</code> on the licensing worker and stores the new lease for offline verification.</p>
+<ul>
+<li><strong>Self-Serve Billing Portal</strong>: Pro subscribers can open invoices, update payment methods, or cancel via:</li>
+</ul>
+<p>``<code>bash npx treeresolve portal [licenseKey] </code>``</p>
+<p>Or in VS Code: <code>TreeResolve: Open Billing Portal</code> (routes through <code>GET /api/v1/portal?licenseKey=</code>).</p>
+<hr>
+<h2>4. Fleet Management &amp; Automated Deployment</h2>
+<h3>4.1. Silent Installation via MDM</h3>
+<p>TreeResolve is on the VS Code Marketplace as <a href="https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve" rel="noopener"><code>still-systems.ss-treeresolve</code></a>. For air-gapped fleets, distribute a <strong>verified offline VSIX</strong> (SHA-256 + Sigstore) from a GitHub Release, or provision the CLI via npm (<code>treeresolve@1.0.2</code>) for headless / mergetool workflows. Full steps and <code>AllowedExtensions</code> allow-list examples: <a href="trust-offline-vsix.html" rel="noopener">docs/trust/offline-vsix.md</a>.</p>
+<h4>Microsoft Intune / Windows MDM</h4>
+<p>Deploy via PowerShell script or Intune Win32 App:</p>
+<pre><code>
+# Install extension silently for all users
+code --install-extension still-systems.ss-treeresolve --force
+</code></pre>
+<h4>Jamf Pro / macOS Fleet</h4>
+<p>Deploy via Jamf shell policy:</p>
+<pre><code>
+#!/bin/bash
+# Install extension silently under current logged-in user
+sudo -u $(stat -f &quot;%Su&quot; /dev/console) code --install-extension still-systems.ss-treeresolve --force
+</code></pre>
+<h3>4.2. Centralized VS Code Settings Configuration</h3>
+<p>IT administrators can push global default settings to <code>/etc/vscode/settings.json</code> (Linux), <code>C:\ProgramData\Code\settings.json</code> (Windows), or via MDM profiles:</p>
+<pre><code>
+{
+  &quot;treeresolve.autoMergeImports&quot;: true,
+  &quot;treeresolve.stageOnSave&quot;: true,
+  &quot;treeresolve.enableTelemetry&quot;: false,
+  &quot;treeresolve.licensingEndpoint&quot;: &quot;https://treeresolve-licensing.internal.company.com&quot;
+}
+</code></pre>
+<h3>4.3. Repository-Level Policy Governance (<code>.treeresolverc</code>)</h3>
+<p>Security and platform teams can check a <code>.treeresolverc</code> or <code>treeresolve.json</code> file into the root of any repository to enforce uniform conflict handling:</p>
+<pre><code>
+{
+  &quot;$schema&quot;: &quot;https://stillsystems.github.io/treeresolve-community/schema/treeresolverc.json&quot;,
+  &quot;autoMergeImports&quot;: true,
+  &quot;stageOnSave&quot;: false,
+  &quot;rules&quot;: [
+    {
+      &quot;pattern&quot;: &quot;**/package-lock.json&quot;,
+      &quot;autoMerge&quot;: true,
+      &quot;stageOnSave&quot;: true
+    },
+    {
+      &quot;pattern&quot;: &quot;security/auth/**&quot;,
+      &quot;autoMerge&quot;: false,
+      &quot;stageOnSave&quot;: false
+    }
+  ]
+}
+</code></pre>
+<p>The <code>$schema</code> URL is hosted on Still Systems–controlled GitHub Pages (<code>stillsystems.github.io</code>). Do not point editors at third-party domains for this schema.</p>
+<h3>4.4. Headless CI/CD &amp; CLI Deployment</h3>
+<p>For headless build systems, containerized CI runners, and terminal merge workflows:</p>
+<ul>
+<li><strong>CI/CD Credential Injection</strong>: Provide the license token via the <code>TREERESOLVE_LICENSE</code> environment variable. In GitHub Actions, configure as a repository or organization secret:</li>
+</ul>
+<p>```yaml</p>
+<ul>
+<li>name: Auto-Resolve Git Conflicts</li>
+<p>env: TREERESOLVE_LICENSE: ${{ secrets.TREERESOLVE_LICENSE }} run: npx treeresolve auto ```</p>
+</ul>
+<ul>
+<li><strong>Automated Git Merge Driver Setup</strong>: In runner base images or developer setup scripts, run:</li>
+</ul>
+<p>``<code>bash npx treeresolve setup-driver </code>``</p>
+<p>This configures Git's native 5-parameter merge driver (<code>merge.treeresolve.driver</code>) globally.</p>
+<ul>
+<li><strong>Workstation Credential Provisioning</strong>: Install license tokens using:</li>
+</ul>
+<p>``<code>bash npx treeresolve license &lt;token&gt; </code>``</p>
+<p>Credentials are saved to <code>~/.treeresolve/license.json</code> with restricted file permissions (<code>0o600</code>).</p>
+<ul>
+<li><strong>Anti-Tamper Monotonic Clock Guard</strong>: Monotonic execution watermarks are persisted to <code>~/.treeresolve/state.json</code>, ensuring local clock tampering cannot circumvent license expiration.</li>
+</ul>
+<h3>4.5. Headless CI/CD Runner Prerequisites &amp; Node.js Runtime Isolation</h3>
+<p>The standalone TreeResolve CLI executable (<code>bin/treeresolve.js</code>) runs natively in headless environments without requiring VS Code:</p>
+<ul>
+<li><strong>Node.js Runtime Requirement</strong>: The CLI bundle targets Node.js 20+ runtime environments (<code>node &gt;= 20.0.0</code>) to utilize native cryptographic subroutines (<code>crypto.subtle</code>, <code>crypto.createHmac</code>) and modern WebAssembly features. Ensure CI/CD runner container base images provide Node.js 20.x LTS or higher.</li>
+<li><strong>Hermetic Environment Shims</strong>: When executed outside the VS Code Extension Host, the CLI automatically provides isolated mock shims to maintain deterministic parsing, diffing, and merge driver compatibility without external editor dependencies.</li>
+</ul>
+<hr>
+<h2>5. Trust Pack (vendor risk, zero-cost)</h2>
+<p>TreeResolve does <strong>not</strong> ship a paid SOC 2 report. For InfoSec review, use the Trust Pack:</p>
+<ul>
+<li><strong>Artifact</strong>: Index — <strong>Link</strong>: <a href="trust-pack.html" rel="noopener">docs/trust/README.md</a></li>
+<li><strong>Artifact</strong>: Data-flow (local merge; honest licensing/telemetry egress) — <strong>Link</strong>: <a href="trust-data-flow.html" rel="noopener">docs/trust/data-flow.md</a></li>
+<li><strong>Artifact</strong>: CSA CAIQ (lite, solo-honest) — <strong>Link</strong>: <a href="trust-caiq.html" rel="noopener">docs/trust/caiq-lite.md</a></li>
+<li><strong>Artifact</strong>: Offline VSIX + <code>AllowedExtensions</code> — <strong>Link</strong>: <a href="trust-offline-vsix.html" rel="noopener">docs/trust/offline-vsix.md</a></li>
+<li><strong>Artifact</strong>: VDP / security.txt — <strong>Link</strong>: <a href="security.html" rel="noopener">SECURITY.md</a>, <a href="security.txt" rel="noopener">docs/security.txt</a></li>
+<li><strong>Artifact</strong>: SBOM + SHA-256 + Sigstore per release — <strong>Link</strong>: GitHub Actions workflow <code>Release artifacts</code> (tag <code>v*</code> or <code>workflow_dispatch</code>)</li>
+<li><strong>Artifact</strong>: OpenSSF Scorecard — <strong>Link</strong>: Public repo <a href="https://github.com/stillsystems/treeresolve-community" rel="noopener"><code>stillsystems/treeresolve-community</code></a></li>
+</ul>
+<p>Quick claims buyers usually need:</p>
+<ul>
+<li><strong>Source code never leaves the machine</strong> for merge resolution (see data-flow).</li>
+<li><strong>Air-gapped path</strong>: offline VSIX + offline wildcard JWT + telemetry off.</li>
+<li><strong>Supply chain</strong>: CycloneDX SBOM and Sigstore-signed VSIX on tagged releases.</li>
+</ul>
+<h2>6. Procurement &amp; Commercial Terms</h2>
+<p>Still Systems (solo-operated LLC) offers honest, deliverable procurement paths for enterprise buyers:</p>
+<ul>
+<li><strong>Payment Methods</strong>: Self-serve card checkout via Paddle (Merchant of Record). For qualifying fleet quotes, Paddle invoices the buyer. Net-30 may be offered case-by-case after quote acceptance. Extended Net-60 (or longer) terms are not a standard offering. Still Systems does not invoice buyers or collect payment directly.</li>
+<li><strong>Volume Seat Tiering</strong>: Discounted seat pricing discussed starting around 50 developer seats (see list pricing footnotes in the product README).</li>
+<li><strong>Agreements</strong>: Purchases are governed by the TreeResolve EULA plus a short written order / quote for fleet deals. Custom MSA or Security Addendum language can be reviewed case-by-case; it is not a turnkey packaged deliverable. Vendor risk questionnaires can start from the <a href="trust-caiq.html" rel="noopener">CAIQ lite</a> above.</li>
+<li><strong>Support Targets</strong>: Enterprise inquiries aim for <strong>next-business-day acknowledgment</strong> (US Central). Security disclosures follow the 48-hour ack in <a href="security.html" rel="noopener">SECURITY.md</a>. There is no separate uptime SLA for the local extension (merge work runs on the customer's machines). Community / Pro GitHub issues remain best-effort.</li>
+<li><strong>Custom Grammar Normalizers</strong>: Available only as scoped, quoted engineering work when capacity allows—not included by default in Enterprise seat pricing.</li>
+</ul>
+<p>For enterprise evaluations, custom quotes, or security reviews, submit an inquiry via the <a href="https://stillsystems.github.io/treeresolve-community/#enterprise" rel="noopener">Enterprise Portal</a> or open a thread on the <a href="https://github.com/stillsystems/treeresolve-community/issues" rel="noopener">TreeResolve Community Tracker</a>.</p>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-copy">
+        © 2026 Still Systems, LLC.
+        Support: <a href="mailto:billy.kidd34@gmail.com">billy.kidd34@gmail.com</a>
+      </div>
+      <ul class="footer-links">
+        <li><a href="https://stillsystems.github.io/">Still Systems</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="refund.html">Refund Policy</a></li>
+        <li><a href="./">TreeResolve</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>

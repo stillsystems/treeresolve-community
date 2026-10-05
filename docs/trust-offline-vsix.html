@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline VSIX — TreeResolve</title>
+  <link rel="canonical" href="https://stillsystems.github.io/treeresolve-community/trust-offline-vsix.html">
+  <link rel="icon" type="image/png" href="images/icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="legal-top">
+    <div class="container legal-top-inner">
+      <div class="legal-id">
+        <a class="legal-company" href="https://stillsystems.github.io/">Still Systems</a>
+        <a class="legal-brand" href="./">TreeResolve</a>
+      </div>
+      <nav class="legal-nav">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="refund.html">Refund Policy</a>
+        <a href="./#pricing">Pricing</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container legal-doc">
+    <p class="legal-entity"><a href="https://stillsystems.github.io/">Still Systems, LLC</a> — TreeResolve product site (stillsystems.github.io/treeresolve-community)</p>
+    <h1>Offline VSIX</h1>
+    <div class="legal-body">
+<p>For air-gapped fleets, private marketplaces, and allow-listed VS Code environments. Official Microsoft reference: <a href="https://code.visualstudio.com/docs/enterprise/extensions" rel="noopener">Manage extensions in enterprise environments</a>.</p>
+<h2>1. Obtain a verified VSIX</h2>
+<p>Prefer a GitHub Release from <code>stillsystems/treeresolve</code> (private source of truth) once tagged:</p>
+<ol>
+<li>Download <code>treeresolve-&lt;version&gt;.vsix</code></li>
+<li>Download <code>treeresolve-&lt;version&gt;.vsix.sha256</code></li>
+<li>Download <code>treeresolve-&lt;version&gt;.vsix.sigstore.json</code> (Sigstore bundle)</li>
+<li>Optionally download <code>treeresolve-&lt;version&gt;.cdx.json</code> (SBOM)</li>
+</ol>
+<p>Verify:</p>
+<pre><code>
+sha256sum -c treeresolve-&lt;version&gt;.vsix.sha256
+
+cosign verify-blob &quot;treeresolve-&lt;version&gt;.vsix&quot; \
+  --bundle &quot;treeresolve-&lt;version&gt;.vsix.sigstore.json&quot; \
+  --certificate-oidc-issuer &quot;https://token.actions.githubusercontent.com&quot; \
+  --certificate-identity-regexp \
+  '^https://github.com/stillsystems/treeresolve/\.github/workflows/release-artifacts\.yml@refs/tags/v'
+</code></pre>
+<p>Marketplace install (<code>still-systems.ss-treeresolve</code>) is preferred when online. For air-gapped or allow-listed fleets, treat signed GitHub Release assets (or an internal mirror of those assets) as the offline install source of truth.</p>
+<h2>2. Install without Marketplace</h2>
+<pre><code>
+# User scope
+code --install-extension ./treeresolve-&lt;version&gt;.vsix --force
+
+# Or VSCodium / forks — use the matching CLI
+codium --install-extension ./treeresolve-&lt;version&gt;.vsix --force
+</code></pre>
+<p>MDM / Intune / Jamf: ship the VSIX to a known path and run the same command under the target user, or distribute via your private VS Code marketplace if you operate one.</p>
+<h2>3. Allow-list TreeResolve (<code>extensions.allowed</code>)</h2>
+<p>VS Code 1.96+ supports application setting <code>extensions.allowed</code> and org policy <code>AllowedExtensions</code>. When the allow-list is set, <strong>only listed</strong> publishers / extensions may install.</p>
+<p>User or machine <code>settings.json</code> example (allow Still Systems publisher, or pin the extension id):</p>
+<pre><code>
+{
+  &quot;extensions.allowed&quot;: {
+    &quot;still-systems&quot;: true
+  }
+}
+</code></pre>
+<p>Pin a specific extension (and optionally versions) instead of the whole publisher:</p>
+<pre><code>
+{
+  &quot;extensions.allowed&quot;: {
+    &quot;still-systems.ss-treeresolve&quot;: true
+  }
+}
+</code></pre>
+<p>Or allow only listed versions:</p>
+<pre><code>
+{
+  &quot;extensions.allowed&quot;: {
+    &quot;still-systems.ss-treeresolve&quot;: [&quot;1.0.2&quot;]
+  }
+}
+</code></pre>
+<h3>Organization policy (<code>AllowedExtensions</code>)</h3>
+<p>Deploy the <strong>same JSON object</strong> via device management. Policy overrides user <code>extensions.allowed</code>. On Windows Group Policy / Intune, the policy value is the JSON string (not JSONC — no comments).</p>
+<p>Example policy payload:</p>
+<pre><code>
+{&quot;still-systems.ss-treeresolve&quot;:true}
+</code></pre>
+<p>If policy JSON is invalid, VS Code ignores it — check <strong>Show Window Log</strong>.</p>
+<h2>4. Recommended enterprise defaults</h2>
+<pre><code>
+{
+  &quot;treeresolve.enableTelemetry&quot;: false,
+  &quot;treeresolve.autoMergeImports&quot;: true
+}
+</code></pre>
+<p>Air-gapped license install (no network validation once the JWT is present):</p>
+<pre><code>
+npx treeresolve license &lt;OFFLINE_WILDCARD_JWT&gt;
+</code></pre>
+<p>Or VS Code command: <code>TreeResolve: Install License Key</code>.</p>
+<h2>5. Headless CLI (no VSIX)</h2>
+<p>CI runners that only need the merge driver/CLI can use the npm package without installing the VS Code extension. Provide <code>TREERESOLVE_LICENSE</code> as a secret and keep runners offline except for your package registry mirror if required.</p>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-copy">
+        © 2026 Still Systems, LLC.
+        Support: <a href="mailto:billy.kidd34@gmail.com">billy.kidd34@gmail.com</a>
+      </div>
+      <ul class="footer-links">
+        <li><a href="https://stillsystems.github.io/">Still Systems</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="refund.html">Refund Policy</a></li>
+        <li><a href="./">TreeResolve</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Flow — TreeResolve</title>
+  <link rel="canonical" href="https://stillsystems.github.io/treeresolve-community/trust-data-flow.html">
+  <link rel="icon" type="image/png" href="images/icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="legal-top">
+    <div class="container legal-top-inner">
+      <div class="legal-id">
+        <a class="legal-company" href="https://stillsystems.github.io/">Still Systems</a>
+        <a class="legal-brand" href="./">TreeResolve</a>
+      </div>
+      <nav class="legal-nav">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="refund.html">Refund Policy</a>
+        <a href="./#pricing">Pricing</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container legal-doc">
+    <p class="legal-entity"><a href="https://stillsystems.github.io/">Still Systems, LLC</a> — TreeResolve product site (stillsystems.github.io/treeresolve-community)</p>
+    <h1>Data Flow</h1>
+    <div class="legal-body">
+<p>Honest local-first model for InfoSec review. <strong>Customer source code used for merge resolution never leaves the machine.</strong> Licensing and optional telemetry are separate, non-code channels.</p>
+<h2>Mermaid overview</h2>
+<pre><code>
+flowchart LR
+  subgraph Workstation[&quot;Developer workstation / CI runner&quot;]
+    SRC[&quot;Repo files / conflict buffers&quot;]
+    EXT[&quot;TreeResolve extension or CLI&quot;]
+    WASM[&quot;Tree-sitter WASM grammars&quot;]
+    WEB[&quot;Merge webview canvas&lt;br/&gt;CSP: connect-src 'none'&quot;]
+    LIC[&quot;Local Ed25519 JWT verify&lt;br/&gt;~/.treeresolve / secretsStorage&quot;]
+    SRC --&gt; EXT
+    EXT --&gt; WASM
+    EXT --&gt; WEB
+    EXT --&gt; LIC
+  end
+
+  subgraph StillSystems[&quot;Still Systems (optional network)&quot;]
+    GW[&quot;Licensing gateway&lt;br/&gt;(Cloudflare Worker)&quot;]
+    PAD[&quot;Paddle MoR&lt;br/&gt;(checkout / portal)&quot;]
+  end
+
+  LIC -.-&gt;|&quot;Trial / floating lease only:&lt;br/&gt;SHA-256 machine fingerprint&lt;br/&gt;+ domainId hash (no paths/code)&quot;| GW
+  EXT -.-&gt;|&quot;Optional telemetry codes&lt;br/&gt;(no source, no paths)&quot;| GW
+  PAD -.-&gt;|&quot;Entitlement metadata after purchase&quot;| GW
+  USER[&quot;Buyer browser&quot;] --&gt; PAD
+  USER --&gt; GW
+</code></pre>
+<h2>What stays local (never transmitted)</h2>
+<ul>
+<li><strong>Category</strong>: Source code, conflict hunks, ASTs/CSTs — <strong>Leaves machine?</strong>: <strong>No</strong></li>
+<li><strong>Category</strong>: File paths, repo URLs, branch/commit names — <strong>Leaves machine?</strong>: <strong>No</strong></li>
+<li><strong>Category</strong>: Webview canvas buffer contents — <strong>Leaves machine?</strong>: <strong>No</strong> (CSP blocks outbound <code>connect-src</code>)</li>
+<li><strong>Category</strong>: Offline / air-gapped wildcard license validation — <strong>Leaves machine?</strong>: <strong>No</strong> (local signature check only)</li>
+</ul>
+<h2>What may leave the machine (non-code)</h2>
+<ul>
+<li><strong>Channel</strong>: Licensing gateway — <strong>When</strong>: Reverse trial issuance; floating lease renew/reclaim; revocation manifest fetch when online — <strong>Payload (honest)</strong>: Anonymized SHA-256 fingerprint (<code>platform:arch:machineId</code>), salted domain id, JWT metadata — <strong>not</strong> source</li>
+<li><strong>Channel</strong>: Optional product telemetry — <strong>When</strong>: Only if <code>treeresolve.enableTelemetry</code> <strong>and</strong> VS Code telemetry enabled — <strong>Payload (honest)</strong>: Aggregate codes (e.g. languageId, error codes) — <strong>not</strong> snippets or paths</li>
+<li><strong>Channel</strong>: Paddle checkout / portal — <strong>When</strong>: Buyer-initiated purchase or billing — <strong>Payload (honest)</strong>: Handled by Paddle as Merchant of Record</li>
+<li><strong>Channel</strong>: Enterprise inquiry form — <strong>When</strong>: Buyer-initiated — <strong>Payload (honest)</strong>: Contact fields the buyer submits</li>
+</ul>
+<p>Default licensing endpoint today: <code>https://treeresolve-licensing.still-systems.workers.dev</code> (launch target: a Still Systems–owned custom host). Enterprises may point <code>treeresolve.licensingEndpoint</code> at an internal reverse proxy, or use offline wildcard keys and disable telemetry for zero product egress.</p>
+<h2>Trust boundaries</h2>
+<ol>
+<li><strong>Merge plane</strong> — local only. Treat this as the product security claim for</li>
+<p>source-code handling.</p>
+<li><strong>License plane</strong> — optional network for trials/leases; offline keys skip it.</li>
+<li><strong>Commercial plane</strong> — Paddle and voluntary support/inquiry channels.</li>
+</ol>
+<p>For settings and MDM rollout, see <a href="trust-offline-vsix.html" rel="noopener">offline-vsix.md</a> and <a href="enterprise.html" rel="noopener">ENTERPRISE.md</a>.</p>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-copy">
+        © 2026 Still Systems, LLC.
+        Support: <a href="mailto:billy.kidd34@gmail.com">billy.kidd34@gmail.com</a>
+      </div>
+      <ul class="footer-links">
+        <li><a href="https://stillsystems.github.io/">Still Systems</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="refund.html">Refund Policy</a></li>
+        <li><a href="./">TreeResolve</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>

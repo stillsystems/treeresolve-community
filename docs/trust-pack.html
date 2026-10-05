@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trust Pack — TreeResolve</title>
+  <link rel="canonical" href="https://stillsystems.github.io/treeresolve-community/trust-pack.html">
+  <link rel="icon" type="image/png" href="images/icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="legal-top">
+    <div class="container legal-top-inner">
+      <div class="legal-id">
+        <a class="legal-company" href="https://stillsystems.github.io/">Still Systems</a>
+        <a class="legal-brand" href="./">TreeResolve</a>
+      </div>
+      <nav class="legal-nav">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="refund.html">Refund Policy</a>
+        <a href="./#pricing">Pricing</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container legal-doc">
+    <p class="legal-entity"><a href="https://stillsystems.github.io/">Still Systems, LLC</a> — TreeResolve product site (stillsystems.github.io/treeresolve-community)</p>
+    <h1>Trust Pack</h1>
+    <div class="legal-body">
+<p>Zero-cost vendor-risk materials for enterprise buyers evaluating TreeResolve. <strong>This is not a SOC 2 report and is not launch approval.</strong> Still Systems is a solo LLC; answers below are honest about that.</p>
+<ul>
+<li><strong>Artifact</strong>: Data-flow diagram — <strong>Location</strong>: <a href="trust-data-flow.html" rel="noopener">data-flow.md</a> — <strong>Automation</strong>: Docs (synced to community)</li>
+<li><strong>Artifact</strong>: SBOM (CycloneDX) — <strong>Location</strong>: GitHub Release / workflow artifact — <strong>Automation</strong>: <a href="https://github.com/stillsystems/treeresolve-community/blob/main/.github/workflows/release-artifacts.yml" rel="noopener">release-artifacts.yml</a></li>
+<li><strong>Artifact</strong>: SHA-256 + Sigstore — <strong>Location</strong>: Alongside each VSIX on release — <strong>Automation</strong>: Same workflow (keyless OIDC)</li>
+<li><strong>Artifact</strong>: OpenSSF Scorecard — <strong>Location</strong>: Public community repo — <strong>Automation</strong>: Community workflow; docs sync via GitHub App PR</li>
+<li><strong>Artifact</strong>: CSA CAIQ (lite) — <strong>Location</strong>: <a href="trust-caiq.html" rel="noopener">caiq-lite.md</a> — <strong>Automation</strong>: Docs</li>
+<li><strong>Artifact</strong>: VDP / security.txt — <strong>Location</strong>: <a href="security.html" rel="noopener">SECURITY.md</a>, <a href="security.txt" rel="noopener">security.txt</a> — <strong>Automation</strong>: Docs + Pages</li>
+<li><strong>Artifact</strong>: Offline VSIX + AllowedExtensions — <strong>Location</strong>: <a href="trust-offline-vsix.html" rel="noopener">offline-vsix.md</a> — <strong>Automation</strong>: Docs</li>
+</ul>
+<p>Also see <a href="enterprise.html" rel="noopener">ENTERPRISE.md</a>, <a href="privacy.html" rel="noopener">PRIVACY.md</a>, and <a href="architecture.html" rel="noopener">ARCHITECTURE.md</a>.</p>
+<h2>How to verify a release VSIX</h2>
+<pre><code>
+# After downloading assets from the GitHub Release:
+sha256sum -c treeresolve-&lt;version&gt;.vsix.sha256
+
+cosign verify-blob &quot;treeresolve-&lt;version&gt;.vsix&quot; \
+  --bundle &quot;treeresolve-&lt;version&gt;.vsix.sigstore.json&quot; \
+  --certificate-oidc-issuer &quot;https://token.actions.githubusercontent.com&quot; \
+  --certificate-identity-regexp \
+  '^https://github.com/stillsystems/treeresolve/\.github/workflows/release-artifacts\.yml@refs/tags/v'
+</code></pre>
+<p>SBOM file: <code>treeresolve-&lt;version&gt;.cdx.json</code> (CycloneDX JSON).</p>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-copy">
+        © 2026 Still Systems, LLC.
+        Support: <a href="mailto:billy.kidd34@gmail.com">billy.kidd34@gmail.com</a>
+      </div>
+      <ul class="footer-links">
+        <li><a href="https://stillsystems.github.io/">Still Systems</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="refund.html">Refund Policy</a></li>
+        <li><a href="./">TreeResolve</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>
