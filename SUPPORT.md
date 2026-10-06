@@ -44,7 +44,7 @@ After a laptop migration or salt reset, reclaim your floating lease:
 
 ## Enterprise
 
-For volume quotes, MDM rollout, air-gapped keys, InfoSec questionnaires, and private support channels, use the [Enterprise Portal](https://stillsystems.github.io/treeresolve-community/#enterprise) or see [ENTERPRISE.md](ENTERPRISE.md).
+For volume quotes, MDM rollout, air-gapped keys, InfoSec questionnaires, and private support channels, use the [enterprise inquiry form](https://stillsystems.github.io/treeresolve-community/enterprise.html#inquiry) or see [ENTERPRISE.md](ENTERPRISE.md).
 
 ---
 

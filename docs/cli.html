@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLI — TreeResolve</title>
+  <link rel="canonical" href="https://stillsystems.github.io/treeresolve-community/cli.html">
+  <link rel="icon" type="image/png" href="images/icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="legal-top">
+    <div class="container legal-top-inner">
+      <div class="legal-id">
+        <a class="legal-company" href="https://stillsystems.github.io/">Still Systems</a>
+        <a class="legal-brand" href="./">TreeResolve</a>
+      </div>
+      <nav class="legal-nav">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="refund.html">Refund Policy</a>
+        <a href="./#pricing">Pricing</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container legal-doc">
+    <p class="legal-entity"><a href="https://stillsystems.github.io/">Still Systems, LLC</a> — TreeResolve product site (stillsystems.github.io/treeresolve-community)</p>
+    <h1>CLI</h1>
+    <div class="legal-body">
+<p>TreeResolve ships a standalone command-line tool for a Git mergetool and for headless auto-resolution in CI. <code>npx treeresolve</code> does not add a package dependency to the repo.</p>
+<pre><code># Configure the Git mergetool
+npx treeresolve setup-git
+
+# Batch auto-resolve clean syntax conflicts
+npx treeresolve auto
+
+# Open the 3-way mergetool
+git mergetool -t treeresolve</code></pre>
+<p>The VS Code extension is the interactive 3-way canvas. The CLI is the mergetool and the CI path. Both use the same license. A headless run stays on Community unless a Pro or Enterprise license is configured.</p>
+<p>The package is <a href="https://www.npmjs.com/package/treeresolve" rel="noopener">treeresolve on npm</a>.</p>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-copy">
+        © 2026 Still Systems, LLC.
+        Support: <a href="mailto:billy.kidd34@gmail.com">billy.kidd34@gmail.com</a>
+      </div>
+      <ul class="footer-links">
+        <li><a href="https://stillsystems.github.io/">Still Systems</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="refund.html">Refund Policy</a></li>
+        <li><a href="./">TreeResolve</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>

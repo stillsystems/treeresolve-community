@@ -210,7 +210,7 @@ TreeResolve uses a Reverse Trial model: install the extension and enjoy all Pro 
 
 | Feature | Community Tier (Free Forever) | Pro Tier ($10/mo or $99/yr) | Enterprise Tier ($20/seat/mo or $199/seat/yr)* |
 | :--- | :---: | :---: | :---: |
-| **Direct Checkout** | Free forever · [Install extension](https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve) · [CLI on npm](https://www.npmjs.com/package/treeresolve) | [**Get Pro ($99/yr)**](https://stillsystems.github.io/treeresolve-community/?checkout=pro) · [($10/mo)](https://stillsystems.github.io/treeresolve-community/?checkout=monthly) | [**Buy Fleet Seats**](https://stillsystems.github.io/treeresolve-community/?checkout=enterprise) · [Inquire](https://stillsystems.github.io/treeresolve-community/#enterprise) |
+| **Direct Checkout** | Free forever · [Install extension](https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve) · [CLI on npm](https://www.npmjs.com/package/treeresolve) | [**Get Pro ($99/yr)**](https://stillsystems.github.io/treeresolve-community/?checkout=pro) · [($10/mo)](https://stillsystems.github.io/treeresolve-community/?checkout=monthly) | [**Buy Fleet Seats**](https://stillsystems.github.io/treeresolve-community/?checkout=enterprise) · [Inquire](https://stillsystems.github.io/treeresolve-community/enterprise.html#inquiry) |
 | **Target User** | Open Source / Hobbyists | Individual Professionals | Engineering Teams & Enterprise Fleets |
 | **License Binding** | N/A | **Per person** — any repo, up to 3 machines | **Seats + org wildcards** (fleet / MDM) |
 | **3-Pane Visual Diffing** | ✅ Included | ✅ Included | ✅ Included |
@@ -231,7 +231,7 @@ TreeResolve uses a Reverse Trial model: install the extension and enjoy all Pro 
 
 When your 14-day trial ends, TreeResolve automatically degrades to the Community tier (you keep the 3-pane canvas **and** TS/JS/Python import auto-merge). Your editor will never be locked or blocked from resolving conflicts manually. **Pro is a per-person license** — install once, use in any repository on up to three machines. Commercial licenses utilize 30-day offline-first floating leases; person/org wildcard tokens carry a maximum 90-day offline validity window.
 
-For organizational procurement, volume quotes, InfoSec assessments, and MDM rollout instructions, refer to the [Enterprise Deployment & Security Guide](ENTERPRISE.md) or submit an inquiry on the [Enterprise Portal](https://stillsystems.github.io/treeresolve-community/#enterprise).
+For organizational procurement, volume quotes, InfoSec assessments, and MDM rollout instructions, refer to the [Enterprise Deployment & Security Guide](ENTERPRISE.md) or submit an [inquiry](https://stillsystems.github.io/treeresolve-community/enterprise.html#inquiry).
 
 ---
 

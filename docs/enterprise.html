@@ -230,9 +230,69 @@ sudo -u $(stat -f &quot;%Su&quot; /dev/console) code --install-extension still-s
 <li><strong>Support Targets</strong>: Enterprise inquiries aim for <strong>next-business-day acknowledgment</strong> (US Central). Security disclosures follow the 48-hour ack in <a href="security.html" rel="noopener">Security Policy</a>. There is no separate uptime SLA for the local extension (merge work runs on the customer's machines). Community / Pro GitHub issues remain best-effort.</li>
 <li><strong>Custom Grammar Normalizers</strong>: Available only as scoped, quoted engineering work when capacity allows—not included by default in Enterprise seat pricing.</li>
 </ul>
-<p>For enterprise evaluations, custom quotes, or security reviews, submit an inquiry via the <a href="https://stillsystems.github.io/treeresolve-community/#enterprise" rel="noopener">Enterprise Portal</a> or open a thread on the <a href="https://github.com/stillsystems/treeresolve-community/issues" rel="noopener">TreeResolve Community Tracker</a>.</p>
+<p>For enterprise evaluations, custom quotes, or security reviews, submit the <a href="https://stillsystems.github.io/treeresolve-community/enterprise.html#inquiry" rel="noopener">inquiry form</a> or open a thread on the <a href="https://github.com/stillsystems/treeresolve-community/issues" rel="noopener">TreeResolve Community Tracker</a>.</p>
     </div>
   </main>
+<section id="inquiry" class="enterprise-section">
+    <div class="container">
+      <div class="enterprise-card">
+        <div class="enterprise-info">
+          <h3>Request a quote</h3>
+          <p>Fleet quotes, MDM rollout, air-gapped keys, and security reviews. The guide above is the deployment reference.</p>
+          <div class="enterprise-contact-box">
+            <p class="enterprise-contact-label">Community &amp; Discussions:</p>
+            <a href="https://github.com/stillsystems/treeresolve-community/discussions" target="_blank" rel="noopener" class="enterprise-contact-link">TreeResolve Community Portal →</a>
+          </div>
+        </div>
+        <div class="enterprise-form-wrap">
+          <form id="enterprise-inquiry-form" class="inquiry-form">
+            <div id="form-status" class="form-status"></div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Your Name *</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Jane Doe" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Work Email *</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="jane@company.com" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="company">Company / Organization *</label>
+                <input type="text" id="company" name="company" class="form-control" placeholder="Acme Technologies" required>
+              </div>
+              <div class="form-group">
+                <label for="seats">Estimated Seats</label>
+                <select id="seats" name="seats" class="form-control">
+                  <option value="10-50">10 – 50 developers</option>
+                  <option value="50-200" selected>50 – 200 developers</option>
+                  <option value="200-1000">200 – 1,000 developers</option>
+                  <option value="1000+">1,000+ enterprise fleet</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="security">Deployment Environment</label>
+              <select id="security" name="security" class="form-control">
+                <option value="Standard Workstations">Standard Laptops (macOS / Linux / Windows)</option>
+                <option value="Air-Gapped VPC">Air-gapped network</option>
+                <option value="Self-Hosted Worker">Internal Cloudflare Worker / Proxy</option>
+                <option value="Virtual Desktops">VDI / Remote SSH / Dev Containers</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Project Requirements or Questions</label>
+              <textarea id="message" name="message" class="form-control" placeholder="Tell us about your team's workflow, security requirements, or custom languages..."></textarea>
+            </div>
+            <button type="submit" id="submit-inquiry-btn" class="btn btn-glow btn-lg btn-block-submit">Submit Enterprise Inquiry</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
   <footer class="footer">
     <div class="container footer-inner">
       <div class="footer-copy">

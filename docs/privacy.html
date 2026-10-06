@@ -38,6 +38,11 @@
 <li><strong>Payments</strong> are processed by our Merchant of Record (Paddle); we do not store full payment card numbers.</li>
 <li><strong>Marketing site analytics</strong> (optional) may measure aggregate pageviews on the public documentation site only — never inside the extension or CLI.</li>
 </ul>
+<h2>Questions</h2>
+<h3>Is product telemetry on by default?</h3>
+<p>Yes. <code>treeresolve.enableTelemetry</code> defaults to on. TreeResolve sends aggregate product events only when that setting is on and VS Code telemetry is enabled. Set <code>treeresolve.enableTelemetry</code> to <code>false</code>, or turn off VS Code telemetry, to stop it. Events do not include source code. Section 2.3 lists the events.</p>
+<h3>What is the anonymous device fingerprint used for?</h3>
+<p>To issue reverse trials and renew floating leases without accounts or passwords, TreeResolve may send an anonymized SHA-256 hash of <code>platform:arch:machineId</code> (truncated to 32 hex characters). No usernames, hostnames, or MAC addresses are included. Offline license keys never contact the licensing endpoint for validation. Licensing traffic currently uses <code>https://treeresolve-licensing.still-systems.workers.dev</code>; <code>https://licensing.stillsystems.com</code> is the planned custom-domain cutover (not live yet). Section 2.2 is the full description.</p>
 <hr>
 <h2>2. Information We Process</h2>
 <h3>2.1. Not collected</h3>

@@ -135,10 +135,11 @@
           <li><a href="#simulator">Live Demo</a></li>
           <li><a href="#how-it-works">How it Works</a></li>
           <li><a href="#features">Features</a></li>
-          <li><a href="#languages">Languages</a></li>
+          <li><a href="languages.html">Languages</a></li>
+          <li><a href="cli.html">CLI</a></li>
           <li><a href="#pricing">Pricing</a></li>
           <li><a href="#faq">FAQ</a></li>
-          <li><a href="#enterprise">Enterprise</a></li>
+          <li><a href="enterprise.html">Enterprise</a></li>
         </ul>
         <div class="nav-actions">
           <a href="https://github.com/stillsystems/treeresolve-community" target="_blank" rel="noopener"
@@ -180,12 +181,12 @@
           </svg>
           Install from Marketplace
         </a>
-        <a href="#cli" class="btn btn-outline btn-lg">
+        <a href="cli.html" class="btn btn-outline btn-lg">
           Try CLI — npx treeresolve
         </a>
       </div>
       <p class="hero-secondary-link">
-        Fleet rollout? <a href="#enterprise">Contact Enterprise →</a>
+        Fleet rollout? <a href="enterprise.html">Contact Enterprise →</a>
       </p>
 
       <div class="trust-bar" aria-label="Distribution and trust signals">
@@ -384,140 +385,6 @@
     </div>
   </section>
 
-  <!-- Languages + Comparison -->
-  <section id="languages" class="container languages-section">
-    <div class="section-header">
-      <span class="section-tag">Language Support</span>
-      <h2 class="section-title">Compiler-Grade Where It Matters</h2>
-      <p class="section-desc">Dedicated AST normalizers for popular stacks. Every other text file still opens in the
-        3-way visual canvas.</p>
-    </div>
-
-    <div class="lang-table-wrap">
-      <table class="lang-table">
-        <thead>
-          <tr>
-            <th scope="col">Language</th>
-            <th scope="col">Deterministic auto-merge</th>
-            <th scope="col">3-way visual diff</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>TypeScript / JavaScript</td>
-            <td>AST imports &amp; structural declarations</td>
-            <td>Yes</td>
-          </tr>
-          <tr>
-            <td>Python</td>
-            <td>AST imports &amp; functions</td>
-            <td>Yes</td>
-          </tr>
-          <tr>
-            <td>JSON / JSONC</td>
-            <td>Deep non-colliding keys</td>
-            <td>Yes</td>
-          </tr>
-          <tr>
-            <td>npm Lockfile (<code>package-lock.json</code>)</td>
-            <td>Dedicated 3-way semver / integrity alignment</td>
-            <td>Yes</td>
-          </tr>
-          <tr>
-            <td>yarn.lock / pnpm-lock.yaml</td>
-            <td>Partial key-union / YAML 3-way (denser cases stay manual)</td>
-            <td>Yes</td>
-          </tr>
-          <tr>
-            <td>Go</td>
-            <td>Imports, structs &amp; fields</td>
-            <td>Yes</td>
-          </tr>
-          <tr>
-            <td>Rust</td>
-            <td>Use trees, structs &amp; enum variants</td>
-            <td>Yes</td>
-          </tr>
-          <tr>
-            <td>YAML</td>
-            <td>Indentation-safe key union</td>
-            <td>Yes</td>
-          </tr>
-          <tr>
-            <td>Java</td>
-            <td>Package &amp; static imports</td>
-            <td>Yes</td>
-          </tr>
-          <tr>
-            <td>C#</td>
-            <td>Using / static / global directives</td>
-            <td>Yes</td>
-          </tr>
-          <tr>
-            <td>All other languages</td>
-            <td>Line-based fallback</td>
-            <td>Yes</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section id="compare" class="container compare-section">
-    <div class="section-header">
-      <span class="section-tag">Positioning</span>
-      <h2 class="section-title">Not Line Guesswork. Not an LLM.</h2>
-      <p class="section-desc">TreeResolve sits between classic Git merge UIs and AI merge assistants—with deterministic
-        local AST math and zero source egress.</p>
-    </div>
-    <div class="compare-grid">
-      <div class="compare-card">
-        <h3 class="compare-title">vs Line-based Git</h3>
-        <ul class="compare-list">
-          <li>Git conflicts on disjoint edits that never touch the same syntax nodes</li>
-          <li>TreeResolve parses the AST and auto-merges safe set-differences</li>
-          <li>True overlapping edits still surface for human review</li>
-        </ul>
-      </div>
-      <div class="compare-card compare-card-accent">
-        <h3 class="compare-title">vs AI merge tools</h3>
-        <ul class="compare-list">
-          <li>Zero AI — same inputs always produce the same result</li>
-          <li>No hallucinations, prompts, or model drift</li>
-          <li>Source code stays on your machine</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- CLI Showcase Banner -->
-  <section id="cli" class="container">
-    <div class="cli-banner">
-      <div>
-        <span class="section-tag">Terminal Workflows</span>
-        <h2 class="cli-title">Standalone Git Mergetool Companion</h2>
-        <p class="cli-desc">
-          Prefer working in the terminal or running headless auto-resolution in CI/CD pipelines? TreeResolve includes a
-          standalone CLI executable with zero dependencies.
-        </p>
-        <div class="cli-actions">
-          <a href="https://github.com/stillsystems/treeresolve-community#4-git-mergetool--cli-companion" target="_blank"
-            rel="noopener" class="btn btn-outline btn-sm">
-            CLI Documentation →
-          </a>
-        </div>
-      </div>
-      <div class="cli-code-block">
-        <span class="cli-comment"># 1. Configure Git global mergetool in one command</span><br>
-        <span class="cli-cmd">npx treeresolve setup-git</span><br><br>
-        <span class="cli-comment"># 2. Batch auto-resolve all clean syntax conflicts</span><br>
-        <span class="cli-cmd">npx treeresolve auto</span><br><br>
-        <span class="cli-comment"># 3. Direct 3-way invocation in Git mergetool</span><br>
-        <span class="cli-cmd">git mergetool -t treeresolve</span>
-      </div>
-    </div>
-  </section>
-
   <!-- Pricing Section -->
   <section id="pricing" class="pricing-section">
     <div class="container">
@@ -554,7 +421,7 @@
               Install from Marketplace
             </a>
             <span class="pricing-sublink">
-              Or <a href="#cli">try CLI</a> ·
+              Or <a href="cli.html">try CLI</a> ·
               <a href="https://open-vsx.org/extension/stillsystems/treeresolve" target="_blank" rel="noopener">Open
                 VSX</a>
             </span>
@@ -614,7 +481,7 @@
               class="btn btn-outline">
               Buy Fleet Seats ($199/seat)
             </a>
-            <a href="#enterprise" class="pricing-sublink">
+            <a href="enterprise.html#inquiry" class="pricing-sublink">
               Request Custom Quote or Invoice Terms →
             </a>
           </div>
@@ -634,7 +501,7 @@
     <div class="section-header">
       <span class="section-tag">FAQ</span>
       <h2 class="section-title">Answers Before You Start</h2>
-      <p class="section-desc">Trial, privacy, language support, and how TreeResolve differs from AI merge tools.</p>
+      <p class="section-desc">Trial, privacy, and how TreeResolve differs from AI merge tools.</p>
     </div>
 
     <div class="faq-list">
@@ -657,37 +524,10 @@
       </details>
 
       <details class="faq-item">
-        <summary>Is product telemetry on by default?</summary>
-        <p>
-          Yes. <code>treeresolve.enableTelemetry</code> defaults to on. TreeResolve sends aggregate product
-          events only when that setting is on and VS Code telemetry is enabled. Set
-          <code>treeresolve.enableTelemetry</code> to <code>false</code>, or turn off VS Code telemetry, to stop
-          it. Events do not include source code. See the
-          <a href="privacy.html">Privacy Policy</a>.
-        </p>
-      </details>
-
-      <details class="faq-item">
-        <summary>What is the anonymous device fingerprint used for?</summary>
-        <p>
-          To issue reverse trials and renew floating leases without accounts or passwords, TreeResolve
-          may send an anonymized SHA-256 hash of <code>platform:arch:machineId</code> (truncated to 32 hex
-          characters). No usernames, hostnames, or MAC addresses are included. Offline license keys never
-          contact the licensing endpoint for validation. Licensing traffic
-          currently uses <code>https://treeresolve-licensing.still-systems.workers.dev</code>;
-          <code>https://licensing.stillsystems.com</code> is the planned custom-domain cutover (not live yet).
-        </p>
-      </details>
-
-      <details class="faq-item">
         <summary>Which languages get deterministic auto-merge?</summary>
         <p>
-          Dedicated AST normalizers cover TypeScript/JavaScript, Python, Go, Rust, Java, C#, JSON/JSONC,
-          and YAML. Lockfile auto-merge is deepest for <code>package-lock.json</code>; <code>yarn.lock</code> and
-          <code>pnpm-lock.yaml</code> are partial (see
-          <a href="https://github.com/stillsystems/treeresolve-community/issues/6" target="_blank" rel="noopener">known
-            limitations #6</a>).
-          All other languages still open in the 3-way visual canvas with a graceful line-based fallback.
+          The <a href="languages.html">language table</a> lists dedicated AST normalizers, partial lockfile coverage,
+          and the line-based fallback for everything else.
         </p>
       </details>
 
@@ -703,9 +543,9 @@
       <details class="faq-item">
         <summary>Do I need the VS Code extension, the CLI, or both?</summary>
         <p>
-          The extension gives you the interactive 3-way canvas inside VS Code. The standalone CLI
-          (<code>npx treeresolve</code>) works as a Git mergetool and for headless / CI auto-resolution.
-          Both share the same licensing model. Headless runs default to Community unless a Pro or
+          The extension gives you the interactive 3-way canvas inside VS Code. The standalone
+          <a href="cli.html">CLI</a> (<code>npx treeresolve</code>) works as a Git mergetool and for headless / CI
+          auto-resolution. Both share the same licensing model. Headless runs default to Community unless a Pro or
           Enterprise license is configured.
         </p>
       </details>
@@ -721,109 +561,6 @@
           (or use the CLI via <code>npx treeresolve</code>).
         </p>
       </details>
-    </div>
-  </section>
-
-  <!-- Enterprise Inquiry Section -->
-  <section id="enterprise" class="enterprise-section">
-    <div class="container">
-      <div class="enterprise-card">
-        <div class="enterprise-info">
-          <span class="section-tag">Enterprise & Security</span>
-          <h3>Procurement, MDM & Custom Inquiries</h3>
-          <p>
-            Deploy TreeResolve across engineering seats with MDM-friendly rollout docs, air-gapped cryptographic
-            licensing, and support targets a solo vendor can meet.
-          </p>
-
-          <ul class="enterprise-points">
-            <li>
-              <span class="check-icon">✓</span>
-              <span><strong>Air-Gapped Cryptographic Leases:</strong> Ed25519-signed offline licenses verified without
-                external network calls.</span>
-            </li>
-            <li>
-              <span class="check-icon">✓</span>
-              <span><strong>Fleet Rollout:</strong> Silent automated distribution via Microsoft Intune, Jamf Pro, and
-                Ansible.</span>
-            </li>
-            <li>
-              <span class="check-icon">✓</span>
-              <span><strong>Commercial invoicing:</strong> Self-serve card via Paddle. Qualifying fleets are invoiced
-                by Paddle, on Net-30 when offered.</span>
-            </li>
-            <li>
-              <span class="check-icon">✓</span>
-              <span><strong>Source code stays local:</strong> Merge work runs on the machine. Trials and leases send a
-                device fingerprint to the licensing endpoint. Offline license keys do not.</span>
-            </li>
-          </ul>
-
-          <div class="enterprise-contact-box">
-            <p class="enterprise-contact-label">Community & Discussions:</p>
-            <a href="https://github.com/stillsystems/treeresolve-community/discussions" target="_blank" rel="noopener"
-              class="enterprise-contact-link">
-              TreeResolve Community Portal →
-            </a>
-          </div>
-        </div>
-
-        <!-- Contact Form -->
-        <div class="enterprise-form-wrap">
-          <form id="enterprise-inquiry-form" class="inquiry-form">
-            <div id="form-status" class="form-status"></div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label for="name">Your Name *</label>
-                <input type="text" id="name" name="name" class="form-control" placeholder="Jane Doe" required>
-              </div>
-              <div class="form-group">
-                <label for="email">Work Email *</label>
-                <input type="email" id="email" name="email" class="form-control" placeholder="jane@company.com"
-                  required>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label for="company">Company / Organization *</label>
-                <input type="text" id="company" name="company" class="form-control" placeholder="Acme Technologies"
-                  required>
-              </div>
-              <div class="form-group">
-                <label for="seats">Estimated Seats</label>
-                <select id="seats" name="seats" class="form-control">
-                  <option value="10-50">10 – 50 developers</option>
-                  <option value="50-200" selected>50 – 200 developers</option>
-                  <option value="200-1000">200 – 1,000 developers</option>
-                  <option value="1000+">1,000+ enterprise fleet</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="security">Deployment Environment</label>
-              <select id="security" name="security" class="form-control">
-                <option value="Standard Workstations">Standard Laptops (macOS / Linux / Windows)</option>
-                <option value="Air-Gapped VPC">Air-gapped network</option>
-                <option value="Self-Hosted Worker">Internal Cloudflare Worker / Proxy</option>
-                <option value="Virtual Desktops">VDI / Remote SSH / Dev Containers</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="message">Project Requirements or Questions</label>
-              <textarea id="message" name="message" class="form-control"
-                placeholder="Tell us about your team's workflow, security requirements, or custom languages..."></textarea>
-            </div>
-
-            <button type="submit" id="submit-inquiry-btn" class="btn btn-glow btn-lg btn-block-submit">
-              Submit Enterprise Inquiry
-            </button>
-          </form>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -844,6 +581,8 @@
         <li><a href="refund.html">Refund Policy</a></li>
         <li><a href="support.html">Support</a></li>
         <li><a href="enterprise.html">Enterprise Guide</a></li>
+        <li><a href="languages.html">Languages</a></li>
+        <li><a href="cli.html">CLI</a></li>
         <li><a href="architecture.html">Architecture</a></li>
         <li><a href="changelog.html">Changelog</a></li>
         <li><a href="https://github.com/stillsystems/treeresolve-community/issues" target="_blank"

@@ -262,4 +262,4 @@ Still Systems (solo-operated LLC) offers honest, deliverable procurement paths f
 * **Support Targets**: Enterprise inquiries aim for **next-business-day acknowledgment** (US Central). Security disclosures follow the 48-hour ack in [SECURITY.md](.github/SECURITY.md). There is no separate uptime SLA for the local extension (merge work runs on the customer's machines). Community / Pro GitHub issues remain best-effort.
 * **Custom Grammar Normalizers**: Available only as scoped, quoted engineering work when capacity allows—not included by default in Enterprise seat pricing.
 
-For enterprise evaluations, custom quotes, or security reviews, submit an inquiry via the [Enterprise Portal](https://stillsystems.github.io/treeresolve-community/#enterprise) or open a thread on the [TreeResolve Community Tracker](https://github.com/stillsystems/treeresolve-community/issues).
+For enterprise evaluations, custom quotes, or security reviews, submit the [inquiry form](https://stillsystems.github.io/treeresolve-community/enterprise.html#inquiry) or open a thread on the [TreeResolve Community Tracker](https://github.com/stillsystems/treeresolve-community/issues).
