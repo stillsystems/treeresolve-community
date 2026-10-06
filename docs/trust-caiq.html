@@ -28,10 +28,10 @@
     <h1>CAIQ Lite</h1>
     <div class="legal-body">
 <p>Pre-filled <strong>lite</strong> answers for vendor risk questionnaires. Mapped loosely to common CSA CAIQ / CCM themes. <strong>Not a CSA certification. Not SOC 2.</strong></p>
-<p><strong>Vendor:</strong> Still Systems, LLC (solo operator) <strong>Product:</strong> TreeResolve VS Code extension + CLI <strong>Date:</strong> 2026-09-26 <strong>Contact:</strong> <a href="mailto:billy.kidd34@gmail.com" rel="noopener">billy.kidd34@gmail.com</a> · private vulnerability reports via <a href="security.html" rel="noopener">SECURITY.md</a></p>
+<p><strong>Vendor:</strong> Still Systems, LLC (solo operator) <strong>Product:</strong> TreeResolve VS Code extension + CLI <strong>Date:</strong> 2026-09-26 <strong>Contact:</strong> <a href="mailto:billy.kidd34@gmail.com" rel="noopener">billy.kidd34@gmail.com</a> · private vulnerability reports via <a href="security.html" rel="noopener">Security Policy</a></p>
 <p>Legend: <strong>Y</strong> = yes · <strong>N</strong> = no · <strong>NA</strong> = not applicable · <strong>P</strong> = partial / honest caveat for a solo vendor.</p>
 <ul>
-<li><strong>#</strong>: 1 — <strong>Control theme (lite)</strong>: Customer source code processed in vendor cloud? — <strong>Ans</strong>: <strong>N</strong> — <strong>Notes</strong>: Merge parsing/resolution is local-only. See <a href="trust-data-flow.html" rel="noopener">data-flow.md</a>.</li>
+<li><strong>#</strong>: 1 — <strong>Control theme (lite)</strong>: Customer source code processed in vendor cloud? — <strong>Ans</strong>: <strong>N</strong> — <strong>Notes</strong>: Merge parsing/resolution is local-only. See <a href="trust-data-flow.html" rel="noopener">Data Flow</a>.</li>
 <li><strong>#</strong>: 2 — <strong>Control theme (lite)</strong>: Customer source stored at rest by vendor? — <strong>Ans</strong>: <strong>N</strong> — <strong>Notes</strong>: Never collected.</li>
 <li><strong>#</strong>: 3 — <strong>Control theme (lite)</strong>: Subprocessors that receive customer source? — <strong>Ans</strong>: <strong>N</strong> — <strong>Notes</strong>: None for merge. Paddle receives <strong>buyer</strong> billing data only.</li>
 <li><strong>#</strong>: 4 — <strong>Control theme (lite)</strong>: Encryption in transit (TLS) for vendor endpoints? — <strong>Ans</strong>: <strong>Y</strong> — <strong>Notes</strong>: Licensing gateway and docs site use HTTPS.</li>
@@ -53,7 +53,7 @@
 <li><strong>#</strong>: 20 — <strong>Control theme (lite)</strong>: Pentest within last 12 months? — <strong>Ans</strong>: <strong>N</strong> — <strong>Notes</strong>: Not yet; release gate + Scorecard + advisory channel instead.</li>
 <li><strong>#</strong>: 21 — <strong>Control theme (lite)</strong>: Logging / SIEM for customer-code access? — <strong>Ans</strong>: <strong>NA</strong> — <strong>Notes</strong>: Vendor cannot access customer code via the product.</li>
 <li><strong>#</strong>: 22 — <strong>Control theme (lite)</strong>: Telemetry opt-out available? — <strong>Ans</strong>: <strong>Y</strong> — <strong>Notes</strong>: <code>treeresolve.enableTelemetry: false</code> and/or VS Code telemetry off.</li>
-<li><strong>#</strong>: 23 — <strong>Control theme (lite)</strong>: Air-gapped deployment supported? — <strong>Ans</strong>: <strong>Y</strong> — <strong>Notes</strong>: Offline VSIX + offline wildcard license; see <a href="trust-offline-vsix.html" rel="noopener">offline-vsix.md</a>.</li>
+<li><strong>#</strong>: 23 — <strong>Control theme (lite)</strong>: Air-gapped deployment supported? — <strong>Ans</strong>: <strong>Y</strong> — <strong>Notes</strong>: Offline VSIX + offline wildcard license; see <a href="trust-offline-vsix.html" rel="noopener">Offline VSIX</a>.</li>
 <li><strong>#</strong>: 24 — <strong>Control theme (lite)</strong>: Extension allow-list compatible? — <strong>Ans</strong>: <strong>Y</strong> — <strong>Notes</strong>: Documented <code>extensions.allowed</code> / <code>AllowedExtensions</code> examples.</li>
 <li><strong>#</strong>: 25 — <strong>Control theme (lite)</strong>: Breach notification commitment? — <strong>Ans</strong>: <strong>P</strong> — <strong>Notes</strong>: Will notify affected paying customers promptly if a licensing/account incident occurs; no customer-source breach surface by design.</li>
 </ul>

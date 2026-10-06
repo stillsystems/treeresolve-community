@@ -128,7 +128,7 @@
 <hr>
 <h2>4. Fleet Management &amp; Automated Deployment</h2>
 <h3>4.1. Silent Installation via MDM</h3>
-<p>TreeResolve is on the VS Code Marketplace as <a href="https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve" rel="noopener"><code>still-systems.ss-treeresolve</code></a>. For air-gapped fleets, distribute a <strong>verified offline VSIX</strong> (SHA-256 + Sigstore) from a GitHub Release, or provision the CLI via npm (<code>treeresolve@1.0.2</code>) for headless / mergetool workflows. Full steps and <code>AllowedExtensions</code> allow-list examples: <a href="trust-offline-vsix.html" rel="noopener">docs/trust/offline-vsix.md</a>.</p>
+<p>TreeResolve is on the VS Code Marketplace as <a href="https://marketplace.visualstudio.com/items?itemName=still-systems.ss-treeresolve" rel="noopener"><code>still-systems.ss-treeresolve</code></a>. For air-gapped fleets, distribute a <strong>verified offline VSIX</strong> (SHA-256 + Sigstore) from a GitHub Release, or provision the CLI via npm (<code>treeresolve@1.0.2</code>) for headless / mergetool workflows. Full steps and <code>AllowedExtensions</code> allow-list examples: <a href="trust-offline-vsix.html" rel="noopener">Offline VSIX</a>.</p>
 <h4>Microsoft Intune / Windows MDM</h4>
 <p>Deploy via PowerShell script or Intune Win32 App:</p>
 <pre><code>
@@ -207,11 +207,11 @@ sudo -u $(stat -f &quot;%Su&quot; /dev/console) code --install-extension still-s
 <h2>5. Trust Pack (vendor risk, zero-cost)</h2>
 <p>TreeResolve does <strong>not</strong> ship a paid SOC 2 report. For InfoSec review, use the Trust Pack:</p>
 <ul>
-<li><strong>Artifact</strong>: Index — <strong>Link</strong>: <a href="trust-pack.html" rel="noopener">docs/trust/README.md</a></li>
-<li><strong>Artifact</strong>: Data-flow (local merge; honest licensing/telemetry egress) — <strong>Link</strong>: <a href="trust-data-flow.html" rel="noopener">docs/trust/data-flow.md</a></li>
-<li><strong>Artifact</strong>: CSA CAIQ (lite, solo-honest) — <strong>Link</strong>: <a href="trust-caiq.html" rel="noopener">docs/trust/caiq-lite.md</a></li>
-<li><strong>Artifact</strong>: Offline VSIX + <code>AllowedExtensions</code> — <strong>Link</strong>: <a href="trust-offline-vsix.html" rel="noopener">docs/trust/offline-vsix.md</a></li>
-<li><strong>Artifact</strong>: VDP / security.txt — <strong>Link</strong>: <a href="security.html" rel="noopener">SECURITY.md</a>, <a href="security.txt" rel="noopener">docs/security.txt</a></li>
+<li><strong>Artifact</strong>: Index — <strong>Link</strong>: <a href="trust-pack.html" rel="noopener">Trust Pack</a></li>
+<li><strong>Artifact</strong>: Data-flow (local merge; honest licensing/telemetry egress) — <strong>Link</strong>: <a href="trust-data-flow.html" rel="noopener">Data Flow</a></li>
+<li><strong>Artifact</strong>: CSA CAIQ (lite, solo-honest) — <strong>Link</strong>: <a href="trust-caiq.html" rel="noopener">CAIQ Lite</a></li>
+<li><strong>Artifact</strong>: Offline VSIX + <code>AllowedExtensions</code> — <strong>Link</strong>: <a href="trust-offline-vsix.html" rel="noopener">Offline VSIX</a></li>
+<li><strong>Artifact</strong>: VDP / security.txt — <strong>Link</strong>: <a href="security.html" rel="noopener">Security Policy</a>, <a href="security.txt" rel="noopener">docs/security.txt</a></li>
 <li><strong>Artifact</strong>: SBOM + SHA-256 + Sigstore per release — <strong>Link</strong>: GitHub Actions workflow <code>Release artifacts</code> (tag <code>v*</code> or <code>workflow_dispatch</code>)</li>
 <li><strong>Artifact</strong>: OpenSSF Scorecard — <strong>Link</strong>: Public repo <a href="https://github.com/stillsystems/treeresolve-community" rel="noopener"><code>stillsystems/treeresolve-community</code></a></li>
 </ul>
@@ -227,7 +227,7 @@ sudo -u $(stat -f &quot;%Su&quot; /dev/console) code --install-extension still-s
 <li><strong>Payment Methods</strong>: Self-serve card checkout via Paddle (Merchant of Record). For qualifying fleet quotes, Paddle invoices the buyer. Net-30 may be offered case-by-case after quote acceptance. Extended Net-60 (or longer) terms are not a standard offering. Still Systems does not invoice buyers or collect payment directly.</li>
 <li><strong>Volume Seat Tiering</strong>: Discounted seat pricing discussed starting around 50 developer seats (see list pricing footnotes in the product README).</li>
 <li><strong>Agreements</strong>: Purchases are governed by the TreeResolve EULA plus a short written order / quote for fleet deals. Custom MSA or Security Addendum language can be reviewed case-by-case; it is not a turnkey packaged deliverable. Vendor risk questionnaires can start from the <a href="trust-caiq.html" rel="noopener">CAIQ lite</a> above.</li>
-<li><strong>Support Targets</strong>: Enterprise inquiries aim for <strong>next-business-day acknowledgment</strong> (US Central). Security disclosures follow the 48-hour ack in <a href="security.html" rel="noopener">SECURITY.md</a>. There is no separate uptime SLA for the local extension (merge work runs on the customer's machines). Community / Pro GitHub issues remain best-effort.</li>
+<li><strong>Support Targets</strong>: Enterprise inquiries aim for <strong>next-business-day acknowledgment</strong> (US Central). Security disclosures follow the 48-hour ack in <a href="security.html" rel="noopener">Security Policy</a>. There is no separate uptime SLA for the local extension (merge work runs on the customer's machines). Community / Pro GitHub issues remain best-effort.</li>
 <li><strong>Custom Grammar Normalizers</strong>: Available only as scoped, quoted engineering work when capacity allows—not included by default in Enterprise seat pricing.</li>
 </ul>
 <p>For enterprise evaluations, custom quotes, or security reviews, submit an inquiry via the <a href="https://stillsystems.github.io/treeresolve-community/#enterprise" rel="noopener">Enterprise Portal</a> or open a thread on the <a href="https://github.com/stillsystems/treeresolve-community/issues" rel="noopener">TreeResolve Community Tracker</a>.</p>
