@@ -15,6 +15,16 @@ This Privacy Policy describes how TreeResolve (the VS Code extension, standalone
 * **Payments** are processed by our Merchant of Record (Paddle); we do not store full payment card numbers.
 * **Marketing site analytics** (optional) may measure aggregate pageviews on the public documentation site only — never inside the extension or CLI.
 
+## Questions
+
+### Is product telemetry on by default?
+
+Yes. `treeresolve.enableTelemetry` defaults to on. TreeResolve sends aggregate product events only when that setting is on and VS Code telemetry is enabled. Set `treeresolve.enableTelemetry` to `false`, or turn off VS Code telemetry, to stop it. Events do not include source code. Section 2.3 lists the events.
+
+### What is the anonymous device fingerprint used for?
+
+To issue reverse trials and renew floating leases without accounts or passwords, TreeResolve may send an anonymized SHA-256 hash of `platform:arch:machineId` (truncated to 32 hex characters). No usernames, hostnames, or MAC addresses are included. Offline license keys never contact the licensing endpoint for validation. Licensing traffic currently uses `https://treeresolve-licensing.still-systems.workers.dev`; `https://licensing.stillsystems.com` is the planned custom-domain cutover (not live yet). Section 2.2 is the full description.
+
 ---
 
 ## 2. Information We Process

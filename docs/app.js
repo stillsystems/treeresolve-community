@@ -130,8 +130,10 @@ import (
   const toggleBtn = document.getElementById('sim-toggle-action');
   const simExplanation = document.getElementById('sim-explanation');
   const tabs = document.querySelectorAll('.sim-tab');
+  const simulatorReady = codeDisplayOurs && codeDisplayResult && toggleBtn && simExplanation;
 
   function updateSimulatorView() {
+    if (!simulatorReady) return;
     const sc = scenarios[currentScenario];
     if (isResolved) {
       codeDisplayOurs.textContent = sc.conflicted;
@@ -146,25 +148,24 @@ import (
     }
   }
 
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      currentScenario = tab.dataset.lang;
-      isResolved = false;
-      updateSimulatorView();
+  if (simulatorReady) {
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentScenario = tab.dataset.lang;
+        isResolved = false;
+        updateSimulatorView();
+      });
     });
-  });
 
-  if (toggleBtn) {
     toggleBtn.addEventListener('click', () => {
       isResolved = !isResolved;
       updateSimulatorView();
     });
-  }
 
-  // Initialize
-  updateSimulatorView();
+    updateSimulatorView();
+  }
 
   // 2. Enterprise Contact Form Submission
   const inquiryForm = document.getElementById('enterprise-inquiry-form');
